@@ -1,0 +1,17 @@
+{
+  "_note": "Keywords of 3 letters or fewer match whole words only; longer ones match from a word start (psycholog → psychology). Maps free-text career directions (G11 Q9 + CU1) to pathway families in spec/config/subject_map.json. Longest match wins. Extend freely; keep ids in sync with pathway_families.",
+  "MED_HEALTH": ["doctor", "medicine", "medical", "surgeon", "pharmacist", "pharmacy", "physiotherap", "physio", "occupational therap", "ot", "dentist", "dental", "radiograph", "optometr", "dietitian", "biokinetic", "vet", "veterinar", "paramedic", "emergency medical"],
+  "ENGINEERING": ["engineer", "engineering", "mechatronic"],
+  "ACTUARIAL_CA": ["actuar", "chartered accountant", "accountant", "ca(sa)", "finance", "auditor", "investment", "banker"],
+  "COMPSCI": ["software", "developer", "programmer", "coding", "computer science", "data scien", "data analyst", "cyber", "information technology"],
+  "SCIENCES": ["scientist", "science", "chemist", "physicist", "biolog", "microbiolog", "geolog", "astronom", "biotech", "forensic", "environmental scien"],
+  "BUILT_ENV": ["architect", "quantity survey", "town plan", "urban plan", "construction manag", "property"],
+  "COMMERCE": ["business", "marketing", "management", "economist", "entrepreneur", "commerce", "human resource", "hr", "logistics", "supply chain"],
+  "LAW": ["lawyer", "law", "attorney", "advocate", "judge", "legal"],
+  "HUMANITIES": ["psycholog", "social work", "sociolog", "journalis", "politic", "international relations", "philosoph", "counsell", "linguist", "history", "anthropolog"],
+  "EDUCATION": ["teacher", "teaching", "educat", "lecturer", "coach"],
+  "CREATIVE": ["artist", "design", "fashion", "film", "music", "musician", "actor", "acting", "photograph", "animation", "animator", "writer", "media", "content creat", "producer", "rapper", "singer", "dancer"],
+  "NURSING": ["nurse", "nursing", "midwife", "caregiver"],
+  "TVET_TRADES": ["electrician", "plumber", "mechanic", "welder", "artisan", "carpenter", "boilermaker", "fitter", "technician", "trade"],
+  "HOSPITALITY": ["chef", "cook", "culinary", "hotel", "hospitality", "tourism", "travel", "events"]
+}

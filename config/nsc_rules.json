@@ -1,0 +1,15 @@
+{
+  "_verify": "Simplified from the NSC promotion requirements and the DBE designated-subject list. VERIFY against current DBE regulations before launch and every year (spec 00, 06 §6).",
+  "designated_subjects": [
+    "Accounting", "Agricultural Sciences", "Business Studies", "Consumer Studies", "Dramatic Arts", "Economics",
+    "Engineering Graphics and Design", "Geography", "History", "Information Technology", "Life Sciences",
+    "Mathematical Literacy", "Mathematics", "Music", "Physical Sciences", "Religion Studies", "Visual Arts",
+    "First Additional Language", "Home Language"
+  ],
+  "levels": [
+    { "id": "bachelor", "label": "Bachelor's pass", "home_language_min": 40, "tiers": [{ "count": 4, "min": 50, "designated_only": true }], "rest_min": 30, "max_below_rest": 0 },
+    { "id": "diploma", "label": "Diploma pass", "home_language_min": 40, "tiers": [{ "count": 4, "min": 40, "designated_only": false }], "rest_min": 30, "max_below_rest": 0 },
+    { "id": "higher_certificate", "label": "Higher Certificate pass", "home_language_min": 40, "tiers": [{ "count": 2, "min": 40, "designated_only": false }], "rest_min": 30, "max_below_rest": 0 },
+    { "id": "nsc", "label": "NSC pass", "home_language_min": 40, "tiers": [{ "count": 2, "min": 40, "designated_only": false }], "rest_min": 30, "max_below_rest": 1 }
+  ]
+}
