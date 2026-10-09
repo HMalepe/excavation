@@ -1,0 +1,878 @@
+{
+  "version": "1.0.0",
+  "riasec_keys": [
+    "R",
+    "I",
+    "A",
+    "S",
+    "E",
+    "C"
+  ],
+  "subjects": [
+    {
+      "name": "Mathematics",
+      "riasec_vector": {
+        "R": 0.3,
+        "I": 0.9,
+        "A": 0.0,
+        "S": 0.0,
+        "E": 0.2,
+        "C": 0.7
+      }
+    },
+    {
+      "name": "Mathematical Literacy",
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.3,
+        "A": 0.0,
+        "S": 0.2,
+        "E": 0.4,
+        "C": 0.7
+      }
+    },
+    {
+      "name": "Physical Sciences",
+      "riasec_vector": {
+        "R": 0.5,
+        "I": 1,
+        "A": 0.0,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.3
+      }
+    },
+    {
+      "name": "Life Sciences",
+      "riasec_vector": {
+        "R": 0.3,
+        "I": 0.9,
+        "A": 0.0,
+        "S": 0.5,
+        "E": 0.0,
+        "C": 0.0
+      }
+    },
+    {
+      "name": "Agricultural Sciences",
+      "riasec_vector": {
+        "R": 0.9,
+        "I": 0.6,
+        "A": 0.0,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.0
+      }
+    },
+    {
+      "name": "Geography",
+      "riasec_vector": {
+        "R": 0.5,
+        "I": 0.6,
+        "A": 0.0,
+        "S": 0.3,
+        "E": 0.0,
+        "C": 0.2
+      }
+    },
+    {
+      "name": "History",
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.5,
+        "A": 0.4,
+        "S": 0.5,
+        "E": 0.3,
+        "C": 0.0
+      }
+    },
+    {
+      "name": "Accounting",
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.3,
+        "A": 0.0,
+        "S": 0.0,
+        "E": 0.5,
+        "C": 1
+      }
+    },
+    {
+      "name": "Business Studies",
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.0,
+        "A": 0.0,
+        "S": 0.3,
+        "E": 1,
+        "C": 0.5
+      }
+    },
+    {
+      "name": "Economics",
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.6,
+        "A": 0.0,
+        "S": 0.0,
+        "E": 0.7,
+        "C": 0.5
+      }
+    },
+    {
+      "name": "Information Technology",
+      "riasec_vector": {
+        "R": 0.4,
+        "I": 0.8,
+        "A": 0.3,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.6
+      }
+    },
+    {
+      "name": "Computer Applications Technology",
+      "riasec_vector": {
+        "R": 0.3,
+        "I": 0.0,
+        "A": 0.3,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.8
+      }
+    },
+    {
+      "name": "Engineering Graphics and Design",
+      "riasec_vector": {
+        "R": 0.8,
+        "I": 0.5,
+        "A": 0.5,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.4
+      }
+    },
+    {
+      "name": "Civil Technology",
+      "riasec_vector": {
+        "R": 1,
+        "I": 0.5,
+        "A": 0.0,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.2
+      }
+    },
+    {
+      "name": "Electrical Technology",
+      "riasec_vector": {
+        "R": 1,
+        "I": 0.6,
+        "A": 0.0,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.2
+      }
+    },
+    {
+      "name": "Mechanical Technology",
+      "riasec_vector": {
+        "R": 1,
+        "I": 0.5,
+        "A": 0.0,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.2
+      }
+    },
+    {
+      "name": "Visual Arts",
+      "riasec_vector": {
+        "R": 0.3,
+        "I": 0.0,
+        "A": 1,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.0
+      }
+    },
+    {
+      "name": "Dramatic Arts",
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.0,
+        "A": 1,
+        "S": 0.5,
+        "E": 0.4,
+        "C": 0.0
+      }
+    },
+    {
+      "name": "Music",
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.0,
+        "A": 1,
+        "S": 0.3,
+        "E": 0.0,
+        "C": 0.0
+      }
+    },
+    {
+      "name": "Design",
+      "riasec_vector": {
+        "R": 0.3,
+        "I": 0.0,
+        "A": 1,
+        "S": 0.0,
+        "E": 0.3,
+        "C": 0.0
+      }
+    },
+    {
+      "name": "Tourism",
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.0,
+        "A": 0.0,
+        "S": 0.7,
+        "E": 0.7,
+        "C": 0.3
+      }
+    },
+    {
+      "name": "Hospitality Studies",
+      "riasec_vector": {
+        "R": 0.6,
+        "I": 0.0,
+        "A": 0.0,
+        "S": 0.6,
+        "E": 0.5,
+        "C": 0.0
+      }
+    },
+    {
+      "name": "Consumer Studies",
+      "riasec_vector": {
+        "R": 0.5,
+        "I": 0.0,
+        "A": 0.3,
+        "S": 0.0,
+        "E": 0.5,
+        "C": 0.4
+      }
+    },
+    {
+      "name": "Religion Studies",
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.5,
+        "A": 0.0,
+        "S": 0.6,
+        "E": 0.0,
+        "C": 0.0
+      }
+    }
+  ],
+  "combinations": [
+    {
+      "id": "HEALTH_SCI",
+      "name": "Health & Life Sciences",
+      "maths": "Mathematics",
+      "core_electives": [
+        "Physical Sciences",
+        "Life Sciences"
+      ],
+      "third_elective_options": [
+        "Geography"
+      ],
+      "riasec_vector": {
+        "R": 0.433,
+        "I": 0.833,
+        "A": 0.0,
+        "S": 0.267,
+        "E": 0.0,
+        "C": 0.167
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "ENG_TECH",
+      "name": "Engineering & Design",
+      "maths": "Mathematics",
+      "core_electives": [
+        "Physical Sciences",
+        "Engineering Graphics and Design"
+      ],
+      "third_elective_options": [
+        "Information Technology"
+      ],
+      "riasec_vector": {
+        "R": 0.567,
+        "I": 0.767,
+        "A": 0.267,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.433
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "SCI_IT",
+      "name": "Science & Computing",
+      "maths": "Mathematics",
+      "core_electives": [
+        "Physical Sciences",
+        "Information Technology"
+      ],
+      "third_elective_options": [
+        "Life Sciences"
+      ],
+      "riasec_vector": {
+        "R": 0.4,
+        "I": 0.9,
+        "A": 0.1,
+        "S": 0.167,
+        "E": 0.0,
+        "C": 0.3
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "COMMERCE",
+      "name": "Commerce & Finance",
+      "maths": "Mathematics",
+      "core_electives": [
+        "Accounting",
+        "Economics"
+      ],
+      "third_elective_options": [
+        "Business Studies"
+      ],
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.3,
+        "A": 0.0,
+        "S": 0.1,
+        "E": 0.733,
+        "C": 0.667
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "TECHNICAL",
+      "name": "Technical & Trades (Engineering pathway)",
+      "maths": "Mathematics",
+      "core_electives": [
+        "Physical Sciences"
+      ],
+      "third_elective_options": [
+        "Civil Technology",
+        "Electrical Technology",
+        "Mechanical Technology"
+      ],
+      "riasec_vector": {
+        "R": 0.75,
+        "I": 0.75,
+        "A": 0.0,
+        "S": 0.0,
+        "E": 0.0,
+        "C": 0.25
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "AGRI",
+      "name": "Agriculture & Environment",
+      "maths": "Mathematics",
+      "core_electives": [
+        "Life Sciences",
+        "Agricultural Sciences"
+      ],
+      "third_elective_options": [
+        "Geography"
+      ],
+      "riasec_vector": {
+        "R": 0.567,
+        "I": 0.7,
+        "A": 0.0,
+        "S": 0.267,
+        "E": 0.0,
+        "C": 0.067
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "GEO_ENV",
+      "name": "Earth, Environment & Planning",
+      "maths": "Mathematics",
+      "core_electives": [
+        "Geography",
+        "Life Sciences"
+      ],
+      "third_elective_options": [
+        "Tourism",
+        "Agricultural Sciences"
+      ],
+      "riasec_vector": {
+        "R": 0.267,
+        "I": 0.5,
+        "A": 0.0,
+        "S": 0.5,
+        "E": 0.233,
+        "C": 0.167
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "HUMANITIES",
+      "name": "Humanities & Social Sciences",
+      "maths": "Either",
+      "core_electives": [
+        "History",
+        "Geography"
+      ],
+      "third_elective_options": [
+        "Life Sciences",
+        "Religion Studies"
+      ],
+      "riasec_vector": {
+        "R": 0.267,
+        "I": 0.667,
+        "A": 0.133,
+        "S": 0.433,
+        "E": 0.1,
+        "C": 0.067
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "BUSINESS_PRACTICAL",
+      "name": "Business & Enterprise",
+      "maths": "Either",
+      "core_electives": [
+        "Business Studies",
+        "Economics"
+      ],
+      "third_elective_options": [
+        "Tourism",
+        "Computer Applications Technology"
+      ],
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.2,
+        "A": 0.0,
+        "S": 0.333,
+        "E": 0.8,
+        "C": 0.433
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "VISUAL_CREATIVE",
+      "name": "Visual Arts & Design",
+      "maths": "Either",
+      "core_electives": [
+        "Visual Arts",
+        "Design"
+      ],
+      "third_elective_options": [
+        "History"
+      ],
+      "riasec_vector": {
+        "R": 0.2,
+        "I": 0.167,
+        "A": 0.8,
+        "S": 0.167,
+        "E": 0.2,
+        "C": 0.0
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "PERFORMING",
+      "name": "Performing Arts",
+      "maths": "Either",
+      "core_electives": [
+        "Dramatic Arts",
+        "Music"
+      ],
+      "third_elective_options": [
+        "History"
+      ],
+      "riasec_vector": {
+        "R": 0.0,
+        "I": 0.167,
+        "A": 0.8,
+        "S": 0.433,
+        "E": 0.233,
+        "C": 0.0
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "DIGITAL_MEDIA",
+      "name": "Digital & Media",
+      "maths": "Either",
+      "core_electives": [
+        "Computer Applications Technology",
+        "Design"
+      ],
+      "third_elective_options": [
+        "Business Studies",
+        "Information Technology"
+      ],
+      "riasec_vector": {
+        "R": 0.2,
+        "I": 0.0,
+        "A": 0.433,
+        "S": 0.1,
+        "E": 0.433,
+        "C": 0.433
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    },
+    {
+      "id": "SERVICE",
+      "name": "Hospitality, Tourism & Consumer",
+      "maths": "Mathematical Literacy",
+      "core_electives": [
+        "Hospitality Studies",
+        "Tourism"
+      ],
+      "third_elective_options": [
+        "Consumer Studies"
+      ],
+      "riasec_vector": {
+        "R": 0.367,
+        "I": 0.0,
+        "A": 0.1,
+        "S": 0.433,
+        "E": 0.567,
+        "C": 0.233
+      },
+      "note": "Vector computed from core electives + first third-elective option. Maths/Maths Lit handled separately by the maths gate."
+    }
+  ],
+  "readiness_rules_grade9": {
+    "_default": {
+      "recommended": 50,
+      "possible_with_support": 40,
+      "meaning": ">= recommended: ready. Between: possible with a support plan. Below: high risk — show as caution, never forbid."
+    },
+    "Mathematics": {
+      "needs": {
+        "Mathematics": 50
+      }
+    },
+    "Physical Sciences": {
+      "needs": {
+        "Natural Sciences": 50,
+        "Mathematics": 50
+      }
+    },
+    "Life Sciences": {
+      "needs": {
+        "Natural Sciences": 45
+      }
+    },
+    "Agricultural Sciences": {
+      "needs": {
+        "Natural Sciences": 40
+      }
+    },
+    "Accounting": {
+      "needs": {
+        "Economic and Management Sciences": 50,
+        "Mathematics": 45
+      }
+    },
+    "Economics": {
+      "needs": {
+        "Economic and Management Sciences": 45,
+        "Mathematics": 40
+      }
+    },
+    "Business Studies": {
+      "needs": {
+        "Economic and Management Sciences": 40
+      }
+    },
+    "Information Technology": {
+      "needs": {
+        "Mathematics": 50
+      }
+    },
+    "Computer Applications Technology": {
+      "needs": {
+        "Technology": 40
+      }
+    },
+    "Engineering Graphics and Design": {
+      "needs": {
+        "Technology": 50,
+        "Mathematics": 50
+      }
+    },
+    "Civil Technology": {
+      "needs": {
+        "Technology": 50,
+        "Mathematics": 45
+      }
+    },
+    "Electrical Technology": {
+      "needs": {
+        "Technology": 50,
+        "Mathematics": 50
+      }
+    },
+    "Mechanical Technology": {
+      "needs": {
+        "Technology": 50,
+        "Mathematics": 45
+      }
+    },
+    "Visual Arts": {
+      "needs": {
+        "Creative Arts": 50
+      },
+      "also": "portfolio per school policy"
+    },
+    "Design": {
+      "needs": {
+        "Creative Arts": 50
+      },
+      "also": "portfolio per school policy"
+    },
+    "Dramatic Arts": {
+      "needs": {
+        "Creative Arts": 50
+      },
+      "also": "audition per school policy"
+    },
+    "Music": {
+      "needs": {
+        "Creative Arts": 50
+      },
+      "also": "audition / prior training per school policy"
+    },
+    "History": {
+      "needs": {
+        "Social Sciences": 45
+      }
+    },
+    "Geography": {
+      "needs": {
+        "Social Sciences": 45
+      }
+    },
+    "Tourism": {
+      "needs": {
+        "Social Sciences": 40
+      }
+    },
+    "Hospitality Studies": {
+      "needs": {
+        "Technology": 40
+      }
+    },
+    "Consumer Studies": {
+      "needs": {
+        "Technology": 40
+      }
+    },
+    "Religion Studies": {
+      "needs": {
+        "Social Sciences": 40
+      }
+    },
+    "Mathematical Literacy": {
+      "needs": {}
+    }
+  },
+  "pathway_families": [
+    {
+      "id": "MED_HEALTH",
+      "name": "Medicine, pharmacy & health sciences",
+      "typical_requires": [
+        "Mathematics",
+        "Physical Sciences",
+        "Life Sciences"
+      ],
+      "closed_by_maths_lit": true
+    },
+    {
+      "id": "ENGINEERING",
+      "name": "Engineering",
+      "typical_requires": [
+        "Mathematics",
+        "Physical Sciences"
+      ],
+      "closed_by_maths_lit": true
+    },
+    {
+      "id": "ACTUARIAL_CA",
+      "name": "Actuarial science, chartered accounting & finance",
+      "typical_requires": [
+        "Mathematics"
+      ],
+      "helpful": [
+        "Accounting"
+      ],
+      "closed_by_maths_lit": true
+    },
+    {
+      "id": "COMPSCI",
+      "name": "Computer science & data",
+      "typical_requires": [
+        "Mathematics"
+      ],
+      "closed_by_maths_lit": true
+    },
+    {
+      "id": "SCIENCES",
+      "name": "Natural & applied sciences",
+      "typical_requires": [
+        "Mathematics",
+        "Physical Sciences or Life Sciences"
+      ],
+      "closed_by_maths_lit": true
+    },
+    {
+      "id": "BUILT_ENV",
+      "name": "Architecture, quantity surveying & built environment",
+      "typical_requires": [
+        "Mathematics"
+      ],
+      "helpful": [
+        "Physical Sciences",
+        "Engineering Graphics and Design"
+      ],
+      "closed_by_maths_lit": true
+    },
+    {
+      "id": "COMMERCE",
+      "name": "Commerce, management & economics",
+      "typical_requires": [
+        "Mathematics (most degrees)"
+      ],
+      "closed_by_maths_lit": "partial"
+    },
+    {
+      "id": "LAW",
+      "name": "Law",
+      "typical_requires": [
+        "Strong Home Language / English"
+      ],
+      "closed_by_maths_lit": false
+    },
+    {
+      "id": "HUMANITIES",
+      "name": "Humanities, psychology & social sciences",
+      "typical_requires": [],
+      "closed_by_maths_lit": false
+    },
+    {
+      "id": "EDUCATION",
+      "name": "Teaching & education",
+      "typical_requires": [
+        "Depends on teaching specialisation"
+      ],
+      "closed_by_maths_lit": "partial"
+    },
+    {
+      "id": "CREATIVE",
+      "name": "Creative arts, design & media",
+      "typical_requires": [
+        "Portfolio or audition often required"
+      ],
+      "closed_by_maths_lit": false
+    },
+    {
+      "id": "NURSING",
+      "name": "Nursing & allied care",
+      "typical_requires": [
+        "Life Sciences often required"
+      ],
+      "closed_by_maths_lit": "partial"
+    },
+    {
+      "id": "TVET_TRADES",
+      "name": "TVET, artisan & technical trades",
+      "typical_requires": [],
+      "helpful": [
+        "Technical subjects",
+        "Mathematics"
+      ],
+      "closed_by_maths_lit": "partial"
+    },
+    {
+      "id": "HOSPITALITY",
+      "name": "Hospitality, tourism & culinary",
+      "typical_requires": [],
+      "closed_by_maths_lit": false
+    }
+  ],
+  "nsc_pass_types": {
+    "_warning": "Simplified from the NSC promotion requirements. VERIFY against current DBE regulations before launch and every year.",
+    "bachelor": {
+      "label": "Bachelor's pass (degree study)",
+      "rule": "Home Language >= 40%; four other subjects from the designated list >= 50% (excluding LO); remaining subjects >= 30%; language of learning and teaching >= 30%."
+    },
+    "diploma": {
+      "label": "Diploma pass",
+      "rule": "Home Language >= 40%; four other subjects >= 40% (excluding LO); remaining >= 30%."
+    },
+    "higher_certificate": {
+      "label": "Higher Certificate pass",
+      "rule": "Home Language >= 40%; two other subjects >= 40%; three others >= 30%."
+    },
+    "nsc": {
+      "label": "NSC pass",
+      "rule": "Home Language >= 40%; two other subjects >= 40%; three others >= 30%; failing at most one subject (with conditions)."
+    }
+  },
+  "aps": {
+    "_warning": "Generic 7-point NSC scale. Each university calculates APS differently (some include LO, some weight Maths/English, Wits/UCT/Stellenbosch use their own scores). Store per-institution rules in a separate table and verify yearly.",
+    "levels": [
+      [
+        7,
+        80,
+        100
+      ],
+      [
+        6,
+        70,
+        79
+      ],
+      [
+        5,
+        60,
+        69
+      ],
+      [
+        4,
+        50,
+        59
+      ],
+      [
+        3,
+        40,
+        49
+      ],
+      [
+        2,
+        30,
+        39
+      ],
+      [
+        1,
+        0,
+        29
+      ]
+    ],
+    "default_method": "Sum of the best 6 subjects excluding Life Orientation.",
+    "uses_grade11_final": "Most universities make provisional offers on Grade 11 final results — say this to learners explicitly."
+  },
+  "school_overrides": "Every school uploads: (1) which combinations it actually offers, (2) its own readiness thresholds, (3) its subject-change deadline for Grade 10 and Grade 11. School values always win over these defaults."
+}

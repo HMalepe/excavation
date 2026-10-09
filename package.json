@@ -1,0 +1,54 @@
+{
+  "name": "excavation-school-edition",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The Excavation x Know Thy Self — School Edition (Grade 9 Foundation + Grade 11 Confirmation)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:db": "bash scripts/test-db.sh",
+    "check:secrets": "node scripts/check-client-bundle.mjs",
+    "db:types": "supabase gen types typescript --local > src/lib/db/database.types.ts",
+    "norms": "tsx scripts/run-norming.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "@react-pdf/renderer": "^4.9.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.3",
+    "next": "^15.5.27",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.7",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^15.5.27",
+    "pg": "^8.23.1",
+    "postcss": "^8.5.29",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "5.9",
+    "vitest": "^5.0.3"
+  },
+  "overrides": {
+    "postcss": "^8.5.29"
+  },
+  "type": "module"
+}
