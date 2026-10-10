@@ -28,8 +28,10 @@ export function GuideChat({ initial }: { initial: Initial }) {
   const recRef = useRef<SpeechRec | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => setCanSpeak(!!speechCtor()), []);
-  useEffect(() => endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" }), [messages]);
+  // Effect bodies are blocks on purpose: an effect must return nothing or a cleanup function, and a
+  // browser extension that wraps scrollIntoView could otherwise hand React a non-function to "clean up".
+  useEffect(() => { setCanSpeak(!!speechCtor()); }, []);
+  useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages]);
 
   async function send(text: string | null) {
     setBusy(true); setError(null); setNeedsRetry(false);

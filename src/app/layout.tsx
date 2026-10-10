@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { ErrorReporter } from "@/components/client/ErrorReporter";
 
 export const metadata: Metadata = {
   title: { default: "The Excavation", template: "%s · The Excavation" },
@@ -12,7 +13,10 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, them
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-ZA">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <ErrorReporter />
+        {children}
+      </body>
     </html>
   );
 }
