@@ -40,7 +40,9 @@ export function buildScoreProfile(input: ScoringInput): ScoreProfile {
   const gate = mathsGate(marks["Mathematics"], mindset, study, trapOnMaths);
   const watch = contradictionWatch({ personality, interests }, marks);
 
-  const sel = runCombinationEngine({
+  // The combination engine and maths gate use Senior Phase marks: Grade 9 only (spec 04 §8).
+  const isG9 = input.touchpoint === "G9_FOUNDATION";
+  const sel = isG9 ? runCombinationEngine({
     riasec: interests.scores,
     interestsExcluded: interests.excluded_from_recommendations,
     flatProfile: interests.flat_profile,
@@ -50,7 +52,7 @@ export function buildScoreProfile(input: ScoringInput): ScoreProfile {
     watch,
     conversation: input.conversation,
     school: input.school,
-  });
+  }) : { fits: [], cautions: [], ranked: [], offersKnown: false };
 
   const strip = ({ order: _o, ...c }: CombinationResult & { order?: number }) => c as CombinationResult;
   const combinations = [...sel.fits, ...sel.cautions].map(strip);
@@ -75,7 +77,7 @@ export function buildScoreProfile(input: ScoringInput): ScoreProfile {
     combinations,
     ranking: sel.ranked.map((c) => ({ id: c.id, score: c.score, interest_fit: c.interest_fit, readiness: c.readiness, trait_fit: c.trait_fit, adjustments: c.adjustments })),
     school_offers_known: sel.offersKnown,
-    maths_gate: gate,
+    maths_gate: isG9 ? gate : null,
     contradiction_watch: watch,
     deltas: null,
   };

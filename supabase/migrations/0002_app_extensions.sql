@@ -45,6 +45,11 @@ alter table safeguarding_events
   add column reviewed_by        uuid references profiles(id),
   add column reviewed_at        timestamptz;
 
+-- ---------- SHARING: parent summaries are opened through a revocable link ----------
+-- Parents have no account. The learner gets a link containing a random token; only its
+-- SHA-256 hash is stored. Revoking the grant (revoked_at) kills the link.
+alter table share_grants add column token_hash text unique;
+
 -- ---------- LOGIN THROTTLING ----------
 create table login_attempts (
   id         bigint generated always as identity primary key,

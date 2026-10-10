@@ -181,7 +181,8 @@ export interface ScoreProfile {
   /** Addition: full ranked list (staff review + audit trail). */
   ranking: Pick<CombinationResult, "id" | "score" | "interest_fit" | "readiness" | "trait_fit" | "adjustments">[];
   school_offers_known: boolean;
-  maths_gate: MathsGate;
+  /** Grade 9 only; Grade 11 uses the verdict engine instead. */
+  maths_gate: MathsGate | null;
   contradiction_watch: ContradictionWatch[];
   deltas: Deltas | null;
 }

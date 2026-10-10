@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Design tokens (spec 10 Step 3): dark warm palette, serif headings, large tap targets. */
+@theme {
+  --color-ink: #0f0d0a;          /* charcoal background */
+  --color-ink-2: #1a1611;        /* raised surface */
+  --color-ink-3: #2a241c;        /* borders, wells */
+  --color-amber: #c8973a;        /* accent */
+  --color-amber-soft: #e0b866;
+  --color-cream: #f0e8da;        /* primary text */
+  --color-muted: #b5a993;        /* secondary text (≥ 4.5:1 on ink) */
+  --color-danger: #e07a5f;
+  --color-ok: #8fbf8f;
+  --font-serif: Georgia, "Noto Serif", "Times New Roman", serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+}
+
+:root { color-scheme: dark; }
+html { background: var(--color-ink); color: var(--color-cream); font-family: var(--font-sans); -webkit-text-size-adjust: 100%; }
+body { min-height: 100dvh; line-height: 1.55; font-size: 1.0625rem; }
+h1, h2, h3, .serif { font-family: var(--font-serif); letter-spacing: -0.01em; }
+:focus-visible { outline: 3px solid var(--color-amber); outline-offset: 2px; border-radius: 6px; }
+a { color: var(--color-amber-soft); text-underline-offset: 3px; }
+
+/* Low-data / reduced motion: no animations at all. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+.low-data *, .low-data *::before, .low-data *::after { animation: none !important; transition: none !important; }
+
+/* Tailwind v4: reusable component classes are declared with @utility so they can be composed. */
+@utility btn { @apply inline-flex min-h-12 items-center justify-center rounded-xl px-5 py-3 text-base font-semibold transition-colors disabled:opacity-50; }
+@utility btn-primary { @apply btn bg-amber text-ink hover:bg-amber-soft; }
+@utility btn-ghost { @apply btn border border-ink-3 bg-ink-2 text-cream hover:border-amber; }
+@utility card { @apply rounded-2xl border border-ink-3 bg-ink-2 p-5; }
+@utility field { @apply w-full min-h-12 rounded-xl border border-ink-3 bg-ink px-4 py-3 text-cream placeholder:text-muted focus:border-amber; }
+@utility label { @apply mb-1 block text-sm font-semibold text-muted; }
+
+@keyframes draw { from { stroke-dashoffset: var(--len, 1000); } to { stroke-dashoffset: 0; } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.animate-fade-up { animation: fade-up 0.6s ease-out both; }

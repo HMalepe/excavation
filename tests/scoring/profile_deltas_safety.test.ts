@@ -30,7 +30,8 @@ describe("buildScoreProfile (spec 04 §11)", () => {
     expect(p.identity.status).not.toBeNull();
     expect(p.combinations.filter((c) => c.role?.startsWith("fit"))).toHaveLength(3);
     expect(p.ranking).toHaveLength(13);
-    expect(p.maths_gate.recommendation).toBe("mathematics");
+    expect(p.maths_gate!.recommendation).toBe("mathematics");
+    expect(buildScoreProfile(input({ touchpoint: "G11_CONFIRMATION" }))).toMatchObject({ combinations: [], ranking: [], maths_gate: null });
     expect(p.school_offers_known).toBe(false);
     expect(JSON.parse(JSON.stringify(p))).toEqual(p); // plain JSON, storable in jsonb
   });
