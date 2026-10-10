@@ -1,4 +1,5 @@
 import "server-only";
+import { one } from "@/lib/db/one";
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import { adminDb } from "@/lib/db/admin";
 import { serverEnv } from "@/lib/env.server";
@@ -62,7 +63,7 @@ export async function notifyEvent(eventId: string, token: string | null, opts: {
   const env = serverEnv();
   const { data: ev } = await db.from("safeguarding_events").select("*, learners(first_name, last_name, current_grade, school_id), conversation_messages(content)").eq("id", eventId).single();
   if (!ev) return;
-  const learner = ev.learners as { first_name: string; last_name: string; current_grade: number; school_id: string };
+  const learner = one(ev.learners) as { first_name: string; last_name: string; current_grade: number; school_id: string };
   const { data: settings } = await db.from("school_settings").select("*").eq("school_id", learner.school_id).single();
   const s = settings as SchoolSettingsRow | null;
   const alert = composeAlert({
@@ -70,7 +71,7 @@ export async function notifyEvent(eventId: string, token: string | null, opts: {
     grade: learner.current_grade,
     at: new Date(ev.created_at),
     level: ev.level === "hard" ? "urgent" : "soft",
-    triggerMessage: (ev.conversation_messages as { content: string } | null)?.content ?? null,
+    triggerMessage: one(ev.conversation_messages as { content: string } | null)?.content ?? null,
     confirmUrl: token ? `${env.NEXT_PUBLIC_APP_URL}/api/safeguarding/confirm?e=${eventId}&t=${token}` : `${env.NEXT_PUBLIC_APP_URL}/staff/safeguarding`,
     timezone: s?.timezone ?? "Africa/Johannesburg",
   });

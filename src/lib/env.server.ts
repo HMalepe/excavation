@@ -17,7 +17,7 @@ const schema = z.object({
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(10),
   ANTHROPIC_API_KEY: z.string().min(10).optional(),
   AI_MODEL_FAST: z.string().default("claude-haiku-5-5"),
-  AI_MODEL_STRONG: z.string().default("claude-sonnet-5-5"),
+  AI_MODEL_STRONG: z.string().default("claude-opus-5-5"),
   REVIEW_FIRST_N_REPORTS: z.coerce.number().int().min(0).default(200),
   RESEND_API_KEY: z.string().optional(),
   SAFEGUARDING_FROM_EMAIL: z.string().default("safeguarding@theexcavation.co.za"),

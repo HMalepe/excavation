@@ -14,7 +14,7 @@
     "test:db": "bash scripts/test-db.sh",
     "check:secrets": "node scripts/check-client-bundle.mjs",
     "db:types": "supabase gen types typescript --local > src/lib/db/database.types.ts",
-    "norms": "tsx scripts/run-norming.ts",
+    "norms": "tsx --env-file=.env.local --tsconfig tsconfig.json scripts/run-norming.ts",
     "seed": "tsx --env-file=.env.local scripts/seed.ts"
   },
   "engines": {

@@ -1,4 +1,5 @@
 import "server-only";
+import { one } from "@/lib/db/one";
 import { adminDb } from "@/lib/db/admin";
 import type { ReportRow, SessionRow } from "@/lib/db/types";
 import type { ScoreProfile } from "@/lib/scoring/types";
@@ -16,7 +17,7 @@ export async function loadReportBundle(sessionId: string) {
   let g9Profile: ScoreProfile | null = null;
   if (session?.touchpoint === "G11_CONFIRMATION") {
     const { data: g9 } = await db.from("sessions").select("score_profiles(profile)").eq("learner_id", session.learner_id).eq("touchpoint", "G9_FOUNDATION").maybeSingle();
-    g9Profile = (g9?.score_profiles as unknown as { profile: ScoreProfile } | null)?.profile ?? null;
+    g9Profile = one(g9?.score_profiles as unknown as { profile: ScoreProfile } | null)?.profile ?? null;
   }
   return {
     session: session as SessionRow,

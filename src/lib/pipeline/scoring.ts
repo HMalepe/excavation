@@ -1,4 +1,5 @@
 import "server-only";
+import { one } from "@/lib/db/one";
 import { adminDb } from "@/lib/db/admin";
 import { buildScoreProfile, ENGINE_VERSION } from "@/lib/scoring/profile";
 import { computeDeltas } from "@/lib/scoring/deltas";
@@ -65,7 +66,7 @@ export async function scoreSession(session: SessionRow, schoolId: string, conver
   if (!isG9) {
     const { data: g9 } = await adminDb().from("sessions").select("id, score_profiles(profile)").eq("learner_id", session.learner_id)
       .eq("touchpoint", "G9_FOUNDATION").maybeSingle();
-    const g9Profile = (g9?.score_profiles as unknown as { profile: ScoreProfile } | null)?.profile;
+    const g9Profile = one(g9?.score_profiles as unknown as { profile: ScoreProfile } | null)?.profile;
     if (g9Profile) profile.deltas = computeDeltas(g9Profile, profile);
   }
 

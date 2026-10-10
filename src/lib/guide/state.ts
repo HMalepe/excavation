@@ -1,4 +1,5 @@
 import "server-only";
+import { one } from "@/lib/db/one";
 import { adminDb } from "@/lib/db/admin";
 import { loadProfile } from "@/lib/pipeline/scoring";
 import { g11Subjects } from "@/lib/pipeline/g11";
@@ -80,7 +81,7 @@ export async function guideBlock(session: SessionRow, learner: LearnerRow): Prom
 
 export async function g9CallbacksFor(learnerId: string): Promise<G9Callbacks> {
   const { data } = await adminDb().from("sessions").select("id, signals(payload), reports(kind, status, content)").eq("learner_id", learnerId).eq("touchpoint", "G9_FOUNDATION").maybeSingle();
-  const sig = (data?.signals as unknown as { payload: { q2_most_myself?: string; q19_future_tuesday?: string } } | null)?.payload;
+  const sig = one(data?.signals as unknown as { payload: { q2_most_myself?: string; q19_future_tuesday?: string } } | null)?.payload;
   const rep = (data?.reports as { kind: string; status: string; content: { headline?: { text: string } } }[] | undefined)?.find((r) => r.kind === "learner" && r.status === "released");
   return { q2_most_myself: sig?.q2_most_myself ?? null, q19_future_tuesday: sig?.q19_future_tuesday ?? null, headline: rep?.content.headline?.text ?? null };
 }

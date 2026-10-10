@@ -1,0 +1,6 @@
+{
+  "crons": [
+    { "path": "/api/cron/safeguarding-escalation", "schedule": "*/15 * * * *" },
+    { "path": "/api/cron/norms", "schedule": "17 2 * * *" }
+  ]
+}
