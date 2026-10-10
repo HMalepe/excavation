@@ -24,14 +24,16 @@ if (!process.argv.includes("--no-build")) execSync("npx next build", { stdio: "i
 
 const walk = (d) => readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : [p]; });
 const files = walk(".next/static");
-const needles = [...Object.values(CANARY), ...Object.keys(CANARY)];
+// Readiness-check answer keys must stay on the server: a check question's text is the canary.
+const CHECK_KEY_CANARY = "Sipho is 3 times as old as his sister";
+const needles = [...Object.values(CANARY), ...Object.keys(CANARY), CHECK_KEY_CANARY];
 const hits = [];
 for (const f of files) {
   const text = readFileSync(f, "utf8");
   for (const n of needles) if (text.includes(n)) hits.push(`${f}: ${n}`);
 }
 if (hits.length) {
-  console.error("✖ Server secrets found in browser bundle:\n" + hits.join("\n"));
+  console.error("✖ Server secrets or check answer keys found in browser bundle:\n" + hits.join("\n"));
   process.exit(1);
 }
-console.log(`✔ Scanned ${files.length} browser files: no server secrets or secret env names.`);
+console.log(`✔ Scanned ${files.length} browser files: no server secrets, secret env names or check answer keys.`);

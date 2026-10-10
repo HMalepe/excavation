@@ -16,6 +16,7 @@ psychology, then a guided AI conversation, delivered in **Grade 9** (choose subj
 | 1 Scaffold + database | Next.js 15 (App Router, TS), Tailwind 4, Supabase. `supabase/migrations/0001_init.sql` = spec schema verbatim; `0002` = app columns + **RLS fixes** ([why](docs/DECISIONS.md#a1-four-rls-policy-holes-in-schemasql-fixed-in-0002_app_extensionssql)) |
 | 2 Scoring engine | `src/lib/scoring/` — pure TS, no I/O. Lerato fixture reproduces spec 08 |
 | 3 Scored-layer UI | `/login` → consent gate → assent → intake → randomised scored layer (1 item/screen on phones, ≤6 on desktop, attention checks, descent progress, two micro-moments, tap card sort) → academic snapshot |
+| + Readiness checks & tasters | Maths / science / reading checks and six taster tasks after the snapshot, then a break before The Guide. Raise-only lifts, ±5 taster adjustments, plain-language summaries for the AI, "What you tried" on the report. `src/lib/skills/`, `config/skills/` ([rules](docs/DECISIONS.md#e-readiness-checks--taster-tasks-owners-decision-2026-10-10-check)) |
 | 4 The Guide | `/api/guide/message` — safety screen → streamed conversation, hidden markers, voice input, pause/resume, hard-path alerts |
 | 5 Signals + reports | `src/lib/pipeline/report.ts` — signals → rescoring → report writer (Lerato few-shot) → Zod + linter → retry → release policy; review queue at `/staff` |
 | 6 Report + PDF + sharing | `/learn/report` (headline reveal, RIASEC hexagon, doors strips), PDF export, teacher/parent summaries, revocable parent link |
@@ -68,10 +69,11 @@ password is printed by the seed (or set `SEED_STAFF_PASSWORD`).
 ## Tests
 
 ```bash
-npm test               # 139 unit tests: scoring, verdicts A–G, Lerato G9 + G11, flow, guide, linter, PDFs, cohort, norming
+npm test               # 183 unit tests: scoring, verdicts A–G, Lerato G9 + G11, checks + tasters, flow, guide, linter, PDFs, cohort, norming
 npm run test:db        # 15 RLS checks on the real migrations in a throwaway Postgres 16
 MIGRATION_LIMIT=1 bash scripts/test-db.sh   # same checks on the spec schema alone → 4 fail (the holes 0002 fixes)
-npm run check:secrets  # production build with canary secrets, then scans every browser file for them
+npm run check:secrets  # production build with canary secrets, then scans every browser file for them (and for check answer keys)
+npm run validity       # check item statistics + whether each check predicts Grade 10/11 marks beyond Grade 9 marks
 npm run typecheck && npm run lint
 ```
 
@@ -92,11 +94,11 @@ npm run typecheck && npm run lint
 
 | Item | Status |
 |---|---|
-| All Vitest suites pass, incl. Lerato fixtures and verdict examples A–G | ✅ 139 unit + 15 RLS |
+| All Vitest suites pass, incl. Lerato fixtures and verdict examples A–G | ✅ 183 unit + 15 RLS |
 | No AI key or service key reachable from the browser | ✅ `server-only` + canary bundle scan (and a probe proving a client import fails the build) |
 | Teacher cannot see any report the learner didn't share (tested with RLS) | ✅ `tests/db/rls.test.ts` |
 | Cohort dashboard suppresses groups smaller than 10 | ✅ incl. complementary suppression (`tests/cohort.test.ts`) |
-| Grade 9 on a phone over slow data in < 90 min | ⏳ Needs a device test. Built for it: no web fonts, 103–115 kB first load per page, one item per screen |
+| Grade 9 on a phone over slow data in < 90 min | ⏳ Needs a device test. Now two sittings with a break: Part 1 (questions, checks, tasters) and Part 2 (The Guide). Built for it: no web fonts, one item per screen |
 | Safety screen tested on 200 sample messages with the clinical advisor | ⏳ Needs the advisor and the message set |
 | Safeguarding flags visible to staff | ✅ `/staff/safeguarding` on creation; urgent ones also emailed (no SMS, by decision) |
 | File 09 §7 checklist | ⏳ Legal / clinical / registration items — see spec 09 |
@@ -105,7 +107,7 @@ npm run typecheck && npm run lint
 
 ```
 spec/                     the spec pack (source of truth; configs are loaded + validated from here)
-config/                   runtime config the spec asks to keep out of code (crisis numbers, NSC rules, career keywords, few-shot reports)
+config/                   runtime config the spec asks to keep out of code (crisis numbers, NSC rules, career keywords, few-shot reports, skills/ check + taster content)
 supabase/migrations/      0001 = spec schema verbatim · 0002 = additions + RLS fixes
 src/lib/scoring/          deterministic scoring engine (spec 04)
 src/lib/verdict/          deterministic Grade 11 verdict engine (spec 06)
@@ -113,6 +115,7 @@ src/lib/ai/               prompts (spec 07), Zod schemas, safety screen, report 
 src/lib/guide/            The Guide: scripts, score context, markers, streaming turn
 src/lib/pipeline/         scoring, signals, reports, summaries
 src/lib/safeguarding/     scored-layer soft trigger, keyword floor, alerts, escalation clock
+src/lib/skills/           readiness checks + taster tasks: plan, scoring, raise-only lifts, plain summaries, validity stats
 src/lib/cohort/, norming/ aggregates with suppression; norming statistics
 src/app/                  learner, staff, school pages + API routes
 tests/                    unit tests · tests/db = RLS on real Postgres

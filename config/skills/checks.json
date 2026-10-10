@@ -1,0 +1,142 @@
+{
+  "version": "checks-2026-10-v1",
+  "review_status": "DRAFT. Every item needs sign-off from a Grade 9 subject teacher (maths, natural sciences, English) before learners see it. Item statistics from the pilot (norming job) decide which items stay.",
+  "notes": "Each check is built from units (one CAPS topic each, in rising difficulty). One variant per unit is served, chosen at random per learner, so two learners side by side rarely see the same question. 'answer' is the index of the correct option as written; options are shuffled per learner when shown. Answer keys never leave the server.",
+  "checks": {
+    "maths": {
+      "title": "Maths check",
+      "informs_mark": "Mathematics",
+      "minutes": 8,
+      "min_median_ms": 6000,
+      "intro": "Ten Grade 9 maths questions — the skills Grade 10 Mathematics builds on. Use paper if you like. This can only help you: if you do well, it can open doors your marks might have closed. If it goes badly, nothing changes.",
+      "units": [
+        { "id": "M1", "topic": "Integers and order of operations", "difficulty": 1, "variants": [
+          { "id": "M1a", "items": [ { "id": "M1a", "stem": "Work out: −3 + 4 × (−2)", "options": ["−11", "−2", "2", "5"], "answer": 0 } ] },
+          { "id": "M1b", "items": [ { "id": "M1b", "stem": "Work out: 12 − 3 × (−4)", "options": ["0", "24", "−36", "36"], "answer": 1 } ] }
+        ] },
+        { "id": "M2", "topic": "Exponent laws", "difficulty": 1, "variants": [
+          { "id": "M2a", "items": [ { "id": "M2a", "stem": "Simplify: 2³ × 2⁴", "options": ["2¹²", "4⁷", "2⁷", "4¹²"], "answer": 2 } ] },
+          { "id": "M2b", "items": [ { "id": "M2b", "stem": "Simplify: (x³)²", "options": ["x⁵", "x⁹", "2x³", "x⁶"], "answer": 3 } ] }
+        ] },
+        { "id": "M3", "topic": "Algebraic expressions", "difficulty": 1, "variants": [
+          { "id": "M3a", "items": [ { "id": "M3a", "stem": "Expand and simplify: 3(x + 2) − 2(x − 1)", "options": ["x + 8", "x + 4", "x + 5", "5x + 4"], "answer": 0 } ] },
+          { "id": "M3b", "items": [ { "id": "M3b", "stem": "Expand: (x + 3)(x − 2)", "options": ["x² − 6", "x² + x − 6", "x² + 5x − 6", "x² − x − 6"], "answer": 1 } ] }
+        ] },
+        { "id": "M4", "topic": "Linear equations", "difficulty": 2, "variants": [
+          { "id": "M4a", "items": [ { "id": "M4a", "stem": "Solve for x: 5x − 7 = 2x + 8", "options": ["x = 3", "x = 15", "x = ⅓", "x = 5"], "answer": 3 } ] },
+          { "id": "M4b", "items": [ { "id": "M4b", "stem": "Solve for x: 2(x − 3) = 10", "options": ["x = 8", "x = 6,5", "x = 5", "x = 2"], "answer": 0 } ] }
+        ] },
+        { "id": "M5", "topic": "Number patterns", "difficulty": 2, "variants": [
+          { "id": "M5a", "items": [ { "id": "M5a", "stem": "The pattern 3; 7; 11; 15; … carries on the same way. Which expression gives the nth term?", "options": ["3n + 4", "4n − 1", "n + 4", "4n + 3"], "answer": 1 } ] },
+          { "id": "M5b", "items": [ { "id": "M5b", "stem": "Pattern 1 uses 4 matches, pattern 2 uses 7 and pattern 3 uses 10. How many matches does pattern 10 use?", "options": ["30", "34", "31", "40"], "answer": 2 } ] }
+        ] },
+        { "id": "M6", "topic": "Linear functions and graphs", "difficulty": 2, "variants": [
+          { "id": "M6a", "items": [ { "id": "M6a", "stem": "Where does the line y = −2x + 6 cross the x-axis?", "options": ["(0; 6)", "(−3; 0)", "(6; 0)", "(3; 0)"], "answer": 3 } ] },
+          { "id": "M6b", "items": [ { "id": "M6b", "stem": "A straight line passes through (0; 2) and (2; 8). What is its gradient?", "options": ["3", "4", "⅓", "6"], "answer": 0 } ] }
+        ] },
+        { "id": "M7", "topic": "Ratio and rate", "difficulty": 2, "variants": [
+          { "id": "M7a", "items": [ { "id": "M7a", "stem": "A taxi uses 9 litres of petrol for every 100 km. How many litres does it use for a 250 km trip?", "options": ["25 litres", "22,5 litres", "18 litres", "27,5 litres"], "answer": 1 } ] },
+          { "id": "M7b", "items": [ { "id": "M7b", "stem": "Thandi and Pule share R600 in the ratio 2 : 3. How much does Pule get?", "options": ["R240", "R300", "R360", "R400"], "answer": 2 } ] }
+        ] },
+        { "id": "M8", "topic": "Theorem of Pythagoras", "difficulty": 2, "variants": [
+          { "id": "M8a", "items": [ { "id": "M8a", "stem": "A 5 m ladder leans against a wall. Its foot is 3 m from the wall. How high up the wall does it reach?", "options": ["2 m", "8 m", "4 m", "√34 m"], "answer": 2 } ] },
+          { "id": "M8b", "items": [ { "id": "M8b", "stem": "A rectangle is 8 cm long and 6 cm wide. How long is its diagonal?", "options": ["10 cm", "14 cm", "12 cm", "√28 cm"], "answer": 0 } ] }
+        ] },
+        { "id": "M9", "topic": "Factorising", "difficulty": 3, "variants": [
+          { "id": "M9a", "items": [ { "id": "M9a", "stem": "Factorise fully: x² − 9", "options": ["(x − 3)²", "(x − 9)(x + 1)", "x(x − 9)", "(x − 3)(x + 3)"], "answer": 3 } ] },
+          { "id": "M9b", "items": [ { "id": "M9b", "stem": "Factorise fully: 2x² + 6x", "options": ["2x(x + 3)", "2(x² + 3x)", "x(2x + 6)", "2x(x + 6)"], "answer": 0 } ] }
+        ] },
+        { "id": "M10", "topic": "Word problem to equation", "difficulty": 3, "variants": [
+          { "id": "M10a", "items": [ { "id": "M10a", "stem": "Sipho is 3 times as old as his sister. In 5 years' time their ages will add up to 38. How old is his sister now?", "options": ["8", "7", "21", "9"], "answer": 1 } ] },
+          { "id": "M10b", "items": [ { "id": "M10b", "stem": "A phone contract costs R99 a month plus R1,50 for every minute of calls. One month's bill was R156. How many minutes were used?", "options": ["57", "104", "38", "42"], "answer": 2 } ] }
+        ] }
+      ]
+    },
+    "science": {
+      "title": "Science check",
+      "informs_mark": "Natural Sciences",
+      "minutes": 7,
+      "min_median_ms": 6000,
+      "intro": "Eight questions about thinking like a scientist: fair tests, data, and simple calculations. This is what Physical Sciences and Life Sciences build on. Same deal: it can only help you.",
+      "units": [
+        { "id": "S1", "topic": "Variables and fair tests", "difficulty": 1, "variants": [
+          { "id": "S1a", "items": [ { "id": "S1a", "stem": "Lebo tests whether the amount of sunlight affects how tall bean plants grow. What must she keep the SAME for all the plants?", "options": ["The amount of sunlight", "The amount of water each plant gets", "How tall the plants grow", "Nothing — anything can change"], "answer": 1 } ] },
+          { "id": "S1b", "items": [ { "id": "S1b", "stem": "An experiment tests how the temperature of water affects how fast sugar dissolves. What is the DEPENDENT variable (the thing you measure)?", "options": ["The temperature of the water", "The amount of sugar", "The time the sugar takes to dissolve", "The size of the container"], "answer": 2 } ] }
+        ] },
+        { "id": "S2", "topic": "Reading data", "difficulty": 1, "variants": [
+          { "id": "S2a", "items": [ { "id": "S2a", "stem": "Water is heated. Time (min) → temperature (°C): 0 → 20 · 2 → 35 · 4 → 50 · 6 → 65 · 8 → 80. If the pattern continues, what is the temperature at 10 minutes?", "options": ["90 °C", "95 °C", "100 °C", "85 °C"], "answer": 1 } ] },
+          { "id": "S2b", "items": [ { "id": "S2b", "stem": "A trolley's distance from the start: 0 s → 0 m · 1 s → 2 m · 2 s → 4 m · 3 s → 6 m. What is its speed?", "options": ["6 m/s", "3 m/s", "0,5 m/s", "2 m/s"], "answer": 3 } ] }
+        ] },
+        { "id": "S3", "topic": "Particle model of matter", "difficulty": 1, "variants": [
+          { "id": "S3a", "items": [ { "id": "S3a", "stem": "When water boils and becomes steam, what happens to the water particles?", "options": ["They move faster and further apart", "They get bigger", "They split into hydrogen and oxygen", "They stop moving"], "answer": 0 } ] },
+          { "id": "S3b", "items": [ { "id": "S3b", "stem": "Why can you smell perfume from across a room a few seconds after someone sprays it?", "options": ["The perfume particles move and spread out through the air", "The air particles turn into perfume", "Perfume particles get bigger", "Smell travels as light"], "answer": 0 } ] }
+        ] },
+        { "id": "S4", "topic": "Calculations: density and speed", "difficulty": 2, "variants": [
+          { "id": "S4a", "items": [ { "id": "S4a", "stem": "A block has a mass of 60 g and a volume of 20 cm³. What is its density?", "options": ["1 200 g/cm³", "3 g/cm³", "0,33 g/cm³", "40 g/cm³"], "answer": 1 } ] },
+          { "id": "S4b", "items": [ { "id": "S4b", "stem": "A cyclist rides 30 km in 2 hours. What is her average speed?", "options": ["60 km/h", "32 km/h", "15 km/h", "28 km/h"], "answer": 2 } ] }
+        ] },
+        { "id": "S5", "topic": "Electric circuits", "difficulty": 2, "variants": [
+          { "id": "S5a", "items": [ { "id": "S5a", "stem": "Two identical bulbs are connected in SERIES to a battery. One bulb breaks. What happens to the other bulb?", "options": ["It gets brighter", "It stays the same", "It goes out", "It gets dimmer but stays on"], "answer": 2 } ] },
+          { "id": "S5b", "items": [ { "id": "S5b", "stem": "Two identical bulbs are connected in PARALLEL to a battery. One bulb breaks. What happens to the other bulb?", "options": ["It stays on", "It goes out", "It starts flickering", "It gets much dimmer"], "answer": 0 } ] }
+        ] },
+        { "id": "S6", "topic": "Acids, bases and reactions", "difficulty": 2, "variants": [
+          { "id": "S6a", "items": [ { "id": "S6a", "stem": "A solution has a pH of 2. What is it?", "options": ["Neutral", "Slightly basic", "Strongly basic", "Strongly acidic"], "answer": 3 } ] },
+          { "id": "S6b", "items": [ { "id": "S6b", "stem": "Magnesium burns in oxygen to make magnesium oxide. Which word equation is correct?", "options": ["magnesium oxide → magnesium + oxygen", "magnesium + oxygen → magnesium oxide", "magnesium + water → magnesium oxide", "oxygen → magnesium + magnesium oxide"], "answer": 1 } ] }
+        ] },
+        { "id": "S7", "topic": "Energy and forces", "difficulty": 2, "variants": [
+          { "id": "S7a", "items": [ { "id": "S7a", "stem": "A ball is thrown straight up. At its very highest point, which is true?", "options": ["Gravity stops pulling on it", "Its speed is zero for an instant", "It has no potential energy", "Its kinetic energy is at its maximum"], "answer": 1 } ] },
+          { "id": "S7b", "items": [ { "id": "S7b", "stem": "A phone plays music from its battery. Which chain of energy changes is correct?", "options": ["electrical → chemical → light", "sound → electrical → chemical", "chemical → electrical → sound", "heat → chemical → sound"], "answer": 2 } ] }
+        ] },
+        { "id": "S8", "topic": "Evaluating evidence", "difficulty": 3, "variants": [
+          { "id": "S8a", "items": [ { "id": "S8a", "stem": "Two plants got fertiliser and grew 10 cm more than two plants without it. The learner says: 'Fertiliser makes plants grow taller.' What is the best comment?", "options": ["It's proven", "More plants should be tested before being confident", "Fertiliser must harm plants", "A control group wasn't needed"], "answer": 1 } ] },
+          { "id": "S8b", "items": [ { "id": "S8b", "stem": "On days when a beach shop sells more ice cream, more people need rescuing from the sea. What is the best explanation?", "options": ["Eating ice cream makes people drown", "People buy ice cream after a rescue", "Hot weather brings more people to both the shop and the sea", "There's no link at all"], "answer": 2 } ] }
+        ] }
+      ]
+    },
+    "reading": {
+      "title": "Reading check",
+      "informs_mark": "Social Sciences",
+      "minutes": 8,
+      "min_median_ms": 4000,
+      "intro": "Two short texts in English, four questions each. Every subject you take in Grade 10 is taught and tested in English, so this tells us something about all of them. Read at your own pace.",
+      "units": [
+        { "id": "R1", "topic": "Narrative and information text", "difficulty": 1, "variants": [
+          { "id": "R1a",
+            "passage": { "title": "Gogo's spaza", "text": "Every afternoon after school, Ayanda helps at her gogo's spaza shop in Mamelodi. For months, bread and airtime sold well, but in March the bread sales dropped by almost half. Gogo blamed the weather. Ayanda was not so sure.\n\nShe started writing down every sale in an old exercise book: what was bought, and at what time. After two weeks she noticed something. Before 7 a.m., almost no bread was sold any more. That was exactly when the new bakery van started stopping at the taxi rank two streets away, selling bread for R2 less.\n\nAyanda did not suggest dropping the price. Instead, she asked her gogo to open thirty minutes earlier and to sell bread with a hot cup of tea for the price of the bread alone. Within a month, the morning queue was back — and now the regulars stayed to talk." },
+            "items": [
+              { "id": "R1a.1", "stem": "What is the passage mainly about?", "options": ["A learner who solves a business problem by looking carefully at evidence", "Why bakeries are better than spaza shops", "How bad weather affects bread sales", "A grandmother who refuses to change"], "answer": 0 },
+              { "id": "R1a.2", "stem": "Why did morning bread sales drop?", "options": ["The weather was bad in March", "A bakery van nearby sold bread for less", "Gogo raised her prices", "People stopped eating bread"], "answer": 1 },
+              { "id": "R1a.3", "stem": "Why did Ayanda probably NOT suggest cutting the bread price?", "options": ["She didn't care about sales", "Gogo told her not to", "She wanted to compete in a way the van couldn't easily copy", "Bread prices are fixed by law"], "answer": 2 },
+              { "id": "R1a.4", "stem": "\"Ayanda was not so sure.\" What does this sentence tell us?", "options": ["She thought Gogo was lying", "She doubted Gogo's explanation", "She was confused about the weather", "She was unsure whether to keep helping"], "answer": 1 }
+            ] },
+          { "id": "R1b",
+            "passage": { "title": "Day Zero", "text": "In 2017 and early 2018, after three dry winters in a row, Cape Town's dams fell to their lowest levels in decades. The city warned that if dam levels kept falling, it would reach \"Day Zero\": the day most taps would be turned off and people would collect a daily ration of water at collection points.\n\nTo push that day back, households were asked to use no more than 50 litres per person a day — less than one five-minute shower. People reused bath water to flush toilets, farmers released water to the city, and the government limited how much water businesses could use.\n\nDay Zero never came. Water use in the city fell to about half of what it had been, and good winter rains in 2018 began to refill the dams. Many people kept some of their new habits even after the restrictions were lifted." },
+            "items": [
+              { "id": "R1b.1", "stem": "What was \"Day Zero\"?", "options": ["The day the drought started", "The day most taps would be turned off", "The first day of the 2018 rains", "The day water restrictions ended"], "answer": 1 },
+              { "id": "R1b.2", "stem": "Why does the writer compare 50 litres to a five-minute shower?", "options": ["To show how small the daily limit was", "To recommend showering for five minutes", "To prove that showers waste water", "To explain how showers work"], "answer": 0 },
+              { "id": "R1b.3", "stem": "According to the passage, which TWO things together helped Cape Town avoid Day Zero?", "options": ["New dams and lower prices", "Businesses closing and people leaving the city", "Lower water use and winter rains", "Farmers using more water and fewer showers"], "answer": 2 },
+              { "id": "R1b.4", "stem": "What does the last sentence suggest?", "options": ["People forgot about the drought quickly", "The crisis changed some people's behaviour for good", "The restrictions were never lifted", "Water use went back up immediately"], "answer": 1 }
+            ] }
+        ] },
+        { "id": "R2", "topic": "Argument text", "difficulty": 2, "variants": [
+          { "id": "R2a",
+            "passage": { "title": "Phones belong in the classroom", "text": "Many schools ban cellphones in class. I think that is a mistake.\n\nFor learners whose families can't afford data at home, school wi-fi on a phone may be the only way to watch a maths video or check a word in a dictionary app. A ban takes that away from the learners who need it most.\n\nOf course, phones can distract. Some learners will scroll social media instead of working. But that is a reason to teach learners when phones help and when they don't — not a reason to pretend phones don't exist. After school, every job and university course will expect us to use them well.\n\nA better rule would be simple: phones face-down unless the teacher says they're needed. That keeps the benefits and limits the distraction." },
+            "items": [
+              { "id": "R2a.1", "stem": "What is the writer's main claim?", "options": ["Phones are always a distraction", "Banning phones in class is a mistake", "Schools should provide free data", "Social media is harmful"], "answer": 1 },
+              { "id": "R2a.2", "stem": "In the third paragraph, why does the writer admit that phones can distract?", "options": ["To change their mind", "To deal with the strongest argument against them", "To prove phones should be banned", "To fill space"], "answer": 1 },
+              { "id": "R2a.3", "stem": "Which reason does the writer give for allowing phones?", "options": ["Phones are cheaper than textbooks", "Teachers like using phones", "Some learners have no other way to get online", "Learners will behave better"], "answer": 2 },
+              { "id": "R2a.4", "stem": "Which statement is an OPINION rather than a fact?", "options": ["Many schools ban cellphones in class", "Some learners will scroll social media", "A ban is a mistake", "School wi-fi can be used on a phone"], "answer": 2 }
+            ] },
+          { "id": "R2b",
+            "passage": { "title": "Should school start later?", "text": "Our school starts at 7:30. I believe it should start at 8:30.\n\nScientists who study sleep have found that during the teenage years the body clock shifts, so many teenagers only feel sleepy late at night. When school starts early, they arrive tired. Tired learners find it harder to concentrate and remember what they learn.\n\nSome parents say a later start would make it harder for them to drop children off before work. That is a real problem, and schools would need to keep the gates open early for learners who arrive with their parents.\n\nBut a school day should be designed around how learners learn best. An extra hour of sleep costs nothing, and it may be one of the cheapest ways to improve marks." },
+            "items": [
+              { "id": "R2b.1", "stem": "What does the writer want?", "options": ["Shorter school days", "School to start at 8:30", "Parents to drive learners to school", "Less homework"], "answer": 1 },
+              { "id": "R2b.2", "stem": "What evidence does the writer use to support their view?", "options": ["Research about teenagers' body clocks", "The writer's own marks", "A survey of parents", "The school's rules"], "answer": 0 },
+              { "id": "R2b.3", "stem": "How does the writer respond to the parents' concern?", "options": ["They say parents are wrong", "They ignore it", "They accept it and suggest a solution", "They say learners should walk"], "answer": 2 },
+              { "id": "R2b.4", "stem": "\"one of the cheapest ways to improve marks\" — what is the writer suggesting?", "options": ["Sleep costs money", "A later start could help learners at almost no cost", "Marks don't matter", "Schools should charge for sleep"], "answer": 1 }
+            ] }
+        ] }
+      ]
+    }
+  }
+}

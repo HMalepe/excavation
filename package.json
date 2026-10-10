@@ -2,7 +2,7 @@
   "name": "excavation-school-edition",
   "version": "0.1.0",
   "private": true,
-  "description": "The Excavation x Know Thy Self — School Edition (Grade 9 Foundation + Grade 11 Confirmation)",
+  "description": "The Excavation x Know Thy Self \u2014 School Edition (Grade 9 Foundation + Grade 11 Confirmation)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,7 +15,8 @@
     "check:secrets": "node scripts/check-client-bundle.mjs",
     "db:types": "supabase gen types typescript --local > src/lib/db/database.types.ts",
     "norms": "tsx --env-file=.env.local --tsconfig tsconfig.json scripts/run-norming.ts",
-    "seed": "tsx --env-file=.env.local scripts/seed.ts"
+    "seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "validity": "tsx --env-file=.env.local --tsconfig tsconfig.json scripts/run-validity.ts"
   },
   "engines": {
     "node": ">=20"

@@ -2,6 +2,7 @@ import "server-only";
 import { Document, Page, StyleSheet, Text, View, renderToBuffer } from "@react-pdf/renderer";
 import { pathwayName } from "@/lib/scoring/doors";
 import type { ParentSummary, ReportG9, ReportG11, TeacherSummary } from "@/lib/ai/schemas";
+import type { skillsLines } from "@/lib/skills/plain";
 
 // Print-friendly: light paper, the brand amber only as an accent. Built-in fonts (no downloads).
 const s = StyleSheet.create({
@@ -26,7 +27,7 @@ const Footer = () => (
 );
 const Paras = ({ t }: { t: string }) => <>{t.split(/\n{2,}/).map((x, i) => <Text key={i} style={s.p}>{x}</Text>)}</>;
 
-export function G9Pdf({ r, name }: { r: ReportG9; name: string }) {
+export function G9Pdf({ r, name, part1 = null }: { r: ReportG9; name: string; part1?: ReturnType<typeof skillsLines> | null }) {
   return (
     <Document title={`Foundation Report — ${name}`} author="The Excavation">
       <Page size="A4" style={s.page}>
@@ -58,6 +59,14 @@ export function G9Pdf({ r, name }: { r: ReportG9; name: string }) {
         ))}
         <Text style={s.h3}>Maths</Text><Text style={s.p}>{r.subject_options.maths_gate}</Text>
         <Text style={s.muted}>{r.subject_options.school_check}</Text>
+        {part1 && (
+          <View>
+            <Text style={s.h2}>What you tried</Text>
+            <Text style={s.muted}>Three short checks and some taster tasks. The checks could only ever help you: they never lowered anything.</Text>
+            {part1.checks.map((c) => <Text key={c.check} style={s.p}>{c.you}</Text>)}
+            {part1.tasters.map((t) => <Text key={t.id} style={s.p}>{t.title} ({t.work}): {t.you}.</Text>)}
+          </View>
+        )}
         <Text style={s.h2}>The pattern to watch: {r.pattern_to_watch.name.toLowerCase()}</Text>
         <Text style={s.p}>{r.pattern_to_watch.how_it_shows_up}</Text>
         <Text style={s.p}>Early warning: {r.pattern_to_watch.early_warning}</Text>

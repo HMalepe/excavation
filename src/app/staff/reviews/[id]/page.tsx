@@ -47,7 +47,15 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
               <p>Code {b.profile.interests.code} · identity {b.profile.identity.status} {b.profile.identity.direction_flags.join(" ")}</p>
               <p>Fits: {b.profile.combinations.filter((c) => c.role?.startsWith("fit")).map((c) => `${c.id} ${c.score}${c.label ? "*" : ""}`).join(" · ") || "—"}</p>
               <p>Cautions: {b.profile.combinations.filter((c) => c.role === "caution").map((c) => `${c.id} (${c.caution_type})`).join(" · ") || "—"}</p>
-              <p>Maths gate: {b.profile.maths_gate?.recommendation ?? "—"}</p>
+              <p>Maths gate: {b.profile.maths_gate?.recommendation ?? "—"}{b.profile.skills?.gate_lift ? ` (lifted from ${b.profile.skills.gate_lift.from} by maths check ${b.profile.skills.gate_lift.check_score}%)` : ""}</p>
+              {b.profile.skills && (
+                <p>Checks: {(["maths", "science", "reading"] as const).map((c) => {
+                  const r = b.profile!.skills!.checks[c];
+                  return `${c} ${r ? (r.score === null ? r.status : `${r.score}%${r.reliable ? "" : ` (unreliable: ${r.reasons.join(", ")})`}`) : "—"}`;
+                }).join(" · ")}
+                {b.profile.skills.lifts.length ? ` · lifts: ${b.profile.skills.lifts.map((l) => `${l.subject} ${l.mark}→${l.effective}`).join(", ")}` : ""}
+                {" · "}tasters: {Object.entries(b.profile.skills.tasters).map(([k, t]) => `${k} ${t?.signal ?? (t?.skipped ? "skipped" : "—")}`).join(", ")}</p>
+              )}
               {b.verdict && <p>Verdict: <strong>{b.verdict.verdict}</strong>{b.verdict.hold_redirect ? " (hold)" : ""} — {b.verdict.rule_trace.join(" → ")}</p>}
             </div>
           )}

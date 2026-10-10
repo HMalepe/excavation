@@ -6,6 +6,15 @@ import { computeDeltas } from "@/lib/scoring/deltas";
 import { loadResponses } from "@/lib/session/service";
 import type { ConversationAdjustments, MarksInput, NormContext, ScoreProfile } from "@/lib/scoring/types";
 import type { MarkRow, SchoolSettingsRow, SessionRow } from "@/lib/db/types";
+import { skillsInputFromRows, type SkillRow } from "@/lib/skills/fromRows";
+import type { SkillsInput } from "@/lib/skills/types";
+import type { SkillsProgress } from "@/lib/session/service";
+
+/** Checks + tasters, once the learner has a skills plan (Grade 9 sessions from 2026-10). */
+function skillsFor(session: SessionRow, rows: SkillRow[]): SkillsInput | undefined {
+  const plan = (session.progress as { skills?: SkillsProgress } | null)?.skills?.plan;
+  return plan ? skillsInputFromRows(plan, rows) : undefined;
+}
 
 /** Latest marks per subject for a grade; school import beats self-report (spec 02 §5). */
 export async function marksFor(learnerId: string, grade: number, termLabel?: string): Promise<MarksInput & { rows: MarkRow[] }> {
@@ -45,7 +54,7 @@ export async function normContext(grade: 9 | 11): Promise<NormContext> {
  */
 export async function scoreSession(session: SessionRow, schoolId: string, conversation?: ConversationAdjustments): Promise<ScoreProfile> {
   const isG9 = session.touchpoint === "G9_FOUNDATION";
-  const [{ likert, meta, values }, marks, settings, norms] = await Promise.all([
+  const [{ likert, meta, values, skillRows }, marks, settings, norms] = await Promise.all([
     loadResponses(session.id),
     marksFor(session.learner_id, isG9 ? 9 : 11),
     schoolSettings(schoolId),
@@ -61,6 +70,7 @@ export async function scoreSession(session: SessionRow, schoolId: string, conver
     conversation,
     school: settings ? { offeredCombinationIds: settings.offered_combination_ids, readinessOverrides: settings.readiness_overrides } : undefined,
     norms,
+    skills: skillsFor(session, skillRows),
   });
 
   if (!isG9) {

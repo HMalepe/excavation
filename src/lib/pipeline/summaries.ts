@@ -6,6 +6,7 @@ import { PARENT_SUMMARY, TEACHER_SUMMARY } from "@/lib/ai/prompts";
 import { ParentSchema, TeacherSchema, type ParentSummary, type ReportG9, type ReportG11, type TeacherSummary } from "@/lib/ai/schemas";
 import { lintParent, lintTeacher } from "@/lib/ai/reportLint";
 import type { ScoreProfile } from "@/lib/scoring/types";
+import { skillsPlain } from "@/lib/skills/plain";
 import type { VerdictResult } from "@/lib/verdict/types";
 
 /**
@@ -14,6 +15,7 @@ import type { VerdictResult } from "@/lib/verdict/types";
  */
 export function teacherInput(report: ReportG9 | ReportG11, profile: ScoreProfile, verdict: VerdictResult | null, firstName: string) {
   if ("subject_options" in report) {
+    const part1 = skillsPlain(profile.skills, profile.marks);
     return {
       learner_first_name: firstName, touchpoint: "G9",
       how_you_work: report.how_you_work,
@@ -24,6 +26,11 @@ export function teacherInput(report: ReportG9 | ReportG11, profile: ScoreProfile
         study_habits: profile.study?.band,
         marks_self_reported: profile.marks.source === "self_report",
         readiness: profile.combinations.filter((c) => c.role?.startsWith("fit")).map((c) => ({ id: c.id, readiness: c.readiness })),
+        // Checks only — taster reactions stay between the learner and their report.
+        part1: part1 && {
+          marks_undersell: part1.marks_undersell, reading_support: part1.reading_support,
+          maths_option_opened_by_check: part1.maths_option_opened_by_check, maths_topics_to_practise: part1.maths_topics_to_practise,
+        },
       },
     };
   }

@@ -6,6 +6,35 @@ import { DOORS_DISCLAIMER } from "@/lib/scoring/doors";
 import type { ReportG9, ReportG11 } from "@/lib/ai/schemas";
 import type { ScoreProfile } from "@/lib/scoring/types";
 import type { VerdictResult } from "@/lib/verdict/types";
+import { skillsLines } from "@/lib/skills/plain";
+import type { SkillsResult } from "@/lib/skills/types";
+
+/** Deterministic (not AI-written): what the learner did in Part 1 and what it changed. */
+function WhatYouTried({ skills, marks }: { skills: SkillsResult; marks: Record<string, unknown> }) {
+  const { checks, tasters } = skillsLines(skills, marks);
+  const practise = checks.find((c) => c.check === "maths")?.practise ?? [];
+  return (
+    <Section title="What you tried">
+      <p className="text-muted">Before the conversation you did three short checks and some taster tasks. The checks could only ever help you: they never lowered anything.</p>
+      {skills.gate_lift && (
+        <p className="card border-amber/60 text-lg">Your maths check went well enough to open the Mathematics option. Your marks alone pointed somewhere safer — see the Maths section above.</p>
+      )}
+      <ul className="space-y-2 text-lg">{checks.map((c) => <li key={c.check}>{c.you}</li>)}</ul>
+      {practise.length > 0 && <p><strong>Worth practising:</strong> {practise.join(" · ")}</p>}
+      {skills.reading_support && (
+        <p><strong>Worth building:</strong> reading in English. Every Grade 10 subject is taught and tested in it, so 20 minutes of reading a day pays off everywhere.
+          {skills.language_note ? " Some of your maths marks may reflect reading the question, not the maths itself." : ""}</p>
+      )}
+      {tasters.length > 0 && (
+        <>
+          <h3 className="font-semibold text-amber-soft">Taster tasks</h3>
+          <ul className="space-y-2">{tasters.map((t) => <li key={t.id}><strong>{t.title}</strong> <span className="text-muted">({t.work})</span> — {t.you}.</li>)}</ul>
+          <p className="text-sm text-muted">How much you enjoyed real work counted a little towards your subject options. Getting answers right didn&apos;t.</p>
+        </>
+      )}
+    </Section>
+  );
+}
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <section className="space-y-3 border-t border-ink-3 pt-8">
@@ -58,6 +87,7 @@ export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile })
             <div className="card"><h3 className="font-semibold">Maths</h3><p className="mt-1">{r.subject_options.maths_gate}</p></div>
             <p className="text-sm text-muted">{r.subject_options.school_check} {DOORS_DISCLAIMER}</p>
           </Section>
+          {profile.skills && <WhatYouTried skills={profile.skills} marks={profile.marks} />}
           <Section title={`The pattern to watch: ${r.pattern_to_watch.name.toLowerCase()}`}>
             <p className="text-lg">{r.pattern_to_watch.how_it_shows_up}</p>
             <p><strong>Early warning:</strong> {r.pattern_to_watch.early_warning}</p>

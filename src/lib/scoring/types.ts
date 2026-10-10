@@ -3,6 +3,7 @@
  * The ScoreProfile shape follows spec 04 §11 exactly, with documented additions.
  */
 import type { RiasecType } from "@/lib/config/subjectMap";
+import type { SkillsInput, SkillsResult } from "@/lib/skills/types";
 
 export type Touchpoint = "G9_FOUNDATION" | "G11_CONFIRMATION";
 export type NormState = "pre_norm" | "emerging_norm" | "established_norm";
@@ -72,6 +73,8 @@ export interface ScoringInput {
   norms?: NormContext;
   /** Senior Phase restarted within the session (scored-layer soft trigger). */
   restartedInSession?: boolean;
+  /** Addition (2026-10): readiness checks + taster tasks. Absent = engine behaves exactly as spec 04. */
+  skills?: SkillsInput;
 }
 
 export interface QualityResult {
@@ -92,7 +95,7 @@ export interface CombinationResult {
   subjects: { maths: "Mathematics" | "Mathematical Literacy"; electives: string[] };
   interest_fit: number;
   readiness: number;
-  readiness_detail: Record<string, { readiness: number; limiting: string | null; missing: boolean }>;
+  readiness_detail: Record<string, { readiness: number; limiting: string | null; missing: boolean; lifted?: boolean }>;
   trait_fit: number;
   score: number;
   q20_count: number;
@@ -185,5 +188,7 @@ export interface ScoreProfile {
   maths_gate: MathsGate | null;
   contradiction_watch: ContradictionWatch[];
   deltas: Deltas | null;
+  /** Addition (2026-10): readiness checks + taster tasks; null when not taken (or Grade 11). */
+  skills: SkillsResult | null;
 }
 export type YNS = "yes" | "sometimes" | "no" | null;

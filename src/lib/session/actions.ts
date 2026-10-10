@@ -16,6 +16,7 @@ import {
 } from "./service";
 import { g11Actions } from "./g11Actions";
 import { reportActions } from "./reportActions";
+import { skillActions, newSkillsProgress } from "./skillActions";
 import type { LearnerRow, SessionRow } from "@/lib/db/types";
 
 export const PAGE_SIZE_MAX = 6; // spec 02 §3.3: up to 6 items per screen on computers
@@ -149,8 +150,15 @@ export const actions = {
       const { error } = await adminDb().from("marks").upsert(rows, { onConflict: "learner_id,grade,term_label,subject" });
       if (error) throw new Error(`save marks: ${error.message}`);
     }
-    await scoreSession(session, caller.learner.school_id);
-    await advanceTo(session, "guide_notice");
+    // Part 1 continues with the readiness checks and taster tasks (scored at the end of the tasters).
+    // After a retake, they're already done: score straight away and go to the conversation notice.
+    const prog = progressOf(session);
+    if (prog.skills?.done) {
+      await scoreSession(session, caller.learner.school_id);
+      await advanceTo(session, "guide_notice");
+      return {};
+    }
+    await advanceTo(session, "checks", { progress: { ...prog, skills: prog.skills ?? newSkillsProgress() } as Record<string, unknown> });
     return {};
   }),
 
@@ -168,7 +176,8 @@ export const actions = {
     await adminDb().from("item_responses").delete().eq("session_id", session.id).in("item_id", scoredIds);
     await advanceTo(session, "scored", {
       item_order: buildItemPlan(seededRng(randomInt(2 ** 31))),
-      progress: { section: 0, item: 0, moments: [], retakes: (prog.retakes ?? 0) + 1, retake_offered: true, answered_order: [] } as Record<string, unknown>,
+      // Checks and tasters are kept: a retake is only about the questionnaire.
+      progress: { section: 0, item: 0, moments: [], retakes: (prog.retakes ?? 0) + 1, retake_offered: true, answered_order: [], skills: prog.skills } as Record<string, unknown>,
     });
     return {};
   }),
@@ -183,6 +192,7 @@ export const actions = {
     return {};
   }),
 
+  ...skillActions,
   ...g11Actions,
   ...reportActions,
 } as const;

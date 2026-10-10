@@ -13,6 +13,9 @@ import { doorsFor } from "./doors";
 import { clamp, mean, round1 } from "./items";
 import { mathsForCombination } from "./mathsGate";
 import { expandSubjects, normaliseSubjectList } from "./subjects";
+import { tasterAdjustment } from "@/lib/skills/engine";
+import type { TasterId } from "@/lib/skills/content";
+import type { TasterResult } from "@/lib/skills/types";
 import type { CombinationResult, ContradictionWatch, ConversationAdjustments, MathsGate, SchoolOverrides } from "./types";
 
 // ---------- §8.1 Interest fit ----------
@@ -39,23 +42,39 @@ export function interestFit(riasec: Record<RiasecType, number>, comboVec: Riasec
 // ---------- §8.2 Readiness ----------
 export type Rules = Record<string, { needs: Record<string, number> }>;
 
+const tier = (m: number, threshold: number) => (m >= threshold ? 100 : m >= threshold - 10 ? 60 : 20);
+const NEXT_TIER: Record<number, number> = { 20: 60, 60: 100, 100: 100 };
+
+/**
+ * `lifted` (addition, 2026-10): effective marks raised by a reliable readiness check. They can move
+ * a need up by at most ONE tier (20→60, 60→100), never down. Missing marks are never filled in.
+ */
 export function subjectReadiness(
   subject: string,
   marks: Record<string, number | null | undefined>,
   rules: Rules,
-): { readiness: number; limiting: string | null; missing: boolean } {
+  lifted?: Record<string, number>,
+): { readiness: number; limiting: string | null; missing: boolean; lifted?: boolean } {
   const needs = rules[subject]?.needs ?? {};
   let readiness = 100;
   let limiting: string | null = null;
   let missing = false;
+  let wasLifted = false;
   for (const [need, threshold] of Object.entries(needs)) {
     const m = marks[need];
     let r: number;
     if (m === null || m === undefined) { r = 60; missing = true; }
-    else r = m >= threshold ? 100 : m >= threshold - 10 ? 60 : 20;
+    else {
+      r = tier(m, threshold);
+      const eff = lifted?.[need];
+      if (typeof eff === "number" && eff > m) {
+        const up = Math.min(tier(eff, threshold), NEXT_TIER[r]!);
+        if (up > r) { r = up; wasLifted = true; }
+      }
+    }
     if (r < readiness) { readiness = r; limiting = need; }
   }
-  return { readiness, limiting, missing };
+  return wasLifted ? { readiness, limiting, missing, lifted: true } : { readiness, limiting, missing };
 }
 
 // ---------- §8.3 Trait fit ----------
@@ -96,6 +115,10 @@ export interface ComboContext {
   watch: ContradictionWatch[];
   conversation?: ConversationAdjustments;
   school?: SchoolOverrides;
+  /** Addition (2026-10): marks raised by readiness checks (only the subjects that were lifted). */
+  liftedMarks?: Record<string, number>;
+  /** Addition (2026-10): taster task results; each linked combination moves at most ±5. */
+  tasters?: Record<TasterId, TasterResult | null>;
 }
 
 export function weightsFor(ctx: Pick<ComboContext, "interestsExcluded" | "flatProfile">) {
@@ -136,13 +159,14 @@ export function scoreCombination(c: Combination, ctx: ComboContext, order: numbe
   const readiness_detail: CombinationResult["readiness_detail"] = {};
   let wSum = 0, rSum = 0;
   for (const s of [maths, ...electives]) {
-    const d = subjectReadiness(s, ctx.marks, rules);
+    const d = subjectReadiness(s, ctx.marks, rules, ctx.liftedMarks);
     readiness_detail[s] = d;
     if (d.missing) flags.push("marks_incomplete");
     const w = s === "Mathematics" ? 1.5 : 1;
     wSum += w; rSum += w * d.readiness;
   }
   const readiness = Math.round(rSum / wSum);
+  const liftedNeeds = Object.values(readiness_detail).some((d) => d.lifted);
 
   // Trait fit
   const tFit = traitFit(c.id, ctx.personality);
@@ -162,6 +186,18 @@ export function scoreCombination(c: Combination, ctx: ComboContext, order: numbe
     score -= 5;
     adjustments.push(`-5 competence_trap (Q12: ${ctx.conversation?.competenceTrapSubject ?? trapHit})`);
     flags.push("contains_competence_trap");
+  }
+
+  // Readiness lifted by a check: no score adjustment of its own, but logged for the audit trail.
+  if (liftedNeeds) {
+    const subjects = Object.keys(ctx.liftedMarks ?? {}).map((k) => `${k} ${ctx.marks[k]}→${ctx.liftedMarks![k]}`).join(", ");
+    adjustments.push(`readiness_lifted_by_check (${subjects})`);
+  }
+
+  // Taster tasks: behaviour, not self-report. Capped ±5 like the Q20 bonus.
+  if (ctx.tasters) {
+    const t = tasterAdjustment(c.id, ctx.tasters);
+    if (t.delta) { score += t.delta; adjustments.push(t.note!); }
   }
 
   // Contradiction resolutions: if the learner says the conversation is truer, the disputed trait is
@@ -221,7 +257,9 @@ export function selectCombinations(all: Scored[], ctx: ComboContext): SelectionR
   }
 
   // (c) Doors-open safeguard: a capable learner always sees one science option.
-  const maths = ctx.marks["Mathematics"], ns = ctx.marks["Natural Sciences"];
+  // Uses check-lifted marks when present: the safeguard exists to keep doors open, so it may only widen.
+  const eff = (k: string) => ctx.liftedMarks?.[k] ?? ctx.marks[k];
+  const maths = eff("Mathematics"), ns = eff("Natural Sciences");
   if (fits.length === 3 && !fits.some((f) => f.family === "STEM") && (maths ?? 0) >= 50 && (ns ?? 0) >= 50) {
     const bestStem = pool.find((c) => c.family === "STEM");
     if (bestStem && bestStem.score >= fits[2]!.score - 10) {

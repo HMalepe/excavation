@@ -7,6 +7,17 @@ import { buildItemPlan, seededRng } from "@/lib/flow/itemPlan";
 import { touchpointForGrade, stagesFor, type Stage } from "@/lib/flow/stages";
 import type { ItemPlan, ItemResponseRow, LearnerRow, SessionRow, SessionStatus } from "@/lib/db/types";
 import type { ItemMeta, LikertResponses, ValuesSort } from "@/lib/scoring/types";
+import type { SkillsPlan } from "@/lib/skills/types";
+import { isSkillRow } from "@/lib/skills/fromRows";
+
+/** Readiness checks + tasters pointer, kept in sessions.progress.skills. */
+export interface SkillsProgress {
+  plan: SkillsPlan;
+  check: number;   // index into plan.order
+  item: number;    // index into that check's served items
+  taster: number;  // index into plan.tasters
+  done?: boolean;
+}
 
 export const ASSENT_SCREEN_VERSION = "2026-10-v1";
 
@@ -19,11 +30,12 @@ export interface ScoredProgress {
   retakes?: number;
   retake_offered?: boolean;
   answered_order?: string[];
+  skills?: SkillsProgress;
 }
 
 export function progressOf(s: SessionRow): ScoredProgress {
   const p = (s.progress ?? {}) as Partial<ScoredProgress>;
-  return { section: p.section ?? 0, item: p.item ?? 0, moments: p.moments ?? [], soft_shown: p.soft_shown, retakes: p.retakes ?? 0, retake_offered: p.retake_offered, answered_order: p.answered_order ?? [] };
+  return { section: p.section ?? 0, item: p.item ?? 0, moments: p.moments ?? [], soft_shown: p.soft_shown, retakes: p.retakes ?? 0, retake_offered: p.retake_offered, answered_order: p.answered_order ?? [], skills: p.skills };
 }
 
 export async function hasValidGuardianConsent(learnerId: string): Promise<boolean> {
@@ -65,6 +77,7 @@ export function assertStage(s: SessionRow, ...allowed: Stage[]) {
 const STATUS_FOR: Record<Stage, SessionStatus> = {
   consent: "not_started", assent: "not_started",
   intake: "scored_layer", two_years: "scored_layer", scored: "scored_layer", snapshot: "scored_layer", marks: "scored_layer",
+  checks: "scored_layer", tasters: "scored_layer", break: "scored_layer",
   subject_experience: "scored_layer", failure_cause: "scored_layer", career_update: "scored_layer", guide_notice: "scored_layer",
   conversation: "conversation", processing: "complete", report: "complete",
 };
@@ -81,7 +94,10 @@ export async function advanceTo(s: SessionRow, stage: Stage, extra: Partial<Sess
 // ---------- responses ----------
 export async function loadResponses(sessionId: string) {
   const { data } = await adminDb().from("item_responses").select("*").eq("session_id", sessionId);
-  const rows = (data ?? []) as ItemResponseRow[];
+  const all = (data ?? []) as ItemResponseRow[];
+  // Readiness-check and taster rows are kept apart: they are not questionnaire items.
+  const skillRows = all.filter((r) => isSkillRow(r.item_id));
+  const rows = all.filter((r) => !isSkillRow(r.item_id));
   const likert: LikertResponses = {};
   const meta: Record<string, ItemMeta> = {};
   const json: Record<string, unknown> = {};
@@ -90,7 +106,7 @@ export async function loadResponses(sessionId: string) {
     if (r.value_json !== null) json[r.item_id] = r.value_json;
     meta[r.item_id] = { ms: r.response_ms, changes: r.change_count };
   }
-  return { rows, likert, meta, json, values: (json.VALUES as ValuesSort | undefined) ?? null };
+  return { rows, skillRows, likert, meta, json, values: (json.VALUES as ValuesSort | undefined) ?? null };
 }
 
 export async function upsertResponse(sessionId: string, itemId: string, row: { value?: number | null; value_json?: unknown; response_ms?: number | null; change_count?: number }) {

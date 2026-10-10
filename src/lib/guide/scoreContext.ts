@@ -6,6 +6,7 @@ import { valueCards } from "@/lib/config/questionBank";
 import { RIASEC_FRIENDLY } from "@/lib/scoring/scales";
 import type { RiasecType } from "@/lib/config/subjectMap";
 import type { ScoreProfile } from "@/lib/scoring/types";
+import { skillsPlain } from "@/lib/skills/plain";
 
 const INTEREST_PLAIN: Record<RiasecType, string> = {
   R: "building and fixing things", I: "figuring things out", A: "making things", S: "helping people",
@@ -62,6 +63,8 @@ export function buildScoreContext(p: ScoreProfile, firstName: string, grade: 9 |
     marks_summary: marks,
     top_combination_ids: p.combinations.filter((c) => c.role?.startsWith("fit")).map((c) => c.id),
     contradiction_watch: p.contradiction_watch.map((w) => `[${w.id}] ${w.text}`),
+    /** Addition (2026-10): readiness checks + taster tasks, in plain words (null if not taken). */
+    part1: skillsPlain(p.skills, p.marks),
   };
 }
 export type ScoreContext = ReturnType<typeof buildScoreContext>;

@@ -11,9 +11,12 @@ import {
   readContext, scoreIdentity, scoreInterests, scoreMindset, scoreMotivation, scorePersonality, scoreStudy, scoreValues,
 } from "./scales";
 import { expandSubjects } from "./subjects";
+import { liftGate, scoreSkills, tasterWatch } from "@/lib/skills/engine";
+import type { SkillsResult } from "@/lib/skills/types";
 import type { CombinationResult, ScoreProfile, ScoringInput } from "./types";
 
-export const ENGINE_VERSION = "1.0.0";
+/** 1.1.0: readiness checks + taster tasks (raise-only lifts, ±5 taster adjustments). No change without them. */
+export const ENGINE_VERSION = "1.1.0";
 
 export function buildScoreProfile(input: ScoringInput): ScoreProfile {
   const r = input.likert;
@@ -37,22 +40,37 @@ export function buildScoreProfile(input: ScoringInput): ScoreProfile {
 
   const trapOnMaths = !!input.conversation?.competenceTrapSubject &&
     expandSubjects(input.conversation.competenceTrapSubject).includes("Mathematics");
-  const gate = mathsGate(marks["Mathematics"], mindset, study, trapOnMaths);
-  const watch = contradictionWatch({ personality, interests }, marks);
-
   // The combination engine and maths gate use Senior Phase marks: Grade 9 only (spec 04 §8).
   const isG9 = input.touchpoint === "G9_FOUNDATION";
+
+  // Readiness checks + tasters (Grade 9). Raise-only: they can lift marks and the gate, never lower.
+  const skillsBase = isG9 && input.skills ? scoreSkills(input.skills, marks) : null;
+  // Combinations keep the marks-based gate for their maths choice ("Either" → Maths Lit when marks
+  // say so): switching them to Mathematics would LOWER their readiness, and checks may only raise.
+  // The lifted gate is what the learner sees: it opens the Mathematics option, it doesn't impose it.
+  const marksGate = mathsGate(marks["Mathematics"], mindset, study, trapOnMaths);
+  const { gate, lift: gateLift } = skillsBase
+    ? liftGate(marksGate, marks["Mathematics"], skillsBase.checks.maths)
+    : { gate: marksGate, lift: null as SkillsResult["gate_lift"] };
+  const lifted = skillsBase?.lifts.length ? Object.fromEntries(skillsBase.lifts.map((l) => [l.subject, l.effective])) : undefined;
+  const watch = contradictionWatch({ personality, interests }, marks);
+
   const sel = isG9 ? runCombinationEngine({
     riasec: interests.scores,
     interestsExcluded: interests.excluded_from_recommendations,
     flatProfile: interests.flat_profile,
     personality,
     marks,
-    gate,
+    gate: marksGate,
     watch,
     conversation: input.conversation,
     school: input.school,
+    liftedMarks: lifted,
+    tasters: skillsBase?.tasters,
   }) : { fits: [], cautions: [], ranked: [], offersKnown: false };
+
+  const skills: SkillsResult | null = skillsBase ? { ...skillsBase, gate_lift: gateLift } : null;
+  if (skills) watch.push(...tasterWatch(skills.tasters, sel.ranked, sel.fits.map((f) => f.id)));
 
   const strip = (c: CombinationResult & { order?: number }): CombinationResult => { const rest = { ...c }; delete rest.order; return rest; };
   const combinations = [...sel.fits, ...sel.cautions].map(strip);
@@ -80,5 +98,6 @@ export function buildScoreProfile(input: ScoringInput): ScoreProfile {
     maths_gate: isG9 ? gate : null,
     contradiction_watch: watch,
     deltas: null,
+    skills,
   };
 }

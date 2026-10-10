@@ -17,6 +17,8 @@ import { Assent, Intake, Snapshot, GuideNotice, TwoYears, MarksG11, PerSubjectLi
 import { GuideChat } from "@/components/client/GuideChat";
 import { loadChat } from "@/lib/guide/state";
 import { LogoutButton } from "@/components/client/LoginForms";
+import { CheckRunner, TasterRunner, PartOneBreak } from "@/components/client/Skills";
+import { checkView, tasterView } from "@/lib/skills/views";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Your session" };
@@ -112,6 +114,23 @@ export default async function LearnPage() {
       const imported = m.rows.some((r) => r.source === "school_import") ? (m.subjects as Record<string, number>) : null;
       return <LearnerShell at="The trench"><Snapshot subjects={G9_SNAPSHOT_SUBJECTS} imported={imported} /></LearnerShell>;
     }
+
+    case "checks": {
+      const sk = progressOf(session).skills;
+      if (!sk) redirect("/learn/paused");
+      const v = checkView(session.id, sk);
+      return <LearnerShell at="The trench"><CheckRunner key={v.itemId} v={v} /></LearnerShell>;
+    }
+
+    case "tasters": {
+      const sk = progressOf(session).skills;
+      if (!sk) redirect("/learn/paused");
+      const v = tasterView(session.id, sk);
+      return <LearnerShell at="The trench"><TasterRunner key={v.id} v={v} /></LearnerShell>;
+    }
+
+    case "break":
+      return <LearnerShell at="The floor"><PartOneBreak /></LearnerShell>;
 
     case "marks": {
       const g11 = await marksFor(learner.id, 11);

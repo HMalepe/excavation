@@ -90,3 +90,60 @@ which can't be known without marks. The flow takes marks first.
   + conversation history. History is append-only; nothing is ever edited.
 - Structured outputs (`output_config.format` + Zod) for every JSON call — no prefill.
 - The conversation model never sees raw item responses — only the score context (spec 07 §2).
+
+---
+
+## E. Readiness checks + taster tasks (owner's decision, 2026-10-10) **[CHECK]**
+
+**Why.** Marks measure performance *in a particular school*, not capability. The spec engine treats 55% at a
+school with no maths teacher for two terms the same as 55% at a well-resourced school, and the maths gate can
+steer a capable learner into Mathematical Literacy. Interest questions are self-report: "I want to be a doctor"
+is often the parents talking. Part 1 now adds two kinds of evidence that marks and questionnaires can't give.
+
+**What learners do** (Grade 9, after the academic snapshot; ~35 extra minutes, so the flow now has a break
+between Part 1 and The Guide):
+
+| | Content | What it feeds |
+|---|---|---|
+| Maths check | 10 items, CAPS Senior Phase (integers → word problems), `config/skills/checks.json` | `Mathematics` readiness + the maths gate |
+| Science check | 8 items: fair tests, data, density/speed, circuits, evidence | `Natural Sciences` readiness (Physical/Life Sciences) |
+| Reading check | 2 passages × 4 questions in English (narrative/information + argument) | `Social Sciences` readiness; reading-support and "language may be part of the maths story" flags |
+| 6 taster tasks | Clinic, fix-the-instructions, two witnesses, vetkoek stall, rain & maize, fix the poster (+ a bonus each), `config/skills/tasters.json` | ±5 on linked combinations; `TT_*` contradiction_watch items for The Guide |
+
+Each check unit has 1–2 parallel variants (one served at random) and options are shuffled per learner, so
+learners side by side rarely see the same screen. "I'm not sure" is offered instead of forcing a guess. A whole
+check can be skipped with no effect. Answer keys never leave the server (`npm run check:secrets` scans for one).
+
+**The rules** (`src/lib/skills/engine.ts`, all logged in each combination's `adjustments`):
+
+| Rule | Value | Reason |
+|---|---|---|
+| **Raise-only** | A check never lowers a mark, a readiness tier or the gate | Marks already pull down. Also neutralises cheating: the most a cheat gets is "consider it, with a plan" |
+| Reliable check | ≥ 70% of items answered, median ≥ 6 s per item (reading ≥ 4 s) | Rushed or abandoned checks are not used |
+| Mark lift | Check ≥ 60% and above the mark → effective = min(check, mark + 15) | Small and capped; a missing mark is never invented |
+| Readiness | A lifted mark moves a need **one tier** at most (20→60, 60→100) | |
+| Maths gate | One step: Maths Lit safer → both options (check ≥ 70%); 40–49% both options → Mathematics with support (check ≥ 60%) | Never straight to "Mathematics" |
+| "Either" combinations | Keep the marks-based maths choice | Switching them to Mathematics would *lower* their readiness; the lifted gate opens the option, it doesn't impose it |
+| Doors-open safeguard | Uses lifted marks | It exists to widen, so it may only widen |
+| Taster signal | pull = enjoyed (4–5) **and** finished the bonus; warm = enjoyed; cold = 1–2 and no bonus | Asking for another one is behaviour, not self-report |
+| Taster adjustment | pull +5, warm +2, neutral 0, cold −3; mean over linked tasters; capped ±5 | Same size as the Q20 bonus. Correctness carries **no** weight |
+| Reading support | Reliable reading check < 50% | Report gives one reading habit; never called a weakness |
+
+**Who sees what.** The Guide, the report writer and the teacher summary get plain words only
+(`src/lib/skills/plain.ts`), never percentages. The learner's report has a deterministic "What you tried"
+section (web + PDF). Teachers see only check-based flags (marks undersell, reading support, maths topics),
+never taster reactions. Staff reviewers see the raw numbers.
+
+**Validation.** `npm run validity` writes per-item difficulty/discrimination (`reports-out/check-items.csv`) and,
+once Grade 10/11 marks exist, reports ΔR²: how much each check predicts later marks *beyond* Grade 9 marks.
+ΔR² ≥ 0.05 → consider more weight; < 0.02 → keep raise-only or drop. It also cross-tabs taster signals against
+the subjects actually taken.
+
+**[CHECK] before learners see it:**
+- Every check item reviewed by a Grade 9 maths / natural sciences / English teacher (content is marked DRAFT).
+- Every taster reviewed by someone who does that work (nurse/pharmacist, developer, attorney, small-business
+  owner, field scientist, designer).
+- Clinical advisor + attorney: the checks are curriculum tests, not psychological tests, but add both to the
+  spec 09 risk-2 opinion (psychological test classification).
+- Grade 11 does not take checks or tasters yet (the verdict engine is unchanged). Candidate for v2: tasters
+  before the career update, and the maths check for learners considering a switch back to Mathematics.

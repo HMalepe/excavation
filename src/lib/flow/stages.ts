@@ -7,7 +7,13 @@
  */
 import type { Touchpoint } from "@/lib/scoring/types";
 
-export const G9_STAGES = ["consent", "assent", "intake", "scored", "snapshot", "guide_notice", "conversation", "processing", "report"] as const;
+/**
+ * Addition (2026-10): readiness checks, taster tasks and a break between Part 1 (questions, checks,
+ * tasks) and Part 2 (The Guide). Part 1 grew by ~35 minutes; the break keeps each sitting short.
+ */
+export const G9_STAGES = [
+  "consent", "assent", "intake", "scored", "snapshot", "checks", "tasters", "break", "guide_notice", "conversation", "processing", "report",
+] as const;
 export const G11_STAGES = [
   "consent", "assent", "two_years", "scored", "marks", "subject_experience", "failure_cause", "career_update",
   "guide_notice", "conversation", "processing", "report",
@@ -39,7 +45,7 @@ export function descentFor(stage: Stage, scoredSection?: string): Descent {
       if (scoredSection === "interests" || scoredSection === "personality") return "Wading in";
       if (scoredSection === "study" || scoredSection === "context") return "The trench";
       return "Deep water";
-    case "snapshot": case "marks": case "subject_experience": case "failure_cause": case "career_update": return "The trench";
+    case "snapshot": case "checks": case "tasters": case "marks": case "subject_experience": case "failure_cause": case "career_update": return "The trench";
     default: return "The floor";
   }
 }

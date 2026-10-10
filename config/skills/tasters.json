@@ -1,0 +1,154 @@
+{
+  "version": "tasters-2026-10-v1",
+  "review_status": "DRAFT. Each task needs a check by someone who does that work (a nurse or pharmacist, a developer, an attorney, a small-business owner, a field scientist, a designer) before the pilot.",
+  "notes": "Taster tasks are small slices of real work. What matters most is how the learner engages: enjoyment before and after, and whether they ask for another one. Getting answers right is recorded but carries no weight. Steps with answer null are taste questions with no right answer. Feedback is shown after each answer — this is a taste of the work, not a test.",
+  "before_scale": ["Not at all", "Not really", "Maybe", "Probably", "Definitely"],
+  "after_scale": ["Not at all", "Not really", "It was okay", "I enjoyed it", "I loved it"],
+  "tasters": [
+    {
+      "id": "HEALTH",
+      "title": "The clinic",
+      "work": "medicine, nursing, pharmacy",
+      "links": ["HEALTH_SCI"],
+      "before_prompt": "How much do you think you'd enjoy working out what's wrong with a sick person?",
+      "scene": "A 14-year-old girl comes into the clinic. Temperature: 39 °C. Sore throat. No cough. Swollen glands in her neck.",
+      "steps": [
+        { "id": "1", "stem": "What's the most useful thing to check next?", "options": ["Look at her throat for white patches", "Check her reflexes", "X-ray her chest", "Ask what she ate for supper"], "answer": 0,
+          "feedback": "That's what a nurse would do first. Fever, a sore throat, swollen glands and NO cough point towards a bacterial throat infection rather than a cold." },
+        { "id": "2", "stem": "Her throat has white patches. What's the right next step?", "options": ["Refer her to the nurse or doctor to decide on antibiotics", "Give her cough syrup", "Tell her it's nothing and send her home", "Tell her to drink cold water"], "answer": 0,
+          "feedback": "A strep throat is treated with antibiotics prescribed by a nurse or doctor. Left untreated it can damage the heart (rheumatic fever) — a real problem in South Africa." },
+        { "id": "3", "stem": "The dose is 10 mg for every kilogram she weighs. She weighs 40 kg. How many mg is one dose?", "options": ["400 mg", "50 mg", "4 000 mg", "30 mg"], "answer": 0,
+          "feedback": "Dosing by body weight is everyday maths in nursing, medicine and pharmacy. Getting it wrong by a factor of 10 is one of the most common — and dangerous — mistakes." }
+      ],
+      "bonus": {
+        "title": "The pharmacy counter",
+        "scene": "A script says: \"1 tablet three times a day for 10 days.\"",
+        "steps": [
+          { "id": "b1", "stem": "How many tablets do you hand over?", "options": ["30", "10", "13", "3"], "answer": 0, "feedback": "3 a day × 10 days = 30. Simple — but pharmacists check every script like this, all day." },
+          { "id": "b2", "stem": "The patient mentions the last antibiotic \"gave me a rash all over\". What do you do?", "options": ["Stop and check with the pharmacist or doctor — it may be an allergy", "Hand it over anyway", "Halve the dose", "Tell her to drink more water"], "answer": 0, "feedback": "A rash after an antibiotic can be an allergy. Catching it at the counter can save a life." }
+        ]
+      }
+    },
+    {
+      "id": "CODE",
+      "title": "Fix the instructions",
+      "work": "software, engineering, robotics",
+      "links": ["SCI_IT", "ENG_TECH", "TECHNICAL", "DIGITAL_MEDIA"],
+      "before_prompt": "How much do you think you'd enjoy finding the mistake in a set of instructions a machine follows?",
+      "scene": "A vending machine runs these steps:\n1. Take the customer's money.\n2. If money ≥ price, give the drink.\n3. Give change: price − money.",
+      "steps": [
+        { "id": "1", "stem": "One step has a bug. Which one?", "options": ["Step 3", "Step 1", "Step 2", "There is no bug"], "answer": 0,
+          "feedback": "Change should be money − price. With R20 for a R15 drink, step 3 gives −R5 change. Programmers call this a bug, and finding them is half the job." },
+        { "id": "2", "stem": "Another program: start at 1. While the number is less than 5: show the number, then add 2. What appears on screen?", "options": ["1, 3", "1, 3, 5", "1, 2, 3, 4", "2, 4"], "answer": 0,
+          "feedback": "It shows 1, adds 2 (3), shows 3, adds 2 (5) — and 5 is not less than 5, so it stops. Loops like this run every app on your phone." },
+        { "id": "3", "stem": "A robot pen must draw a square. Which instructions should repeat 4 times?", "options": ["Forward 10, turn right 90°", "Forward 10, turn right 45°", "Forward 40", "Turn right 90°, then stop"], "answer": 0,
+          "feedback": "Four sides, four 90° corners. Breaking a shape into a repeated pattern is exactly how programmers think." }
+      ],
+      "bonus": {
+        "title": "Password checker",
+        "scene": "Rule: a password must have at least 8 characters AND contain a number.",
+        "steps": [
+          { "id": "b1", "stem": "Which password passes?", "options": ["kasi2026", "sunshine", "abc12", "1234567"], "answer": 0, "feedback": "kasi2026 has 8 characters and numbers. sunshine has no number; abc12 and 1234567 are too short." },
+          { "id": "b2", "stem": "The code checks \"length > 8\" instead of \"length ≥ 8\". Which password is now wrongly rejected?", "options": ["kasi2026", "kasi20266", "sunshine", "abc"], "answer": 0, "feedback": "kasi2026 is exactly 8 long, so \"> 8\" rejects it. Off-by-one errors are among the most common bugs in the world." }
+        ]
+      }
+    },
+    {
+      "id": "EVIDENCE",
+      "title": "Two witnesses",
+      "work": "law, journalism, policy, social sciences",
+      "links": ["HUMANITIES"],
+      "before_prompt": "How much do you think you'd enjoy weighing up evidence to work out what really happened?",
+      "scene": "A phone went missing from a classroom during break (10:00–10:30).\n• Zola: \"I saw Kabelo at the desk at 10:15. I checked the wall clock.\"\n• Mia: \"Kabelo was with me at the tuck shop for the whole of break.\"\n• The teacher confirms: that classroom's clock has been 20 minutes fast all week.",
+      "steps": [
+        { "id": "1", "stem": "What does the clock fact change?", "options": ["Zola probably saw Kabelo at about 9:55 — before break", "It proves Kabelo took the phone", "It proves Mia is lying", "Nothing"], "answer": 0,
+          "feedback": "Good lawyers test the evidence, not the person. With the clock 20 minutes fast, both witnesses could be telling the truth." },
+        { "id": "2", "stem": "Which extra evidence would help most?", "options": ["The tuck shop till slip showing the time Kabelo paid", "Whether Kabelo is popular", "Zola's marks", "What Mia had for lunch"], "answer": 0,
+          "feedback": "Independent records beat memory. A time-stamped slip can't be swayed by friendship." },
+        { "id": "3", "stem": "What's the fairest thing to say right now?", "options": ["There isn't enough evidence that Kabelo took the phone", "Kabelo is guilty", "Zola is lying", "Mia took the phone"], "answer": 0,
+          "feedback": "\"Not enough evidence\" isn't the same as \"innocent\" — but it's the honest answer. Courts work on exactly this line." }
+      ],
+      "bonus": {
+        "title": "The school rule",
+        "scene": "A rule says: \"No learner may bring a vehicle onto school grounds.\" A learner rides in on a bicycle.",
+        "steps": [
+          { "id": "b1", "stem": "What's the strongest way to decide whether a bicycle counts?", "options": ["Ask what problem the rule was written to solve", "A bicycle has wheels, so yes", "Whatever the principal feels today", "Rules don't really matter"], "answer": 0, "feedback": "Judges often read a rule by its purpose. If it's about cars in a busy parking lot, a bicycle may not be what it meant." },
+          { "id": "b2", "stem": "Which change would make the rule clearer?", "options": ["List what counts: \"cars, motorbikes and scooters\"", "Make the rule longer", "Remove the rule", "Add a bigger fine"], "answer": 0, "feedback": "Clear words prevent arguments later. Drafting rules and contracts like this is a big part of legal work." }
+        ]
+      }
+    },
+    {
+      "id": "BUSINESS",
+      "title": "The vetkoek stall",
+      "work": "business, accounting, economics, entrepreneurship",
+      "links": ["COMMERCE", "BUSINESS_PRACTICAL", "SERVICE"],
+      "before_prompt": "How much do you think you'd enjoy working out prices and profit for a small business?",
+      "scene": "You run a vetkoek stall at school. Ingredients for 50 vetkoek cost R150 (R3 each). The stall fee is R50 a day.",
+      "steps": [
+        { "id": "1", "stem": "You sell all 50 at R6 each. What's your profit for the day?", "options": ["R100", "R150", "R300", "R250"], "answer": 0,
+          "feedback": "R300 in sales − R150 ingredients − R50 stall fee = R100. Every business starts with this sum." },
+        { "id": "2", "stem": "At R8 you'd only sell 35 (you still made 50). At R6 you sell all 50. Which price makes more profit?", "options": ["R6 — R100 profit vs R80", "R8 — a higher price always means more profit", "They make exactly the same", "Neither makes a profit"], "answer": 0,
+          "feedback": "At R8: R280 − R150 − R50 = R80. A higher price can mean less profit if you sell less. Economists call this price sensitivity." },
+        { "id": "3", "stem": "Costs are R200 a day. At R6 each, what's the smallest number you must sell to cover them?", "options": ["34", "33", "50", "25"], "answer": 0,
+          "feedback": "200 ÷ 6 = 33,3 — and you can't sell a third of a vetkoek, so 34. That's your break-even point." }
+      ],
+      "bonus": {
+        "title": "Airtime reseller",
+        "scene": "You buy R100 airtime vouchers for R95 and sell them for R100.",
+        "steps": [
+          { "id": "b1", "stem": "How many must you sell to make R200 profit?", "options": ["40", "20", "200", "95"], "answer": 0, "feedback": "R5 profit each: 200 ÷ 5 = 40." },
+          { "id": "b2", "stem": "A supplier offers R93 each if you buy 100 at once. You sell about 40 a month. Good deal?", "options": ["Only if you can afford to tie up R9 300 for about 2½ months — weigh the extra R200 against the risk", "Always — cheaper is always better", "Never buy in bulk", "Only if the supplier is a friend"], "answer": 0, "feedback": "Cash tied up in stock can't be used for anything else. Weighing that trade-off is what accountants do." }
+        ]
+      }
+    },
+    {
+      "id": "FIELD",
+      "title": "Rain and maize",
+      "work": "agriculture, environmental and earth sciences",
+      "links": ["GEO_ENV", "AGRI"],
+      "before_prompt": "How much do you think you'd enjoy using real data from farms and nature to work things out?",
+      "scene": "A farmer recorded rainfall and maize harvest over five seasons:\n300 mm → 1,2 t/ha · 450 mm → 2,5 t/ha · 600 mm → 3,6 t/ha · 750 mm → 3,8 t/ha · 900 mm → 3,1 t/ha",
+      "steps": [
+        { "id": "1", "stem": "What does the data show?", "options": ["Harvest rises with rain up to about 750 mm, then drops", "More rain always means more maize", "Rain makes no difference", "Harvest drops as rain increases"], "answer": 0,
+          "feedback": "Most living things have a sweet spot. Spotting where a pattern turns is a key skill in every science." },
+        { "id": "2", "stem": "What could explain the drop at 900 mm?", "options": ["Too much water can drown roots and wash nutrients out of the soil", "Maize doesn't need water", "The farmer must have counted wrong", "Rain makes maize grow too fast to harvest"], "answer": 0,
+          "feedback": "Waterlogged soil starves roots of oxygen, and heavy rain leaches nutrients. Scientists suggest causes they can then test." },
+        { "id": "3", "stem": "Next season is forecast to be very dry (about 300 mm). What would you advise?", "options": ["Consider a drought-tolerant variety or water-saving methods", "Plant exactly as before", "Plant twice as much maize", "Stop farming"], "answer": 0,
+          "feedback": "Turning data into practical advice is what agricultural scientists and extension officers do every day." }
+      ],
+      "bonus": {
+        "title": "The river test",
+        "scene": "Mayfly larvae only survive in clean water. Upstream of a new factory: 25 per sample. Downstream: 3 per sample.",
+        "steps": [
+          { "id": "b1", "stem": "What might this suggest?", "options": ["The water downstream may be polluted", "Mayflies like factories", "Nothing at all", "The river flows backwards"], "answer": 0, "feedback": "Living things can be pollution detectors. Ecologists call them bio-indicators." },
+          { "id": "b2", "stem": "How could you be more sure?", "options": ["Take more samples at different times and test the water chemistry", "Take one more sample tomorrow and decide", "Ask the factory and believe them", "Count fish once instead"], "answer": 0, "feedback": "More samples plus a second kind of evidence — that's how environmental scientists build a case that holds up." }
+        ]
+      }
+    },
+    {
+      "id": "DESIGN",
+      "title": "Fix the poster",
+      "work": "design, visual arts, media",
+      "links": ["VISUAL_CREATIVE", "DIGITAL_MEDIA"],
+      "before_prompt": "How much do you think you'd enjoy designing posters, logos or layouts?",
+      "scene": "Two posters for the same school concert.",
+      "visual": "poster_ab",
+      "steps": [
+        { "id": "1", "stem": "Which poster works better from across a busy corridor?", "options": ["Poster B", "Poster A"], "answer": 0,
+          "feedback": "B has one clear headline, then the date and place, then one picture. Designers call this hierarchy: the eye knows where to go first." },
+        { "id": "2", "stem": "Poster B prints the date in yellow on a white background. What do you change?", "options": ["Use dark text on a light background (or light on dark) for contrast", "Make the date smaller", "Add more colours", "Put the date in brackets"], "answer": 0,
+          "feedback": "Contrast is the first thing a designer checks. Yellow on white disappears, especially when printed." },
+        { "id": "3", "stem": "Pick the headline you'd put on the poster.", "options": ["SOUND. LIGHTS. US.", "Soweto Sounds — Live!", "Concert", "Music event information for learners"], "answer": null,
+          "feedback": "No right answer here — designers argue about this all day. Short, specific headlines usually win; that's a starting point, not a rule." }
+      ],
+      "bonus": {
+        "title": "The logo",
+        "scene": "A tutoring club wants a logo that says \"learning together\".",
+        "steps": [
+          { "id": "b1", "stem": "Which idea says it most simply?", "options": ["Two overlapping speech bubbles", "A detailed drawing of the whole school", "The word TUTORING in five colours", "A photo of a textbook page"], "answer": null, "feedback": "Taste question — but simple, symbolic ideas tend to last. What would you have drawn?" },
+          { "id": "b2", "stem": "The logo must work as a tiny WhatsApp profile picture. What matters most?", "options": ["Simple shapes that stay clear when tiny", "Lots of fine detail", "Long text", "Thin, pale lines"], "answer": 0, "feedback": "Good logos survive being shrunk to the size of a fingernail. Designers test this every time." }
+        ]
+      }
+    }
+  ]
+}

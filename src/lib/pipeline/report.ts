@@ -11,6 +11,7 @@ import { ReportG9Schema, ReportG11Schema, SignalsG9Schema, SignalsG11Schema, typ
 import { lintG9, lintG11 } from "@/lib/ai/reportLint";
 import { stripMarkers } from "@/lib/guide/markers";
 import { buildScoreContext } from "@/lib/guide/scoreContext";
+import { skillsPlain } from "@/lib/skills/plain";
 import { loadMessages } from "@/lib/guide/state";
 import { pathwayName } from "@/lib/scoring/doors";
 import { advanceTo, loadResponses } from "@/lib/session/service";
@@ -76,6 +77,8 @@ function profileForWriter(p: ScoreProfile) {
   return {
     ...p,
     ranking: undefined,
+    // Plain words only: no check percentages reach the writer.
+    skills: skillsPlain(p.skills, p.marks),
     combinations: p.combinations.map((c) => ({
       ...c,
       doors_named: Object.fromEntries(Object.entries(c.doors).map(([id, st]) => [pathwayName(id), st])),

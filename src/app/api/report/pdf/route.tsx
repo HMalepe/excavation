@@ -6,6 +6,7 @@ import { getOrCreateSession } from "@/lib/session/service";
 import { loadReportBundle } from "@/lib/report/load";
 import { adminDb } from "@/lib/db/admin";
 import { G9Pdf, G11Pdf, TeacherPdf, ParentPdf, renderPdf } from "@/lib/pdf/documents";
+import { skillsLines } from "@/lib/skills/plain";
 import type { ParentSummary, ReportG9, ReportG11, TeacherSummary } from "@/lib/ai/schemas";
 
 export const runtime = "nodejs";
@@ -30,7 +31,7 @@ export const GET = handle(async (req: Request) => {
       const b = await loadReportBundle(session.id);
       if (b.report?.status !== "released") throw new HttpError(404, "Your report isn't ready yet.");
       const doc = session.touchpoint === "G9_FOUNDATION"
-        ? <G9Pdf r={b.report.content as ReportG9} name={caller.learner.first_name} />
+        ? <G9Pdf r={b.report.content as ReportG9} name={caller.learner.first_name} part1={b.profile?.skills ? skillsLines(b.profile.skills, b.profile.marks) : null} />
         : <G11Pdf r={b.report.content as ReportG11} name={caller.learner.first_name} />;
       return pdf(await renderPdf(doc), "excavation-report");
     }
