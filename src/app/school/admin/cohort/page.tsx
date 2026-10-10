@@ -5,6 +5,7 @@ import { audit } from "@/lib/audit";
 import { cohortStats, MIN_GROUP, type CohortLearner, type Distribution } from "@/lib/cohort/aggregate";
 import { combinationById } from "@/lib/config/subjectMap";
 import { IDENTITY_FRIENDLY, RIASEC_FRIENDLY } from "@/lib/scoring/scales";
+import { Stat } from "@/components/ui/Stat";
 import { StaffShell } from "@/components/ui/StaffShell";
 import { ADMIN_NAV } from "../page";
 import type { ScoreProfile } from "@/lib/scoring/types";
@@ -67,13 +68,13 @@ export default async function Cohort() {
       <p className="text-muted">Group statistics only. Any group smaller than {MIN_GROUP} learners is hidden so no individual can be identified. Results are never broken down by race.</p>
       {stats.grades.map((g) => (
         <section key={g.grade} className="space-y-3">
-          <h2 className="text-2xl">Grade {g.grade}</h2>
+          <h2 className="text-3xl">Grade {g.grade}</h2>
           {g.suppressed ? <p className="card text-muted">Fewer than {MIN_GROUP} learners in this grade — nothing is shown.</p> : (
             <>
               <div className="grid gap-3 sm:grid-cols-3">
-                <div className="card"><p className="text-sm text-muted">Learners</p><p className="font-display text-3xl">{g.learners}</p></div>
-                <div className="card"><p className="text-sm text-muted">Completed</p><p className="font-display text-3xl">{g.completed}</p></div>
-                <div className="card"><p className="text-sm text-muted">Completion rate</p><p className="font-display text-3xl">{g.completion_rate}%</p></div>
+                <Stat label="Learners" value={g.learners} layer={1} />
+                <Stat label="Completed" value={g.completed} layer={3} />
+                <Stat label="Completion rate" value={`${g.completion_rate}%`} layer={4} />
               </div>
               <div className="grid gap-3 lg:grid-cols-2">
                 <Dist title="Strongest interest (first letter of the code)" d={g.interest_first_letter} kind="riasec" />

@@ -11,6 +11,10 @@ export default function AppError({ error, reset }: { error: Error & { digest?: s
   useEffect(() => {
     reportClientError("boundary", error);
     try {
+      const t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch { /* storage blocked */ }
+    try {
       const last = Number(sessionStorage.getItem("auto-reset-at") ?? 0);
       if (Date.now() - last > 30_000) {
         sessionStorage.setItem("auto-reset-at", String(Date.now()));

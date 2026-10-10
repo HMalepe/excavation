@@ -33,9 +33,9 @@ export default async function SchoolSafeguarding() {
           const l = learners?.find((x) => x.id === e.learner_id);
           const m = msgs?.find((x) => x.id === e.trigger_message_id);
           return (
-            <li key={e.id} className={`card space-y-2 ${!e.school_confirmed_at ? "border-danger" : ""}`}>
-              <p><strong className="text-danger">URGENT</strong> · {l?.first_name} {l?.last_name} · Grade {l?.current_grade} {l?.class_label ?? ""} · {new Date(e.created_at).toLocaleString("en-ZA")}</p>
-              {m && <p className="rounded-xl bg-canvas p-3 text-sm">&ldquo;{m.content}&rdquo;</p>}
+            <li key={e.id} className={`card space-y-3 ${!e.school_confirmed_at ? "border-l-[10px] !border-l-danger" : ""}`}>
+              <p><strong className="chip !border-danger text-danger">URGENT</strong>  · {l?.first_name} {l?.last_name} · Grade {l?.current_grade} {l?.class_label ?? ""} · {new Date(e.created_at).toLocaleString("en-ZA")}</p>
+              {m && <p className="rounded-[14px] border-[1.5px] border-line bg-sunken/60 p-3">&ldquo;{m.content}&rdquo;</p>}
               {e.school_confirmed_at ? <p className="text-sm text-ok">Confirmed {new Date(e.school_confirmed_at).toLocaleString("en-ZA")}</p>
                 : <SafeguardingActions eventId={e.id} confirmed={false} reviewed endpoint="/api/school/safeguarding" school />}
             </li>
@@ -43,7 +43,7 @@ export default async function SchoolSafeguarding() {
         })}
         {!events?.length && <li className="text-muted">No alerts.</li>}
       </ul>
-      <details className="card"><summary className="cursor-pointer font-semibold">Crisis resources shown to learners</summary><div className="mt-3"><Resources compact /></div></details>
+      <details className="card"><summary className="font-display font-bold">Crisis resources shown to learners</summary><div className="mt-3"><Resources compact /></div></details>
     </StaffShell>
   );
 }

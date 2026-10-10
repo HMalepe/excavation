@@ -86,20 +86,21 @@ export function ScoredLayer({ sectionId, title, stem, intro, items, startIndex, 
   return (
     <section aria-labelledby="sec-title" className="space-y-6">
       <header className="space-y-2">
-        <h1 id="sec-title" className="text-2xl">{title}</h1>
+        <p className="eyebrow">Part 1 · questions</p>
+        <h1 id="sec-title" className="text-4xl">{title}</h1>
         {offset === 0 && startIndex === 0 && intro && <p className="text-muted">{intro}</p>}
         {stem && <p className="font-semibold text-accent-ink">{stem}</p>}
       </header>
 
       <ol className="space-y-6">
         {page.map((it) => (
-          <li key={it.id} className="card space-y-4">
-            <p id={`q-${it.id}`} className="text-lg leading-snug">{it.text}</p>
+          <li key={it.id} className="card-raised space-y-4">
+            <p id={`q-${it.id}`} className="font-display text-xl font-semibold leading-snug tracking-[-0.01em]">{it.text}</p>
             <div role="radiogroup" aria-labelledby={`q-${it.id}`} className={`grid gap-2 ${it.points.length === 3 ? "grid-cols-3" : "sm:grid-cols-5"}`}>
               {it.points.map(([v, label]) => {
                 const on = values[it.id] === v;
                 return (
-                  <label key={v} className={`flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-3 py-3 text-center text-sm font-semibold transition-colors ${on ? "border-edge bg-accent text-on-accent" : "border-line bg-canvas hover:border-edge"}`}>
+                  <label key={v} className={`choice justify-center text-center text-sm ${on ? "choice-on" : ""}`}>
                     <input type="radio" name={it.id} value={v} checked={on} onChange={() => choose(it.id, v)} className="sr-only" />
                     {label}
                   </label>
@@ -111,9 +112,9 @@ export function ScoredLayer({ sectionId, title, stem, intro, items, startIndex, 
         ))}
       </ol>
 
-      {error && <p role="alert" className="text-danger">{error}</p>}
+      {error && <p role="alert" className="alert">{error}</p>}
       <button className="btn-primary w-full" disabled={!ready || busy} onClick={next}>{busy ? "Saving…" : "Next"}</button>
-      <p className="text-center text-xs text-muted">Every answer is saved as you go. {sectionId === "context" ? "These don't affect your results." : ""}</p>
+      <p className="text-center text-sm text-muted">Every answer is saved as you go. {sectionId === "context" ? "These don't affect your results." : ""}</p>
     </section>
   );
 }

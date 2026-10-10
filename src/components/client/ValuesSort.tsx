@@ -47,7 +47,8 @@ export function ValuesSort({ cards, resources }: { cards: Card[]; resources: Rea
   return (
     <section className="space-y-6">
       <header className="space-y-2">
-        <h1 className="text-2xl">What matters most</h1>
+        <p className="eyebrow">{step === "top" ? "Step 1 of 2" : "Step 2 of 2"}</p>
+        <h1 className="text-4xl">What matters most</h1>
         <p className="text-muted">
           {step === "top" ? "Tap the 3 cards that matter MOST to you. The first one you tap is number 1. Use the arrows to change the order." : "Now tap the 2 cards that matter LEAST to you."}
         </p>
@@ -57,11 +58,11 @@ export function ValuesSort({ cards, resources }: { cards: Card[]; resources: Rea
         <ol className="space-y-2" aria-label="Your top three, in order">
           {top.map((id, i) => (
             <li key={id} draggable onDragStart={() => setDragId(id)} onDragOver={(e) => e.preventDefault()} onDrop={() => dropOn(id)}
-              className="flex items-center gap-3 rounded-xl border border-edge bg-surface px-3 py-2">
-              <span className="font-display w-6 text-center text-2xl text-accent-ink">{i + 1}</span>
+              className="flex items-center gap-3 rounded-[14px] border-2 border-edge bg-surface px-3 py-2" style={{ boxShadow: "3px 3px 0 var(--shadow)" }}>
+              <span className="font-display flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-edge bg-accent text-lg font-extrabold text-on-accent">{i + 1}</span>
               <span className="flex-1">{text(id)}</span>
-              <button aria-label="Move up" className="btn-ghost min-h-10 px-3 py-1" onClick={() => move(i, -1)} disabled={i === 0}>↑</button>
-              <button aria-label="Move down" className="btn-ghost min-h-10 px-3 py-1" onClick={() => move(i, 1)} disabled={i === top.length - 1}>↓</button>
+              <button aria-label="Move up" className="btn-ghost min-h-11 min-w-11 px-3 py-1" onClick={() => move(i, -1)} disabled={i === 0}>↑</button>
+              <button aria-label="Move down" className="btn-ghost min-h-11 min-w-11 px-3 py-1" onClick={() => move(i, 1)} disabled={i === top.length - 1}>↓</button>
             </li>
           ))}
         </ol>
@@ -74,14 +75,14 @@ export function ValuesSort({ cards, resources }: { cards: Card[]; resources: Rea
           return (
             <button key={c.id} onClick={() => (step === "top" ? toggleTop(c.id) : toggleBottom(c.id))} disabled={full}
               aria-pressed={on}
-              className={`min-h-14 rounded-xl border px-4 py-3 text-left transition-colors disabled:opacity-40 ${on ? "border-danger bg-sunken" : "border-line bg-surface hover:border-edge"}`}>
-              {c.text}{on ? <span className="ml-2 text-xs text-danger">least</span> : null}
+              className={`choice min-h-14 justify-between gap-2 text-left disabled:opacity-40 ${on ? "!border-danger !bg-danger/10" : ""}`}>
+              <span>{c.text}</span>{on ? <span className="chip !border-danger text-danger">least</span> : null}
             </button>
           );
         })}
       </div>
 
-      {error && <p role="alert" className="text-danger">{error}</p>}
+      {error && <p role="alert" className="alert">{error}</p>}
       {step === "top" ? (
         <button className="btn-primary w-full" disabled={top.length !== 3} onClick={() => setStep("bottom")}>Next</button>
       ) : (

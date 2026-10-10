@@ -2,9 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { learn } from "./api";
+import { IconTile } from "@/components/ui/Brand";
 import type { CheckView, OptionView, TasterStepView, TasterView } from "@/lib/skills/views";
 
-const ErrorLine = ({ error }: { error: string | null }) => (error ? <p role="alert" className="text-danger">{error}</p> : null);
+const ErrorLine = ({ error }: { error: string | null }) => (error ? <p role="alert" className="alert">{error}</p> : null);
 
 function OptionList({ name, options, chosen, onChoose, disabled, correct }: {
   name: string; options: OptionView[]; chosen: number | null; onChoose: (i: number) => void; disabled?: boolean; correct?: number | null;
@@ -14,9 +15,9 @@ function OptionList({ name, options, chosen, onChoose, disabled, correct }: {
       {options.map((o) => {
         const on = chosen === o.i;
         const isRight = correct !== undefined && correct !== null && o.i === correct;
-        const tone = disabled && isRight ? "border-2 border-ok bg-ok/15" : on ? "border-edge bg-accent text-on-accent" : "border-line bg-canvas hover:border-edge";
+        const tone = disabled && isRight ? "!border-ok !bg-ok/15" : on ? "choice-on" : "";
         return (
-          <label key={o.i} className={`flex min-h-12 cursor-pointer items-center rounded-xl border px-4 py-3 text-base transition-colors ${tone} ${disabled ? "cursor-default" : ""}`}>
+          <label key={o.i} className={`choice text-base ${tone} ${disabled ? "!cursor-default" : ""}`}>
             <input type="radio" name={name} value={o.i} checked={on} disabled={disabled} onChange={() => onChoose(o.i)} className="sr-only" />
             <span className="whitespace-pre-line">{o.text}</span>
             {disabled && isRight && <span className="ml-auto pl-3 text-sm font-semibold" aria-label="correct answer">✓</span>}
@@ -33,7 +34,7 @@ function Scale({ name, labels, value, onChange }: { name: string; labels: string
       {labels.map((l, i) => {
         const v = i + 1, on = value === v;
         return (
-          <label key={v} className={`flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-3 py-3 text-center text-sm font-semibold transition-colors ${on ? "border-edge bg-accent text-on-accent" : "border-line bg-canvas hover:border-edge"}`}>
+          <label key={v} className={`choice justify-center text-center text-sm ${on ? "choice-on" : ""}`}>
             <input type="radio" name={name} value={v} checked={on} onChange={() => onChange(v)} className="sr-only" />{l}
           </label>
         );
@@ -63,10 +64,13 @@ export function CheckRunner({ v }: { v: CheckView }) {
   if (!started) {
     return (
       <section className="space-y-6">
-        <p className="text-sm uppercase tracking-widest text-muted">Check {v.checkNumber} of {v.checkCount} · about {v.minutes} minutes</p>
-        <h1 className="text-3xl">{v.title}</h1>
+        <div className="flex items-center gap-4">
+          <IconTile name={v.check} layer={v.check === "maths" ? 2 : v.check === "science" ? 3 : 1} />
+          <p className="eyebrow">Check {v.checkNumber} of {v.checkCount} · about {v.minutes} minutes</p>
+        </div>
+        <h1 className="text-5xl">{v.title}</h1>
         <p className="text-lg leading-relaxed">{v.intro}</p>
-        <ul className="card list-disc space-y-1 pl-9 text-muted">
+        <ul className="note list-disc space-y-1 pl-9">
           <li>No timer. Take your time.</li>
           <li>&ldquo;I&apos;m not sure&rdquo; is a real answer — use it instead of guessing.</li>
           <li>You won&apos;t see right or wrong here. Your report tells you what it showed.</li>
@@ -83,17 +87,17 @@ export function CheckRunner({ v }: { v: CheckView }) {
   return (
     <section className="space-y-5" aria-live="polite">
       <header className="flex items-baseline justify-between gap-3">
-        <h1 className="text-xl">{v.title}</h1>
+        <h1 className="text-2xl">{v.title}</h1>
         <span className="text-sm text-muted">{v.index + 1} of {v.total}</span>
       </header>
       {v.passage && (
         <details open className="card">
-          <summary className="cursor-pointer font-semibold text-accent-ink">{v.passage.title}</summary>
+          <summary className="font-display font-bold">{v.passage.title}</summary>
           <div className="mt-3 space-y-3 text-lg leading-relaxed">{v.passage.text.split(/\n{2,}/).map((p, i) => <p key={i}>{p}</p>)}</div>
         </details>
       )}
-      <div className="card space-y-4">
-        <p id="stem" className="text-lg leading-snug">{v.stem}</p>
+      <div className="card-raised space-y-4">
+        <p id="stem" className="font-display text-xl font-semibold leading-snug tracking-[-0.01em]">{v.stem}</p>
         <OptionList key={v.itemId} name={v.itemId} options={v.options} chosen={chosen} onChoose={setChosen} disabled={busy} />
       </div>
       <ErrorLine error={error} />
@@ -157,7 +161,7 @@ function StepRunner({ steps, onDone, prefix }: { steps: TasterStepView[]; onDone
         <p className="text-lg leading-snug">{s.stem}</p>
         <OptionList key={`${prefix}${i}`} name={`${prefix}${i}`} options={s.options} chosen={chosen} onChoose={setChosen} disabled={revealed} correct={revealed ? s.answer : undefined} />
         {revealed && (
-          <p className="rounded-xl bg-canvas p-4 leading-relaxed" role="status">
+          <p className="rounded-[14px] border-[1.5px] border-line bg-sunken/60 p-4 leading-relaxed" role="status">
             {verdict === null ? "" : verdict ? <strong className="text-ok">Yes. </strong> : <strong className="text-accent-ink">Not quite. </strong>}
             {s.feedback}
           </p>
@@ -193,14 +197,17 @@ export function TasterRunner({ v }: { v: TasterView }) {
   return (
     <section className="space-y-6">
       <header className="space-y-1">
-        <p className="text-sm uppercase tracking-widest text-muted">Taster {v.index + 1} of {v.total} · {v.work}</p>
-        <h1 className="text-3xl">{phase === "bonus" || phase === "bonus_after" ? v.bonus.title : v.title}</h1>
+        <div className="flex items-center gap-4">
+          <IconTile name={v.id} layer={((v.index % 5) + 1) as 1 | 2 | 3 | 4 | 5} />
+          <p className="eyebrow">Taster {v.index + 1} of {v.total} · {v.work}</p>
+        </div>
+        <h1 className="text-5xl">{phase === "bonus" || phase === "bonus_after" ? v.bonus.title : v.title}</h1>
       </header>
 
       {phase === "before" && (
         <div className="space-y-5">
           {v.index === 0 && (
-            <p className="card leading-relaxed">Six tiny slices of real work, about 3 minutes each. You&apos;ll see how you did after every step. What we care about most is how much you <em>enjoy</em> it — there&apos;s no wrong way to feel.</p>
+            <p className="note leading-relaxed">Six tiny slices of real work, about 3 minutes each. You&apos;ll see how you did after every step. What we care about most is how much you <em>enjoy</em> it — there&apos;s no wrong way to feel.</p>
           )}
           <p className="text-lg">{v.before_prompt}</p>
           <Scale name="before" labels={v.before_scale} value={before} onChange={setBefore} />
@@ -212,7 +219,7 @@ export function TasterRunner({ v }: { v: TasterView }) {
 
       {phase === "task" && (
         <div className="space-y-4">
-          <p className="card whitespace-pre-line text-lg leading-relaxed">{v.scene}</p>
+          <p className="card-raised whitespace-pre-line text-lg leading-relaxed">{v.scene}</p>
           {v.visual === "poster_ab" && <PosterAB />}
           <StepRunner steps={v.steps} prefix="s" onDone={(c) => { setSteps(c); setPhase("after"); }} />
         </div>
@@ -239,7 +246,7 @@ export function TasterRunner({ v }: { v: TasterView }) {
 
       {phase === "bonus" && (
         <div className="space-y-4">
-          <p className="card whitespace-pre-line text-lg leading-relaxed">{v.bonus.scene}</p>
+          <p className="card-raised whitespace-pre-line text-lg leading-relaxed">{v.bonus.scene}</p>
           <StepRunner steps={v.bonus.steps} prefix="b" onDone={(c) => { setBonusSteps(c); setPhase("bonus_after"); }} />
         </div>
       )}
@@ -272,7 +279,8 @@ export function PartOneBreak() {
   }
   return (
     <section className="space-y-6">
-      <h1 className="text-3xl">Part 1 is done.</h1>
+      <p className="eyebrow">Halfway</p>
+      <h1 className="text-5xl">Part 1 is done.</h1>
       <p className="text-lg leading-relaxed">Questions, checks, tasks — all saved. Part 2 is a conversation with The Guide, about 30–40 minutes. It goes best when you&apos;re fresh, so this is a good place for a break.</p>
       <p className="text-muted">If you stop now, log in with the same codes later (or tomorrow) and you&apos;ll start right at the conversation.</p>
       <ErrorLine error={error} />

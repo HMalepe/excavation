@@ -42,7 +42,8 @@ export function SettingsForm({ initial, combinations, subjects }: { initial: Set
   return (
     <div className="space-y-6">
       <section className="card space-y-3">
-        <h2 className="text-xl">Safeguarding contacts <span className="text-sm text-danger">(required — no school goes live without them)</span></h2>
+        <h2 className="text-2xl">Safeguarding contacts <span className="chip !border-danger align-middle text-danger">required</span></h2>
+        <p className="text-sm text-muted">No school goes live without a designated contact and a backup.</p>
         <div className="grid gap-3 sm:grid-cols-3">
           <Field k="safeguarding_contact_name" label="Designated contact" /><Field k="safeguarding_contact_phone" label="Phone (for us to call)" /><Field k="safeguarding_contact_email" label="Email" type="email" />
           <Field k="safeguarding_backup_name" label="Backup contact" /><Field k="safeguarding_backup_phone" label="Backup phone" /><Field k="safeguarding_backup_email" label="Backup email" type="email" />
@@ -50,21 +51,21 @@ export function SettingsForm({ initial, combinations, subjects }: { initial: Set
         </div>
       </section>
       <section className="card space-y-3">
-        <h2 className="text-xl">Subject-change deadlines</h2>
+        <h2 className="text-2xl">Subject-change deadlines</h2>
         <p className="text-sm text-muted">The Grade 11 verdict depends on this. Without a deadline, reports never say a switch is possible.</p>
         <div className="grid gap-3 sm:grid-cols-2"><Field k="subject_change_deadline_g10" label="Grade 10 deadline" type="date" /><Field k="subject_change_deadline_g11" label="Grade 11 deadline" type="date" /></div>
       </section>
       <section className="card space-y-3">
-        <h2 className="text-xl">Combinations you offer (Grade 10)</h2>
+        <h2 className="text-2xl">Combinations you offer (Grade 10)</h2>
         <div className="grid gap-2 sm:grid-cols-2">{combinations.map((c) => (
-          <label key={c.id} className="flex items-center gap-2"><input type="checkbox" checked={s.offered_combination_ids.includes(c.id)} onChange={() => toggle("offered_combination_ids", c.id)} />{c.name}</label>
+          <label key={c.id} className="choice gap-3"><input type="checkbox" className="h-5 w-5 accent-[var(--accent)]" checked={s.offered_combination_ids.includes(c.id)} onChange={() => toggle("offered_combination_ids", c.id)} />{c.name}</label>
         ))}</div>
       </section>
       <section className="card space-y-3">
-        <h2 className="text-xl">FET subjects you offer · can a Grade 11 learner switch into/out of it?</h2>
+        <h2 className="text-2xl">FET subjects you offer · can a Grade 11 learner switch into/out of it?</h2>
         <div className="grid gap-2 sm:grid-cols-2">{subjects.map((sub) => (
           <div key={sub} className="flex items-center justify-between gap-2">
-            <label className="flex items-center gap-2"><input type="checkbox" checked={s.offered_subjects_fet.includes(sub)} onChange={() => toggle("offered_subjects_fet", sub)} />{sub}</label>
+            <label className="flex items-center gap-3"><input type="checkbox" className="h-5 w-5 accent-[var(--accent)]" checked={s.offered_subjects_fet.includes(sub)} onChange={() => toggle("offered_subjects_fet", sub)} />{sub}</label>
             <select aria-label={`Timetable allows switching ${sub}`} className="field min-h-9 w-36 py-1 text-sm" value={s.timetable_allows[sub] === undefined ? "" : String(s.timetable_allows[sub])}
               onChange={(e) => { const v = e.target.value; const next = { ...s.timetable_allows }; if (v === "") delete next[sub]; else next[sub] = v === "true"; set("timetable_allows", next); }}>
               <option value="">Not sure</option><option value="true">Switch possible</option><option value="false">No switch</option>
@@ -73,7 +74,7 @@ export function SettingsForm({ initial, combinations, subjects }: { initial: Set
         ))}</div>
       </section>
       <section className="card space-y-3">
-        <h2 className="text-xl">Your own thresholds (optional)</h2>
+        <h2 className="text-2xl">Your own thresholds (optional)</h2>
         <p className="text-sm text-muted">School values always win over the defaults. Readiness: <code>{`{"Physical Sciences": {"needs": {"Natural Sciences": 60}}}`}</code>. Grade 11 pass mark you require: <code>{`{"Physical Sciences": 60}`}</code></p>
         <div className="grid gap-3 sm:grid-cols-2">
           <textarea aria-label="Readiness overrides JSON" className="field min-h-32 font-mono text-xs" value={overrides} onChange={(e) => setOverrides(e.target.value)} />
@@ -81,7 +82,7 @@ export function SettingsForm({ initial, combinations, subjects }: { initial: Set
         </div>
       </section>
       <button className="btn-primary" disabled={busy} onClick={save}>{busy ? "Saving…" : "Save settings"}</button>
-      {msg && <p role="status">{msg}</p>}
+      {msg && <p role="status" className="note">{msg}</p>}
     </div>
   );
 }
@@ -96,9 +97,9 @@ export function ImportBox({ kind, help, example }: { kind: "roster" | "marks"; h
   }
   return (
     <section className="card space-y-3">
-      <h2 className="text-xl">{kind === "roster" ? "Import learners" : "Import marks (SA-SAMS export)"}</h2>
+      <h2 className="text-2xl">{kind === "roster" ? "Import learners" : "Import marks (SA-SAMS export)"}</h2>
       <p className="text-sm text-muted">{help}</p>
-      <pre className="overflow-x-auto rounded-xl bg-canvas p-2 text-xs">{example}</pre>
+      <pre className="overflow-x-auto rounded-[14px] border-[1.5px] border-line bg-sunken/60 p-3 text-xs">{example}</pre>
       <input type="file" accept=".csv,text/csv" disabled={busy} onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0])} />
       {result && (
         <div className="space-y-2">

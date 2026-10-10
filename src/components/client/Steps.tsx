@@ -16,7 +16,7 @@ function useStep() {
   };
   return { busy, error, run };
 }
-const ErrorLine = ({ error }: { error: string | null }) => (error ? <p role="alert" className="text-danger">{error}</p> : null);
+const ErrorLine = ({ error }: { error: string | null }) => (error ? <p role="alert" className="alert">{error}</p> : null);
 
 // ---------- spec 09 §3.3 assent ----------
 export function Assent({ firstName }: { firstName: string }) {
@@ -24,16 +24,23 @@ export function Assent({ firstName }: { firstName: string }) {
   const [question, setQuestion] = useState(false);
   return (
     <section className="space-y-6">
-      <h1 className="text-3xl">Hey {firstName}. Before you start:</h1>
-      <ul className="space-y-3 text-lg">
-        <li>This isn&apos;t a test. There are no wrong answers.</li>
-        <li>You&apos;ll chat with <strong>The Guide</strong>, an AI. It&apos;s built to listen properly.</li>
-        <li>Your report is yours. Teachers only see a summary if you say yes.</li>
-        <li>If something you write makes us think you might be unsafe, we&apos;ll make sure an adult at school who can help knows. That&apos;s the only exception.</li>
-        <li>You can pause or stop any time.</li>
+      <div className="space-y-2">
+        <p className="eyebrow">Before you start</p>
+        <h1 className="text-5xl">Hey {firstName}.</h1>
+      </div>
+      <ul className="space-y-3">
+        {[
+          <>This isn&apos;t a test. There are no wrong answers.</>,
+          <>You&apos;ll chat with <strong>The Guide</strong>, an AI. It&apos;s built to listen properly.</>,
+          <>Your report is yours. Teachers only see a summary if you say yes.</>,
+          <>If something you write makes us think you might be unsafe, we&apos;ll make sure an adult at school who can help knows. That&apos;s the only exception.</>,
+          <>You can pause or stop any time.</>,
+        ].map((t, i) => (
+          <li key={i} className="card flex gap-4 text-lg leading-snug"><span className="diamond" aria-hidden="true" /><span>{t}</span></li>
+        ))}
       </ul>
       {question && (
-        <div className="card space-y-2 text-muted">
+        <div className="note space-y-2">
           <p>Good — ask your LO teacher anything you&apos;re unsure about before you start. You can come back to this screen any time with the same codes.</p>
           <p>Questions about your information can also go to privacy@theexcavation.co.za.</p>
         </div>
@@ -59,7 +66,7 @@ export function Intake() {
   const { busy, error, run } = useStep();
   return (
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); const f = new FormData(e.currentTarget); run("intake", Object.fromEntries(INTAKE_QUESTIONS.map((q) => [q.key, String(f.get(q.key) ?? "")]))); }}>
-      <h1 className="text-2xl">First, three quick ones about you.</h1>
+      <h1 className="text-4xl">First, three quick ones about you.</h1>
       {INTAKE_QUESTIONS.map((q) => (
         <div key={q.key}>
           <label className="label text-base text-fg" htmlFor={q.key}>{q.label}</label>
@@ -79,7 +86,7 @@ export function Snapshot({ subjects, imported }: { subjects: string[]; imported:
   if (imported) {
     return (
       <section className="space-y-6">
-        <h1 className="text-2xl">Your latest marks</h1>
+        <h1 className="text-4xl">Your latest marks</h1>
         <p className="text-muted">Your school sent these. If something looks wrong, tell your LO teacher.</p>
         <ul className="card divide-y divide-line">
           {Object.entries(imported).map(([s, m]) => <li key={s} className="flex justify-between py-2"><span>{s}</span><span className="font-semibold">{m}%</span></li>)}
@@ -102,7 +109,7 @@ export function Snapshot({ subjects, imported }: { subjects: string[]; imported:
       }
       run("snapshot", { marks, estimates });
     }}>
-      <h1 className="text-2xl">Your latest marks</h1>
+      <h1 className="text-4xl">Your latest marks</h1>
       <p className="text-muted">Type your latest term mark for each subject. If you&apos;re not sure, give your best guess and tick &lsquo;estimate&rsquo;. Honest marks give you honest advice.</p>
       <div className="space-y-3">
         {subjects.map((s) => (
@@ -125,7 +132,7 @@ export function GuideNotice({ offerRetake }: { offerRetake: boolean }) {
   if (offerRetake) {
     return (
       <section className="space-y-6">
-        <h1 className="text-2xl">Quick check before the next part</h1>
+        <h1 className="text-4xl">Quick check before the next part</h1>
         <p>Some of your answers may not have come through the way you meant them. You can redo the questions (about 20 minutes), or carry on — the conversation will carry more weight in your report.</p>
         <ErrorLine error={error} />
         <div className="grid gap-3">
@@ -137,8 +144,8 @@ export function GuideNotice({ offerRetake }: { offerRetake: boolean }) {
   }
   return (
     <section className="space-y-6">
-      <h1 className="text-2xl">Next: a conversation</h1>
-      <p className="card text-lg leading-relaxed">
+      <h1 className="text-4xl">Next: a conversation</h1>
+      <p className="card-raised text-lg leading-relaxed">
         For this part you&apos;ll chat with The Guide, an AI built for The Excavation. It&apos;s designed to listen carefully and ask good questions.
         Nobody at school sees this conversation unless you choose to share it, except if The Guide thinks you might be unsafe; then someone who can help will be told.
       </p>
@@ -153,15 +160,15 @@ export function TwoYears({ headline, fits, taken }: { headline: string | null; f
   const { busy, error, run } = useStep();
   return (
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); run("two_years", { text: String(new FormData(e.currentTarget).get("text") ?? "") }); }}>
-      <h1 className="text-2xl">Two years ago…</h1>
+      <h1 className="text-4xl">Two years ago…</h1>
       {headline ? (
         <div className="card space-y-3">
-          <p className="font-display text-xl">&ldquo;{headline}&rdquo;</p>
+          <p className="font-display text-2xl font-bold leading-snug">&ldquo;{headline}&rdquo;</p>
           {fits.length > 0 && <p className="text-muted">Your top combinations were: {fits.join(" · ")}</p>}
           {taken.length > 0 && <p className="text-muted">You took: {taken.join(", ")}</p>}
         </div>
       ) : (
-        <p className="card text-muted">We don&apos;t have a Grade 9 report for you, so today becomes your first baseline. That&apos;s fine — your report will say so.</p>
+        <p className="note">We don&apos;t have a Grade 9 report for you, so today becomes your first baseline. That&apos;s fine — your report will say so.</p>
       )}
       <div>
         <label className="label text-base text-fg" htmlFor="text">Reading this now — what still fits, and what doesn&apos;t?</label>
@@ -181,7 +188,7 @@ export function MarksG11({ imported, subjects }: { imported: { subject: string; 
   if (imported) {
     return (
       <section className="space-y-6">
-        <h1 className="text-2xl">Your marks</h1>
+        <h1 className="text-4xl">Your marks</h1>
         <p className="text-muted">From your school: Grade 10 final and your latest Grade 11 term.</p>
         <table className="card w-full text-left">
           <thead><tr className="text-sm text-muted"><th className="py-1">Subject</th><th>Gr 10</th><th>Gr 11</th></tr></thead>
@@ -202,7 +209,7 @@ export function MarksG11({ imported, subjects }: { imported: { subject: string; 
         estimates: valid.filter((r) => r.est).map((r) => r.subject),
       });
     }}>
-      <h1 className="text-2xl">Your subjects and marks</h1>
+      <h1 className="text-4xl">Your subjects and marks</h1>
       <p className="text-muted">Grade 10 final and your latest Grade 11 term. Best guess is fine — tick &lsquo;estimate&rsquo;.</p>
       <datalist id="fet">{subjects.map((s) => <option key={s} value={s} />)}</datalist>
       <div className="space-y-3">
@@ -228,15 +235,15 @@ export function PerSubjectLikert({ action, subject, header, stem, items, points 
   const done = items.every((i) => answers[i.id] !== undefined);
   return (
     <section className="space-y-6">
-      <h1 className="text-2xl">{header}</h1>
-      {stem && <p className="font-semibold text-accent-ink">{stem}</p>}
+      <h1 className="text-4xl">{header}</h1>
+      {stem && <p className="eyebrow !normal-case !tracking-normal text-base">{stem}</p>}
       <ol className="space-y-5">
         {items.map((it) => (
-          <li key={it.id} className="card space-y-3">
+          <li key={it.id} className="card-raised space-y-3">
             <p id={`q-${it.id}`}>{it.text}</p>
             <div role="radiogroup" aria-labelledby={`q-${it.id}`} className="grid gap-2 sm:grid-cols-5">
               {points.map(([v, label]) => (
-                <label key={v} className={`flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-2 py-2 text-center text-sm font-semibold ${answers[it.id] === v ? "border-edge bg-accent text-on-accent" : "border-line bg-canvas"}`}>
+                <label key={v} className={`choice justify-center px-2 text-center text-sm ${answers[it.id] === v ? "choice-on" : ""}`}>
                   <input type="radio" className="sr-only" name={it.id} checked={answers[it.id] === v} onChange={() => setAnswers((a) => ({ ...a, [it.id]: v }))} />{label}
                 </label>
               ))}
@@ -256,7 +263,7 @@ export function CareerUpdate({ cu2Options, cu3Options }: { cu2Options: string[];
   const [cu3, setCu3] = useState<string[]>([]);
   return (
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); run("career_update", { cu1: String(new FormData(e.currentTarget).get("cu1") ?? ""), cu2, cu3 }); }}>
-      <h1 className="text-2xl">Where you&apos;re heading</h1>
+      <h1 className="text-4xl">Where you&apos;re heading</h1>
       <div>
         <label className="label text-base text-fg" htmlFor="cu1">What career or field are you leaning towards right now? (It&apos;s fine to say &ldquo;not sure&rdquo;.)</label>
         <input id="cu1" name="cu1" className="field" maxLength={300} required />
@@ -264,7 +271,7 @@ export function CareerUpdate({ cu2Options, cu3Options }: { cu2Options: string[];
       <fieldset className="space-y-2">
         <legend className="mb-2">Compared to Grade 9, your direction is…</legend>
         {cu2Options.map((o) => (
-          <label key={o} className={`flex min-h-12 items-center gap-3 rounded-xl border px-4 ${cu2 === o ? "border-edge" : "border-line"}`}>
+          <label key={o} className={`choice gap-3 ${cu2 === o ? "choice-on" : ""}`}>
             <input type="radio" name="cu2" checked={cu2 === o} onChange={() => setCu2(o)} /> {o}
           </label>
         ))}
@@ -272,7 +279,7 @@ export function CareerUpdate({ cu2Options, cu3Options }: { cu2Options: string[];
       <fieldset className="space-y-2">
         <legend className="mb-2">What have you done to explore careers since Grade 9? Tick all that apply.</legend>
         {cu3Options.map((o) => (
-          <label key={o} className={`flex min-h-12 items-center gap-3 rounded-xl border px-4 ${cu3.includes(o) ? "border-edge" : "border-line"}`}>
+          <label key={o} className={`choice gap-3 ${cu3.includes(o) ? "choice-on" : ""}`}>
             <input type="checkbox" checked={cu3.includes(o)} onChange={(e) => setCu3((c) => (e.target.checked ? [...c, o] : c.filter((x) => x !== o)))} /> {o}
           </label>
         ))}

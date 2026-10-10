@@ -91,13 +91,17 @@
   }
 }
 
-html { background: var(--canvas); color: var(--fg); font-family: var(--font-sans); -webkit-text-size-adjust: 100%; }
-body { min-height: 100dvh; line-height: 1.55; font-size: 1.0625rem; }
-h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.025em; line-height: 1.08; font-weight: 750; }
-h3 { letter-spacing: -0.015em; font-weight: 700; }
-::selection { background: var(--accent); color: var(--on-accent); }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; box-shadow: 0 0 0 6px var(--edge); }
-a { color: var(--accent-ink); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+/* Base element styles live in @layer base so utility classes (text-on-accent, text-muted…) can override them. */
+@layer base {
+  html { background: var(--canvas); color: var(--fg); font-family: var(--font-sans); -webkit-text-size-adjust: 100%; }
+  body { min-height: 100dvh; line-height: 1.55; font-size: 1.0625rem; }
+  h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.025em; line-height: 1.08; font-weight: 750; }
+  h3 { letter-spacing: -0.015em; font-weight: 700; }
+  ::selection { background: var(--accent); color: var(--on-accent); }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; box-shadow: 0 0 0 6px var(--edge); }
+  a { color: var(--accent-ink); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+
+}
 
 /* Low-data / reduced motion: no animations at all. */
 @media (prefers-reduced-motion: reduce) {
@@ -135,12 +139,32 @@ a { color: var(--accent-ink); text-underline-offset: 3px; text-decoration-thickn
 }
 @utility choice-on { @apply border-edge bg-accent text-on-accent; box-shadow: 3px 3px 0 var(--shadow); }
 
+@utility alert { @apply rounded-[14px] border-[1.5px] border-danger bg-danger/10 px-4 py-3 font-semibold text-danger; }
+@utility note { @apply rounded-[14px] border-[1.5px] border-line bg-sunken/60 px-4 py-3 text-muted; }
+@utility diamond { @apply mt-[0.55em] h-2.5 w-2.5 shrink-0 rotate-45 border-[1.5px] border-edge bg-accent; }
+
 @utility chip { @apply inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-line bg-surface px-3 py-1 font-display text-xs font-semibold; }
 
 /* Paper grain + contour lines for hero areas. Inline SVG, ~1 KB, no requests. */
 @utility bg-contours {
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23887766' stroke-opacity='.22' stroke-width='1'%3E%3Cpath d='M-10 40c40-18 70 14 110 0s70-26 150-4'/%3E%3Cpath d='M-10 80c50-20 80 12 120-2s80-22 140 2'/%3E%3Cpath d='M-10 122c40-14 90 16 130 2s70-20 130 0'/%3E%3Cpath d='M-10 162c46-16 76 12 116-2s84-24 144 0'/%3E%3Cpath d='M-10 204c40-18 84 14 124 0s76-22 136 2'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@layer base {
+  /* Native <details> disclosure markers, restyled to match. */
+  summary { list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  details > summary { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; min-height: 2.75rem; }
+  details > summary::before { content: ""; width: 0.55rem; height: 0.55rem; border-right: 2.5px solid var(--edge); border-bottom: 2.5px solid var(--edge); transform: rotate(-45deg); transition: transform 0.15s; flex-shrink: 0; }
+  details[open] > summary::before { transform: rotate(45deg); }
+
+  /* Data tables: quiet rules, display-font headers. */
+  table { border-collapse: collapse; }
+  th { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: left; }
+  th, td { padding: 0.6rem 0.75rem; }
+  tbody tr { border-top: 1.5px solid var(--line); }
+
 }
 
 @keyframes draw { from { stroke-dashoffset: var(--len, 1000); } to { stroke-dashoffset: 0; } }

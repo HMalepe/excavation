@@ -24,9 +24,9 @@ export default async function StaffSafeguarding() {
         {(events ?? []).map((e) => {
           const l = one(e.learners) as unknown as { first_name: string; last_name: string; current_grade: number; schools: { name: string } };
           return (
-            <li key={e.id} className={`card space-y-2 ${e.level === "hard" && !e.school_confirmed_at ? "border-danger" : ""}`}>
+            <li key={e.id} className={`card space-y-2 ${e.level === "hard" && !e.school_confirmed_at ? "border-l-[10px] !border-l-danger" : ""}`}>
               <div className="flex flex-wrap justify-between gap-2">
-                <p><strong className={e.level === "hard" ? "text-danger" : ""}>{e.level.toUpperCase()}</strong> · {l.first_name} {l.last_name} · Gr {l.current_grade} · {l.schools.name} · {e.trigger_source}</p>
+                <p><strong className={`chip ${e.level === "hard" ? "!border-danger text-danger" : ""}`}>{e.level.toUpperCase()}</strong> · {l.first_name} {l.last_name} · Gr {l.current_grade} · {l.schools.name} · {e.trigger_source}</p>
                 <p className="text-sm text-muted">{t(e.created_at)}</p>
               </div>
               {e.level === "hard" && one(e.conversation_messages as { content: string } | null)?.content && <p className="rounded-xl bg-canvas p-3 text-sm">&ldquo;{one(e.conversation_messages as { content: string } | null)!.content}&rdquo;</p>}

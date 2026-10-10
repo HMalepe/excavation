@@ -5,6 +5,9 @@ import { getOrCreateSession } from "@/lib/session/service";
 import { loadReportBundle } from "@/lib/report/load";
 import { G9Report, G11Report } from "@/components/report/ReportViews";
 import { AutoRefresh } from "@/components/client/AutoRefresh";
+import { PlainPage } from "@/components/ui/PlainPage";
+import { Wordmark, StrataRule } from "@/components/ui/Brand";
+import { ThemeToggle } from "@/components/client/ThemeToggle";
 import type { ReportG9, ReportG11 } from "@/lib/ai/schemas";
 
 export const dynamic = "force-dynamic";
@@ -20,28 +23,31 @@ export default async function ReportPage() {
   if (!b.report || b.report.status !== "released") {
     const generating = !b.report || b.report.status === "generating";
     return (
-      <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-5 px-5 py-10">
-        <h1 className="text-3xl">{generating ? "Your report is being put together." : "A person is reading your report first."}</h1>
-        <p className="text-muted">
+      <PlainPage>
+        <p className="eyebrow">{generating ? "Digging" : "In review"}</p>
+        <h1 className="text-5xl">{generating ? "Your report is being put together." : "A person is reading your report first."}</h1>
+        <p className="text-lg text-muted">
           {generating
             ? "This usually takes a minute or two. You can leave this page — it'll be here when you log in again."
             : "While The Excavation is new, a trained reviewer reads every report before you see it. It usually takes less than a day."}
         </p>
         {generating && <AutoRefresh seconds={15} />}
-        <Link href="/learn/paused" className="btn-ghost no-underline">Close for now</Link>
-      </main>
+        <Link href="/learn/paused" className="btn-ghost">Close for now</Link>
+      </PlainPage>
     );
   }
 
   const g9 = session.touchpoint === "G9_FOUNDATION";
   return (
     <div className="min-h-dvh">
-      <header className="border-b border-line">
-        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3 text-sm">
-          <span className="uppercase tracking-widest text-muted">{g9 ? "Foundation Report" : "Confirmation Report"}</span>
-          <nav className="flex gap-4">
-            <a href={`/api/report/pdf?kind=learner`} className="no-underline">Download PDF</a>
-            <Link href="/learn/report/share" className="no-underline">Sharing</Link>
+      <header className="sticky top-0 z-10 border-b-[1.5px] border-line bg-canvas/90 backdrop-blur-md">
+        <StrataRule />
+        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-2.5">
+          <Wordmark />
+          <nav className="flex items-center gap-2 font-display text-sm font-bold">
+            <a href={`/api/report/pdf?kind=learner`} className="inline-flex h-11 items-center rounded-xl border-[1.5px] border-edge bg-surface px-3 text-fg no-underline hover:bg-sunken">PDF</a>
+            <Link href="/learn/report/share" className="inline-flex h-11 items-center rounded-xl border-[1.5px] border-edge bg-surface px-3 text-fg no-underline hover:bg-sunken">Share</Link>
+            <ThemeToggle />
           </nav>
         </div>
       </header>

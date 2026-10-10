@@ -147,3 +147,23 @@ the subjects actually taken.
   spec 09 risk-2 opinion (psychological test classification).
 - Grade 11 does not take checks or tasters yet (the verdict engine is unchanged). Candidate for v2: tasters
   before the career update, and the maths check for learners considering a switch back to Mathematics.
+
+---
+
+## F. Visual design: STRATA (owner's decision, 2026-10-10)
+
+The original UI (charcoal + amber + Georgia) read as generic. The identity now comes from the product's own metaphor, a dig: **five earth layers** (sand, ochre, laterite, umber, bedrock) double as the progress gauge, section markers, icon tiles and the cover art.
+
+| Element | Choice | Why |
+|---|---|---|
+| Display type | Bricolage Grotesque (variable) | Distinctive, warm, modern: not a default system look |
+| Reading type | Atkinson Hyperlegible Next | Designed for legibility; suits a Grade 7 reading level and cheap screens |
+| Loading | `next/font`: self-hosted at build time, latin only | No request to Google from a learner's phone; no layout shift |
+| Accent | Excavator yellow `#f2b100`; yellow is never used as text on light (a darker `--accent-ink` is) | Contrast: yellow-on-cream fails WCAG, ink-on-yellow passes |
+| Themes | **Limestone** (light) and **Bedrock** (dark); follows the phone, learner can override (remembered on the device, applied before first paint) | Many learners use phones in bright rooms; dark saves battery |
+| Components | "Physical" buttons (ink outline, hard shadow that presses down), outlined cards, tile-style answers | Big tap targets, clear selected state without relying on colour alone |
+| Art | Inline SVG only (logo mark, cover cross-section, icons, favicon) | A few KB, zero image requests on slow data |
+| Report | Headline alone, then sections marked with their layer colour; subject options ranked 1-3 in layer colours; first move as a yellow call-out; verdict as one large word | Spec 08 Part 7 layout notes, designed |
+| PDF | Same palette, strata rule, bold headings (built-in fonts) | Prints well in black and white |
+
+Code: tokens and component utilities in `src/app/globals.css`; artwork in `src/components/ui/Brand.tsx`; theme switch in `ThemeToggle`. Base element styles sit in `@layer base` so utility classes can override them.
