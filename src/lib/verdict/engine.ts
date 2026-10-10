@@ -40,7 +40,6 @@ export function computeVerdict(input: VerdictInput): VerdictResult {
 /** Rules 1–5, career check, projections and plans, from already-classified subjects. */
 export function decideVerdict(subjects: SubjectResult[], input: VerdictInput): VerdictResult {
   const trace: string[] = [];
-  const q = Object.fromEntries(subjects.map((s) => [s.subject, s.quadrant]));
   const taken = input.subjects.map((s) => s.subject);
 
   // Direction → pathways (career check needs them for Rule 1 too)

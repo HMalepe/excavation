@@ -54,7 +54,7 @@ export function buildScoreProfile(input: ScoringInput): ScoreProfile {
     school: input.school,
   }) : { fits: [], cautions: [], ranked: [], offersKnown: false };
 
-  const strip = ({ order: _o, ...c }: CombinationResult & { order?: number }) => c as CombinationResult;
+  const strip = (c: CombinationResult & { order?: number }): CombinationResult => { const rest = { ...c }; delete rest.order; return rest; };
   const combinations = [...sel.fits, ...sel.cautions].map(strip);
   const incomplete = sel.ranked.some((c) => c.flags.includes("marks_incomplete"));
 

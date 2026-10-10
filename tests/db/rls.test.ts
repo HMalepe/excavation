@@ -16,7 +16,7 @@ const U = {
   safe: "00000000-0000-0000-0000-0000000000e1",
   safeOther: "00000000-0000-0000-0000-0000000000e2",
 };
-const ids: Record<string, string> = {};
+const ids = {} as Record<"s1" | "s2" | "la" | "lb" | "sa" | "sb" | "aLearner" | "aTeacher" | "bLearner" | "bTeacher", string>;
 
 /** Run `sql` as an authenticated user; returns rows (or affected rowCount for writes). */
 async function as<T = Record<string, unknown>>(sub: string, sql: string, params: unknown[] = []) {

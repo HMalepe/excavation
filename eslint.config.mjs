@@ -13,7 +13,7 @@ const serverOnlyModules = [
   "@/lib/pipeline/*",
 ];
 
-export default [
+const config = [
   { ignores: [".next/**", "node_modules/**", "spec/**", "next-env.d.ts"] },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
@@ -32,3 +32,5 @@ export default [
     },
   },
 ];
+
+export default config;

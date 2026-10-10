@@ -19,7 +19,7 @@ export default async function StaffSafeguarding() {
   await audit(staff.userId, "view_safeguarding_log", "safeguarding_events");
   return (
     <StaffShell title="Safeguarding log" nav={STAFF_NAV}>
-      <p className="text-muted">Hard events notify the school's designated contact and backup immediately. If a school hasn&apos;t confirmed within 4 school hours, you are alerted to phone them. Review every hard event quarterly with the clinical advisor.</p>
+      <p className="text-muted">Hard events notify the school&apos;s designated contact and backup immediately. If a school hasn&apos;t confirmed within 4 school hours, you are alerted to phone them. Review every hard event quarterly with the clinical advisor.</p>
       <ul className="space-y-3">
         {(events ?? []).map((e) => {
           const l = one(e.learners) as unknown as { first_name: string; last_name: string; current_grade: number; schools: { name: string } };
