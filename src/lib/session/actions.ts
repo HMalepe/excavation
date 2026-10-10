@@ -15,6 +15,7 @@ import {
   updateSession, upsertResponse, ASSENT_SCREEN_VERSION, type ScoredProgress,
 } from "./service";
 import { g11Actions } from "./g11Actions";
+import { reportActions } from "./reportActions";
 import type { LearnerRow, SessionRow } from "@/lib/db/types";
 
 export const PAGE_SIZE_MAX = 6; // spec 02 §3.3: up to 6 items per screen on computers
@@ -183,6 +184,7 @@ export const actions = {
   }),
 
   ...g11Actions,
+  ...reportActions,
 } as const;
 
 export type ActionName = keyof typeof actions;

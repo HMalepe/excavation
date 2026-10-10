@@ -18,13 +18,27 @@ export interface TurnOutcome { complete: boolean; safetyStop: boolean; risk: "no
 
 const SESSION_START = "<session_start/>";
 
-/** Transcript rows → Messages API history. Append-only: same rows always give the same prefix. */
+/**
+ * Transcript rows → Messages API history. Append-only: the same rows always give the same prefix.
+ * A mid-conversation system message must follow a user turn, so a system row that comes after a
+ * Guide reply (e.g. "safety_review_complete") is placed right after the next learner message.
+ */
 export function toApiMessages(rows: MessageRow[]): Anthropic.Beta.BetaMessageParam[] {
   const out: Anthropic.Beta.BetaMessageParam[] = [{ role: "user", content: SESSION_START }];
+  const sys = (content: string) => ({ role: "system", content }) as unknown as Anthropic.Beta.BetaMessageParam;
+  let held: string[] = [];
   for (const r of rows) {
-    if (r.role === "learner") out.push({ role: "user", content: r.content });
-    else if (r.role === "guide") out.push({ role: "assistant", content: r.content });
-    else out.push({ role: "system", content: r.content } as unknown as Anthropic.Beta.BetaMessageParam);
+    if (r.role === "learner") {
+      out.push({ role: "user", content: r.content });
+      for (const h of held) out.push(sys(h));
+      held = [];
+    } else if (r.role === "guide") {
+      out.push({ role: "assistant", content: r.content });
+    } else if (out.at(-1)?.role === "assistant") {
+      held.push(r.content);
+    } else {
+      out.push(sys(r.content));
+    }
   }
   return out;
 }
