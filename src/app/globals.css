@@ -37,59 +37,59 @@
 /* ---------- Limestone (light) ---------- */
 :root {
   color-scheme: light;
-  --canvas: #f3eee4;
-  --surface: #fffcf5;
-  --sunken: #e8dfcf;
-  --line: #d5c8b3;
-  --control: #857460;        /* borders of interactive controls: ≥ 3:1 on every surface (WCAG 1.4.11) */
-  --edge: #1a1613;
-  --shadow: #1a1613;
-  --fg: #1a1613;
-  --muted: #5d5247;          /* 6.6:1 on canvas */
-  --accent: #f2b100;         /* excavator yellow; text on it is ink */
-  --on-accent: #1a1613;
-  --accent-ink: #855600;     /* yellow is unreadable as text on light: use this instead (5.9:1) */
-  --danger: #b42318;
-  --ok: #17704f;
-  --strata-1: #e7d1a4;       /* Surface: sand */
-  --strata-2: #d69b52;       /* Wading in: ochre */
-  --strata-3: #b5643a;       /* Deep water: laterite */
-  --strata-4: #6b4430;       /* The trench: umber */
-  --strata-5: #2a201a;       /* The floor: bedrock */
+  --canvas: #eceff3;
+  --surface: #ffffff;
+  --sunken: #dfe4ea;
+  --line: #cfd6df;
+  --control: #778092;        /* borders of interactive controls: ≥ 3:1 on every surface (WCAG 1.4.11) */
+  --edge: #0d1117;
+  --shadow: #0d1117;
+  --fg: #0d1117;
+  --muted: #4a5361;          /* 6.6:1 on canvas */
+  --accent: #ffd60a;         /* excavator yellow; text on it is ink */
+  --on-accent: #0d1117;
+  --accent-ink: #2347c5;     /* yellow is unreadable as text on light: use this instead (5.9:1) */
+  --danger: #c8261a;
+  --ok: #11794f;
+  --strata-1: #c7e5ff;       /* Surface: sand */
+  --strata-2: #4aa3ff;       /* Wading in: ochre */
+  --strata-3: #2b5fe8;       /* Deep water: laterite */
+  --strata-4: #1d2f8f;       /* The trench: umber */
+  --strata-5: #0a1030;       /* The floor: bedrock */
   --grain: 0.05;
 }
 
 /* ---------- Bedrock (dark) ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --canvas: #13100d;
-  --surface: #1d1915;
-  --sunken: #2a241e;
-  --line: #3b332b;
-  --control: #80725f;
-  --edge: #ebe1d0;
+  --canvas: #0a0d12;
+  --surface: #121821;
+  --sunken: #1b2330;
+  --line: #262f3d;
+  --control: #6c778a;
+  --edge: #f3f5f8;
   --shadow: #000000;
-  --fg: #f2eadc;
-  --muted: #b9ad9b;
-  --accent: #f6bb1f;
-  --on-accent: #13100d;
-  --accent-ink: #f6c548;
-  --danger: #f2826f;
-  --ok: #6cc69c;
-  --strata-1: #d9c08f;
-  --strata-2: #c98a43;
-  --strata-3: #a5582f;
-  --strata-4: #5e3b29;
-  --strata-5: #0b0907;
+  --fg: #f3f5f8;
+  --muted: #a3adbb;
+  --accent: #ffd60a;
+  --on-accent: #0a0d12;
+  --accent-ink: #ffd60a;
+  --danger: #ff6b5e;
+  --ok: #4fd1a1;
+  --strata-1: #c7e5ff;
+  --strata-2: #4aa3ff;
+  --strata-3: #2b5fe8;
+  --strata-4: #1d2f8f;
+  --strata-5: #0a1030;
   --grain: 0.08;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --canvas: #13100d; --surface: #1d1915; --sunken: #2a241e; --line: #3b332b; --control: #80725f; --edge: #ebe1d0; --shadow: #000000;
-    --fg: #f2eadc; --muted: #b9ad9b; --accent: #f6bb1f; --on-accent: #13100d; --accent-ink: #f6c548;
-    --danger: #f2826f; --ok: #6cc69c;
-    --strata-1: #d9c08f; --strata-2: #c98a43; --strata-3: #a5582f; --strata-4: #5e3b29; --strata-5: #0b0907;
+    --canvas: #0a0d12; --surface: #121821; --sunken: #1b2330; --line: #262f3d; --control: #6c778a; --edge: #f3f5f8; --shadow: #000000;
+    --fg: #f3f5f8; --muted: #a3adbb; --accent: #ffd60a; --on-accent: #0a0d12; --accent-ink: #ffd60a;
+    --danger: #ff6b5e; --ok: #4fd1a1;
+    --strata-1: #c7e5ff; --strata-2: #4aa3ff; --strata-3: #2b5fe8; --strata-4: #1d2f8f; --strata-5: #0a1030;
     --grain: 0.08;
   }
 }
@@ -151,7 +151,7 @@
 /* Paper grain + contour lines for hero areas. Inline SVG, ~1 KB, no requests. */
 @utility bg-contours {
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23887766' stroke-opacity='.22' stroke-width='1'%3E%3Cpath d='M-10 40c40-18 70 14 110 0s70-26 150-4'/%3E%3Cpath d='M-10 80c50-20 80 12 120-2s80-22 140 2'/%3E%3Cpath d='M-10 122c40-14 90 16 130 2s70-20 130 0'/%3E%3Cpath d='M-10 162c46-16 76 12 116-2s84-24 144 0'/%3E%3Cpath d='M-10 204c40-18 84 14 124 0s76-22 136 2'/%3E%3C/g%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%2370809a' stroke-opacity='.22' stroke-width='1'%3E%3Cpath d='M-10 40c40-18 70 14 110 0s70-26 150-4'/%3E%3Cpath d='M-10 80c50-20 80 12 120-2s80-22 140 2'/%3E%3Cpath d='M-10 122c40-14 90 16 130 2s70-20 130 0'/%3E%3Cpath d='M-10 162c46-16 76 12 116-2s84-24 144 0'/%3E%3Cpath d='M-10 204c40-18 84 14 124 0s76-22 136 2'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 @layer base {
@@ -188,8 +188,8 @@
 /* Printing a report from the browser: always the light theme, no controls, no shadows. */
 @media print {
   :root, :root[data-theme="dark"] {
-    --canvas: #ffffff; --surface: #ffffff; --sunken: #f3eee4; --line: #d5c8b3; --control: #857460; --edge: #1a1613; --shadow: transparent;
-    --fg: #1a1613; --muted: #5d5247; --accent: #f2b100; --on-accent: #1a1613; --accent-ink: #855600; --danger: #b42318; --ok: #17704f;
+    --canvas: #ffffff; --surface: #ffffff; --sunken: #eceff3; --line: #cfd6df; --control: #778092; --edge: #0d1117; --shadow: transparent;
+    --fg: #0d1117; --muted: #4a5361; --accent: #ffd60a; --on-accent: #0d1117; --accent-ink: #2347c5; --danger: #c8261a; --ok: #11794f;
   }
   html, body { background: #fff !important; }
   header, nav, button, .no-print { display: none !important; }

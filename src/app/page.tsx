@@ -77,7 +77,7 @@ export default function Home() {
             <div className="space-y-4">
               <div className="card-raised space-y-3">
                 <div className="flex items-start gap-4">
-                  <span className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-edge text-2xl font-extrabold" style={{ background: "var(--strata-1)", color: "#1a1613" }}>1</span>
+                  <span className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-edge text-2xl font-extrabold" style={{ background: "var(--strata-1)", color: "#0d1117" }}>1</span>
                   <div><h3 className="text-2xl">Humanities &amp; Social Sciences</h3><p className="text-sm text-muted">History · Geography · Life Sciences · Mathematics</p></div>
                 </div>
                 <p className="text-lg leading-snug">The closest match to how you think and what you care about. It keeps psychology, social work, law, journalism and teaching open.</p>

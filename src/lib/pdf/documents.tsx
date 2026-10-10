@@ -7,22 +7,22 @@ import type { skillsLines } from "@/lib/skills/plain";
 // Print-friendly Limestone: light paper, ink text, excavator yellow only as an accent, and the five
 // earth layers as a signature rule. Built-in fonts (no downloads): bold Helvetica stands in for the
 // display face on paper.
-const STRATA = ["#e7d1a4", "#d69b52", "#b5643a", "#6b4430", "#2a201a"];
+const STRATA = ["#c7e5ff", "#4aa3ff", "#2b5fe8", "#1d2f8f", "#0a1030"];
 const s = StyleSheet.create({
-  page: { paddingTop: 52, paddingBottom: 54, paddingHorizontal: 44, fontFamily: "Helvetica", fontSize: 10.5, lineHeight: 1.45, color: "#1a1613", backgroundColor: "#fffcf5" },
+  page: { paddingTop: 52, paddingBottom: 54, paddingHorizontal: 44, fontFamily: "Helvetica", fontSize: 10.5, lineHeight: 1.45, color: "#0d1117", backgroundColor: "#ffffff" },
   strata: { position: "absolute", top: 0, left: 0, right: 0, height: 9, flexDirection: "row" },
-  brand: { fontFamily: "Helvetica-Bold", fontSize: 9, letterSpacing: 0.4, color: "#1a1613", marginBottom: 14 },
-  kicker: { fontFamily: "Helvetica-Bold", fontSize: 8, letterSpacing: 1.6, color: "#855600", textTransform: "uppercase", marginBottom: 6 },
+  brand: { fontFamily: "Helvetica-Bold", fontSize: 9, letterSpacing: 0.4, color: "#0d1117", marginBottom: 14 },
+  kicker: { fontFamily: "Helvetica-Bold", fontSize: 8, letterSpacing: 1.6, color: "#2347c5", textTransform: "uppercase", marginBottom: 6 },
   h1: { fontFamily: "Helvetica-Bold", fontSize: 24, marginBottom: 14, lineHeight: 1.12, letterSpacing: -0.4 },
-  h2: { fontFamily: "Helvetica-Bold", fontSize: 14.5, marginTop: 16, marginBottom: 6, color: "#1a1613", paddingBottom: 3, borderBottomWidth: 2, borderBottomColor: "#f2b100" },
+  h2: { fontFamily: "Helvetica-Bold", fontSize: 14.5, marginTop: 16, marginBottom: 6, color: "#0d1117", paddingBottom: 3, borderBottomWidth: 2, borderBottomColor: "#ffd60a" },
   h3: { fontFamily: "Helvetica-Bold", fontSize: 10.5, marginTop: 6, marginBottom: 2 },
   p: { marginBottom: 6 },
-  muted: { color: "#5d5247", fontSize: 9 },
-  card: { borderWidth: 1.5, borderColor: "#1a1613", borderRadius: 7, padding: 9, marginBottom: 8, backgroundColor: "#ffffff" },
-  closing: { fontFamily: "Helvetica-Bold", fontSize: 16, lineHeight: 1.25, marginTop: 22, paddingTop: 12, borderTopWidth: 2, borderTopColor: "#1a1613" },
+  muted: { color: "#4a5361", fontSize: 9 },
+  card: { borderWidth: 1.5, borderColor: "#0d1117", borderRadius: 7, padding: 9, marginBottom: 8, backgroundColor: "#ffffff" },
+  closing: { fontFamily: "Helvetica-Bold", fontSize: 16, lineHeight: 1.25, marginTop: 22, paddingTop: 12, borderTopWidth: 2, borderTopColor: "#0d1117" },
   row: { flexDirection: "row", gap: 8 },
   cell: { flex: 1 },
-  footer: { position: "absolute", bottom: 22, left: 44, right: 44, fontSize: 7.5, color: "#5d5247" },
+  footer: { position: "absolute", bottom: 22, left: 44, right: 44, fontSize: 7.5, color: "#4a5361" },
 });
 
 const Strata = () => (

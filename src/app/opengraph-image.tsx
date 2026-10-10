@@ -7,19 +7,19 @@ export const contentType = "image/png";
 
 /** The preview shown when a link is shared on WhatsApp or by email. */
 export default function OgImage() {
-  const layers = ["#e7d1a4", "#d69b52", "#b5643a", "#6b4430", "#2a201a"];
+  const layers = ["#c7e5ff", "#4aa3ff", "#2b5fe8", "#1d2f8f", "#0a1030"];
   return new ImageResponse(
     (
-      <div style={{ width: 1200, height: 630, display: "flex", background: "#f3eee4", color: "#1a1613" }}>
+      <div style={{ width: 1200, height: 630, display: "flex", background: "#eceff3", color: "#0d1117" }}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 70px", width: 700, gap: 22 }}>
-          <div style={{ display: "flex", fontSize: 26, letterSpacing: 4, color: "#855600", fontWeight: 700 }}>THE EXCAVATION · SCHOOL EDITION</div>
+          <div style={{ display: "flex", fontSize: 26, letterSpacing: 4, color: "#2347c5", fontWeight: 700 }}>THE EXCAVATION · SCHOOL EDITION</div>
           <div style={{ display: "flex", fontSize: 92, fontWeight: 800, lineHeight: 1.0, letterSpacing: -3 }}>Dig deeper than your marks.</div>
-          <div style={{ display: "flex", fontSize: 30, color: "#5d5247" }}>Choose your subjects from who you are and what you can do.</div>
+          <div style={{ display: "flex", fontSize: 30, color: "#4a5361" }}>Choose your subjects from who you are and what you can do.</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", width: 500, height: 630 }}>
           {layers.map((c, i) => (
             <div key={c} style={{ display: "flex", flex: 1, background: c, alignItems: "center", justifyContent: "center" }}>
-              {i === 4 ? <div style={{ display: "flex", width: 64, height: 64, background: "#f2b100", transform: "rotate(45deg)", border: "5px solid #1a1613" }} /> : null}
+              {i === 4 ? <div style={{ display: "flex", width: 64, height: 64, background: "#ffd60a", transform: "rotate(45deg)", border: "5px solid #0d1117" }} /> : null}
             </div>
           ))}
         </div>

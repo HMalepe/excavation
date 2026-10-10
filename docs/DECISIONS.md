@@ -152,14 +152,14 @@ the subjects actually taken.
 
 ## F. Visual design: STRATA (owner's decision, 2026-10-10)
 
-The original UI (charcoal + amber + Georgia) read as generic. The identity now comes from the product's own metaphor, a dig: **five earth layers** (sand, ochre, laterite, umber, bedrock) double as the progress gauge, section markers, icon tiles and the cover art.
+The original UI (charcoal + amber + Georgia) read as generic. The identity now comes from the product's own metaphor, a dig and a descent: **five depth layers** (sky, azure, cobalt, indigo, midnight) double as the progress gauge, section markers, icon tiles and the cover art.
 
 | Element | Choice | Why |
 |---|---|---|
 | Display type | Bricolage Grotesque (variable) | Distinctive, warm, modern: not a default system look |
 | Reading type | Atkinson Hyperlegible Next | Designed for legibility; suits a Grade 7 reading level and cheap screens |
 | Loading | `next/font`: self-hosted at build time, latin only | No request to Google from a learner's phone; no layout shift |
-| Accent | Excavator yellow `#f2b100`; yellow is never used as text on light (a darker `--accent-ink` is) | Contrast: yellow-on-cream fails WCAG, ink-on-yellow passes |
+| Accent | Hi-vis yellow `#ffd60a`; on light backgrounds text accents use indigo `#2347c5` instead (yellow text fails contrast) | Ink-on-yellow passes WCAG; yellow-on-white does not |
 | Themes | **Limestone** (light) and **Bedrock** (dark); follows the phone, learner can override (remembered on the device, applied before first paint) | Many learners use phones in bright rooms; dark saves battery |
 | Components | "Physical" buttons (ink outline, hard shadow that presses down), outlined cards, tile-style answers | Big tap targets, clear selected state without relying on colour alone |
 | Art | Inline SVG only (logo mark, cover cross-section, icons, favicon) | A few KB, zero image requests on slow data |
@@ -169,3 +169,5 @@ The original UI (charcoal + amber + Georgia) read as generic. The identity now c
 Code: tokens and component utilities in `src/app/globals.css`; artwork in `src/components/ui/Brand.tsx`; theme switch in `ThemeToggle`. Base element styles sit in `@layer base` so utility classes can override them.
 
 **F2. Second pass (same day):** WCAG audit of every text/background token pair in both themes (all ≥ 4.5:1) found one gap, the faint decorative border used on unselected answer tiles and form fields (1.4:1); controls now use a `--control` border (≥ 3:1 on every surface, WCAG 1.4.11). Added: an illustration per taster task (clinic vitals, instruction steps, witness statements + clock, vetkoek cost bar, rainfall/harvest chart), a sample report on the landing page (fictional learner, labelled), app-install support (manifest + PNG icons, so a learner can add it to their home screen), a share preview image, branded 404, a loading skeleton for the learner flow, scroll-in motion on report sections (respects reduced motion), and a print stylesheet (browser print always uses the light theme).
+
+**F3. Palette change (owner's call, same day):** the first palette (cream, beige, terracotta, brown) was too recognisably the default "AI product" look. Replaced with cool neutral greys, hi-vis yellow as the single accent, and a sky-to-midnight depth scale that matches the stage names (Surface, Wading in, Deep water, The trench, The floor). No warm browns remain anywhere (UI, PDF, icons, share image). All text pairs re-audited: zero contrast failures in either theme.

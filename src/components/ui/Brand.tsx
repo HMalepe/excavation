@@ -56,19 +56,15 @@ export function StrataHero({ className = "", depth = 4, labels = true, crop = fa
   const mid = (i: number) => (LAYER_TOPS[i]! + (LAYER_TOPS[i + 1] ?? 330)) / 2 + 2;
   return (
     <svg viewBox="0 0 400 330" preserveAspectRatio={crop ? "xMidYMid slice" : undefined} className={className} role="img" aria-label="A cross-section of the ground: five layers from sand down to bedrock, with a shaft dug through them and a find at the bottom.">
-      {/* grass */}
-      <g stroke="#6f8f3c" strokeWidth="2" strokeLinecap="round" fill="none">
-        <path d="M34 44l-3-9M38 43l1-10M42 44l4-8" /><path d="M128 46l-2-8M132 46l2-9" /><path d="M236 42l-3-8M240 41l1-9M244 42l4-7" /><path d="M352 46l-2-8M356 46l3-8" />
-      </g>
       {LAYER_PATHS.map((d, i) => <path key={i} d={d} fill={`var(--strata-${i + 1})`} />)}
       {/* layer edges */}
-      {LAYER_PATHS.slice(1).map((d, i) => <path key={i} d={d.split("V")[0]} fill="none" stroke="#1a1613" strokeOpacity=".18" strokeWidth="1.5" />)}
+      {LAYER_PATHS.slice(1).map((d, i) => <path key={i} d={d.split("V")[0]} fill="none" stroke="#0d1117" strokeOpacity=".18" strokeWidth="1.5" />)}
       {/* pebbles and grit */}
       <g fill="var(--strata-4)" fillOpacity=".28">
         <ellipse cx="60" cy="78" rx="7" ry="4" /><ellipse cx="170" cy="70" rx="4" ry="2.5" /><ellipse cx="226" cy="84" rx="6" ry="3.5" /><ellipse cx="90" cy="134" rx="5" ry="3" />
         <ellipse cx="250" cy="138" rx="8" ry="4.5" /><ellipse cx="34" cy="128" rx="3" ry="2" />
       </g>
-      <g fill="#fff6e6" fillOpacity=".22">
+      <g fill="#f3f5f8" fillOpacity=".22">
         <circle cx="200" cy="198" r="2" /><circle cx="58" cy="186" r="1.6" /><circle cx="250" cy="240" r="1.8" /><circle cx="130" cy="300" r="1.5" /><circle cx="70" cy="306" r="2" />
       </g>
       {/* ammonite in the laterite */}
@@ -77,22 +73,22 @@ export function StrataHero({ className = "", depth = 4, labels = true, crop = fa
         <path d="M126 176v5M138 184l-4 2M139 196l-4-1M126 204v-4M114 197l4-2" strokeWidth="1.6" />
       </g>
       {/* crystals in the umber */}
-      <g stroke="#1a1613" strokeWidth="1.5" strokeLinejoin="round">
+      <g stroke="#0d1117" strokeWidth="1.5" strokeLinejoin="round">
         <path d="M44 262l7-24 7 24z" fill="var(--accent)" /><path d="M56 262l9-32 8 32z" fill="var(--accent)" /><path d="M70 262l5-16 6 16z" fill="var(--accent)" />
-        <path d="M65 230l-1 32" stroke="#1a1613" strokeOpacity=".35" />
+        <path d="M65 230l-1 32" stroke="#0d1117" strokeOpacity=".35" />
       </g>
       {/* the find, in bedrock */}
       <g className="animate-glint">
-        <path d="M180 286l14 14-14 14-14-14z" fill="var(--accent)" stroke="#1a1613" strokeWidth="1.5" />
+        <path d="M180 286l14 14-14 14-14-14z" fill="var(--accent)" stroke="#0d1117" strokeWidth="1.5" />
         <path d="M180 278v-6M196 290l5-4M164 290l-5-4M180 322v5" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" />
       </g>
       {/* the shaft: your descent */}
-      <path d="M300 36V312" stroke="#1a1613" strokeOpacity=".55" strokeWidth="2" strokeDasharray="4 5" />
+      <path d="M300 36V312" stroke="#0d1117" strokeOpacity=".55" strokeWidth="2" strokeDasharray="4 5" />
       {DEPTHS.map((name, i) => (
         <g key={name}>
-          <circle cx="300" cy={mid(i)} r={i === depth ? 8 : 4} fill={i === depth ? "var(--accent)" : "#fff6e6"} stroke="#1a1613" strokeWidth="2" />
+          <circle cx="300" cy={mid(i)} r={i === depth ? 8 : 4} fill={i === depth ? "var(--accent)" : "#f3f5f8"} stroke="#0d1117" strokeWidth="2" />
           {labels && (
-            <text x="314" y={mid(i) + 4} fontSize="12" fontWeight="700" letterSpacing="-0.2" fill={i < 2 ? "#2a201a" : "#fff6e6"} style={{ fontFamily: "var(--font-display)" }}>{name}</text>
+            <text x="314" y={mid(i) + 4} fontSize="12" fontWeight="700" letterSpacing="-0.2" fill={i < 2 ? "#0d1117" : "#f3f5f8"} style={{ fontFamily: "var(--font-display)" }}>{name}</text>
           )}
         </g>
       ))}
@@ -125,7 +121,7 @@ export function Icon({ name, className = "h-6 w-6", style }: { name: string; cla
 export function IconTile({ name, layer = 2 }: { name: string; layer?: 1 | 2 | 3 | 4 | 5 }) {
   const dark = layer >= 3;
   return (
-    <span className="inline-flex h-12 w-12 items-center justify-center rounded-[14px] border-2 border-edge" style={{ background: `var(--strata-${layer})`, color: dark ? "#fff6e6" : "#1a1613", boxShadow: "3px 3px 0 var(--shadow)" }}>
+    <span className="inline-flex h-12 w-12 items-center justify-center rounded-[14px] border-2 border-edge" style={{ background: `var(--strata-${layer})`, color: dark ? "#f3f5f8" : "#0d1117", boxShadow: "3px 3px 0 var(--shadow)" }}>
       <Icon name={name} className="h-6 w-6" />
     </span>
   );

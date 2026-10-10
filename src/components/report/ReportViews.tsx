@@ -80,7 +80,7 @@ export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile })
                 return (
                   <li key={f.combination_id} className={`space-y-3 ${i === 0 ? "card-raised" : "card"}`}>
                     <div className="flex items-start gap-4">
-                      <span className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-edge text-2xl font-extrabold" style={{ background: `var(--strata-${i + 1})`, color: i >= 2 ? "#fff6e6" : "#1a1613" }}>{i + 1}</span>
+                      <span className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-edge text-2xl font-extrabold" style={{ background: `var(--strata-${i + 1})`, color: i >= 2 ? "#f3f5f8" : "#0d1117" }}>{i + 1}</span>
                       <div className="min-w-0 space-y-1">
                         <h3 className="text-2xl">{f.name}</h3>
                         {combo?.label === "keeps_most_doors_open" && <span className="chip">keeps the most doors open</span>}

@@ -64,7 +64,7 @@ function Business() {
     <div className="card space-y-3" aria-hidden="true">
       <div className="flex items-baseline justify-between"><p className="font-display font-bold">50 vetkoek at R6</p><p className="font-display text-xl font-extrabold">R{total}</p></div>
       <div className="flex h-9 overflow-hidden rounded-xl border-2 border-edge">
-        {parts.map(([l, v, c]) => <div key={l} className="flex items-center justify-center text-xs font-bold" style={{ width: `${(v / total) * 100}%`, background: c, color: l === "Left over?" ? "#1a1613" : "#fff6e6" }}>{l === "Left over?" ? "?" : `R${v}`}</div>)}
+        {parts.map(([l, v, c]) => <div key={l} className="flex items-center justify-center text-xs font-bold" style={{ width: `${(v / total) * 100}%`, background: c, color: l === "Left over?" ? "#0d1117" : "#f3f5f8" }}>{l === "Left over?" ? "?" : `R${v}`}</div>)}
       </div>
       <div className="flex gap-4 text-xs text-muted">{parts.map(([l, , c]) => <span key={l} className="inline-flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border border-edge" style={{ background: c }} />{l}</span>)}</div>
     </div>
