@@ -111,10 +111,10 @@ export const actions = {
     prog.item = b.upTo;
     if (prog.item >= sec.items.length) {
       const { events } = await finishSection(session, prog, sec.id);
-      return { events };
+      return { events, sectionComplete: true };
     }
     await updateSession(session.id, { progress: { ...prog } as Record<string, unknown> });
-    return { events: {} };
+    return { events: {}, sectionComplete: false };
   }),
 
   values: action(z.object({ top3: z.tuple([z.string(), z.string(), z.string()]), bottom2: z.tuple([z.string(), z.string()]), ms: z.number().int().min(0).nullable() }), async ({ session }, b) => {
@@ -125,7 +125,7 @@ export const actions = {
     if (err) throw new HttpError(400, `Card sort: ${err}`);
     await upsertResponse(session.id, "VALUES", { value_json: { top3: b.top3, bottom2: b.bottom2 }, response_ms: b.ms });
     const { events } = await finishSection(session, prog, "values");
-    return { events, higherOrder: scoreValues({ top3: b.top3, bottom2: b.bottom2 })?.dominant_cluster };
+    return { events, sectionComplete: true, higherOrder: scoreValues({ top3: b.top3, bottom2: b.bottom2 })?.dominant_cluster };
   }),
 
   /** G9 academic snapshot: confirm school-imported marks, or self-report with an "estimate" tick. */

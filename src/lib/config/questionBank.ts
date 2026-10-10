@@ -76,3 +76,5 @@ export function itemsOf(scaleId: string): Item[] {
 
 export const valueCards = scaleById.get("VALUES")!.cards!;
 export const G9_SNAPSHOT_SUBJECTS = questionBank.academic_snapshot.ACADEMIC_SNAPSHOT_G9.subjects;
+
+export const attentionCheckText = (id: string) => questionBank.attention_checks.find((a) => a.id === id);
