@@ -25,7 +25,7 @@ export default async function ParentPage({ params }: { params: Promise<{ token: 
   return (
     <main className="mx-auto max-w-xl space-y-8 px-5 py-10">
       <header className="space-y-2">
-        <p className="text-sm uppercase tracking-[0.2em] text-amber">The Excavation · {g11 ? "Grade 11 Confirmation" : "Grade 9 Foundation"}</p>
+        <p className="text-sm uppercase tracking-[0.2em] text-accent-ink">The Excavation · {g11 ? "Grade 11 Confirmation" : "Grade 9 Foundation"}</p>
         <h1 className="text-3xl">A summary from {learner?.first_name}</h1>
         <p className="text-muted">{learner?.first_name} chose to share this with you.</p>
       </header>

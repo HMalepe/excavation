@@ -36,7 +36,7 @@ export default async function ReportPage() {
   const g9 = session.touchpoint === "G9_FOUNDATION";
   return (
     <div className="min-h-dvh">
-      <header className="border-b border-ink-3">
+      <header className="border-b border-line">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3 text-sm">
           <span className="uppercase tracking-widest text-muted">{g9 ? "Foundation Report" : "Confirmation Report"}</span>
           <nav className="flex gap-4">

@@ -98,7 +98,7 @@ export function ImportBox({ kind, help, example }: { kind: "roster" | "marks"; h
     <section className="card space-y-3">
       <h2 className="text-xl">{kind === "roster" ? "Import learners" : "Import marks (SA-SAMS export)"}</h2>
       <p className="text-sm text-muted">{help}</p>
-      <pre className="overflow-x-auto rounded-xl bg-ink p-2 text-xs">{example}</pre>
+      <pre className="overflow-x-auto rounded-xl bg-canvas p-2 text-xs">{example}</pre>
       <input type="file" accept=".csv,text/csv" disabled={busy} onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0])} />
       {result && (
         <div className="space-y-2">
@@ -107,7 +107,7 @@ export function ImportBox({ kind, help, example }: { kind: "roster" | "marks"; h
           {!!result.codes?.length && (
             <div>
               <p className="font-semibold">Login codes — print these now and hand them out (school code on each slip).</p>
-              <table className="mt-2 w-full text-sm"><tbody>{result.codes.map((c) => <tr key={c.code} className="border-t border-ink-3"><td className="py-1">{c.name}</td><td>Gr {c.grade} {c.class ?? ""}</td><td className="font-mono">{c.code}</td></tr>)}</tbody></table>
+              <table className="mt-2 w-full text-sm"><tbody>{result.codes.map((c) => <tr key={c.code} className="border-t border-line"><td className="py-1">{c.name}</td><td>Gr {c.grade} {c.class ?? ""}</td><td className="font-mono">{c.code}</td></tr>)}</tbody></table>
               <button className="btn-ghost mt-2" onClick={() => window.print()}>Print</button>
             </div>
           )}

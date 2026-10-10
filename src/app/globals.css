@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
-/* Design tokens (spec 10 Step 3): dark warm palette, serif headings, large tap targets. */
-@theme {
-  --color-ink: #0f0d0a;          /* charcoal background */
-  --color-ink-2: #1a1611;        /* raised surface */
-  --color-ink-3: #2a241c;        /* borders, wells */
-  --color-amber: #c8973a;        /* accent */
-  --color-amber-soft: #e0b866;
-  --color-cream: #f0e8da;        /* primary text */
-  --color-muted: #b5a993;        /* secondary text (≥ 4.5:1 on ink) */
-  --color-danger: #e07a5f;
-  --color-ok: #8fbf8f;
-  --font-serif: Georgia, "Noto Serif", "Times New Roman", serif;
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+/*
+ * STRATA — The Excavation's design system.
+ * Excavator yellow on bedrock ink, with five earth layers (sand → bedrock) that carry the
+ * descent metaphor. Two themes: Limestone (light) and Bedrock (dark). The system preference
+ * decides unless the learner picks one (data-theme on <html>, set before first paint).
+ * Fonts are self-hosted at build time (next/font): Bricolage Grotesque for display,
+ * Atkinson Hyperlegible Next for reading (designed by the Braille Institute for legibility).
+ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-line: var(--line);
+  --color-edge: var(--edge);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-danger: var(--danger);
+  --color-ok: var(--ok);
+  --color-strata-1: var(--strata-1);
+  --color-strata-2: var(--strata-2);
+  --color-strata-3: var(--strata-3);
+  --color-strata-4: var(--strata-4);
+  --color-strata-5: var(--strata-5);
+  --font-display: var(--font-bricolage), "Arial Narrow", system-ui, sans-serif;
+  --font-sans: var(--font-atkinson), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-:root { color-scheme: dark; }
-html { background: var(--color-ink); color: var(--color-cream); font-family: var(--font-sans); -webkit-text-size-adjust: 100%; }
+/* ---------- Limestone (light) ---------- */
+:root {
+  color-scheme: light;
+  --canvas: #f3eee4;
+  --surface: #fffcf5;
+  --sunken: #e8dfcf;
+  --line: #d5c8b3;
+  --edge: #1a1613;
+  --shadow: #1a1613;
+  --fg: #1a1613;
+  --muted: #5d5247;          /* 6.6:1 on canvas */
+  --accent: #f2b100;         /* excavator yellow; text on it is ink */
+  --on-accent: #1a1613;
+  --accent-ink: #855600;     /* yellow is unreadable as text on light: use this instead (5.9:1) */
+  --danger: #b42318;
+  --ok: #17704f;
+  --strata-1: #e7d1a4;       /* Surface: sand */
+  --strata-2: #d69b52;       /* Wading in: ochre */
+  --strata-3: #b5643a;       /* Deep water: laterite */
+  --strata-4: #6b4430;       /* The trench: umber */
+  --strata-5: #2a201a;       /* The floor: bedrock */
+  --grain: 0.05;
+}
+
+/* ---------- Bedrock (dark) ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #13100d;
+  --surface: #1d1915;
+  --sunken: #2a241e;
+  --line: #3b332b;
+  --edge: #ebe1d0;
+  --shadow: #000000;
+  --fg: #f2eadc;
+  --muted: #b9ad9b;
+  --accent: #f6bb1f;
+  --on-accent: #13100d;
+  --accent-ink: #f6c548;
+  --danger: #f2826f;
+  --ok: #6cc69c;
+  --strata-1: #d9c08f;
+  --strata-2: #c98a43;
+  --strata-3: #a5582f;
+  --strata-4: #5e3b29;
+  --strata-5: #0b0907;
+  --grain: 0.08;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --canvas: #13100d; --surface: #1d1915; --sunken: #2a241e; --line: #3b332b; --edge: #ebe1d0; --shadow: #000000;
+    --fg: #f2eadc; --muted: #b9ad9b; --accent: #f6bb1f; --on-accent: #13100d; --accent-ink: #f6c548;
+    --danger: #f2826f; --ok: #6cc69c;
+    --strata-1: #d9c08f; --strata-2: #c98a43; --strata-3: #a5582f; --strata-4: #5e3b29; --strata-5: #0b0907;
+    --grain: 0.08;
+  }
+}
+
+html { background: var(--canvas); color: var(--fg); font-family: var(--font-sans); -webkit-text-size-adjust: 100%; }
 body { min-height: 100dvh; line-height: 1.55; font-size: 1.0625rem; }
-h1, h2, h3, .serif { font-family: var(--font-serif); letter-spacing: -0.01em; }
-:focus-visible { outline: 3px solid var(--color-amber); outline-offset: 2px; border-radius: 6px; }
-a { color: var(--color-amber-soft); text-underline-offset: 3px; }
+h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.025em; line-height: 1.08; font-weight: 750; }
+h3 { letter-spacing: -0.015em; font-weight: 700; }
+::selection { background: var(--accent); color: var(--on-accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; box-shadow: 0 0 0 6px var(--edge); }
+a { color: var(--accent-ink); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 
 /* Low-data / reduced motion: no animations at all. */
 @media (prefers-reduced-motion: reduce) {
@@ -28,14 +105,48 @@ a { color: var(--color-amber-soft); text-underline-offset: 3px; }
 }
 .low-data *, .low-data *::before, .low-data *::after { animation: none !important; transition: none !important; }
 
-/* Tailwind v4: reusable component classes are declared with @utility so they can be composed. */
-@utility btn { @apply inline-flex min-h-12 items-center justify-center rounded-xl px-5 py-3 text-base font-semibold transition-colors disabled:opacity-50; }
-@utility btn-primary { @apply btn bg-amber text-ink hover:bg-amber-soft; }
-@utility btn-ghost { @apply btn border border-ink-3 bg-ink-2 text-cream hover:border-amber; }
-@utility card { @apply rounded-2xl border border-ink-3 bg-ink-2 p-5; }
-@utility field { @apply w-full min-h-12 rounded-xl border border-ink-3 bg-ink px-4 py-3 text-cream placeholder:text-muted focus:border-amber; }
-@utility label { @apply mb-1 block text-sm font-semibold text-muted; }
+/* ---------- components ---------- */
+/* Buttons are physical: an ink outline and a hard shadow that presses down when tapped. */
+@utility btn {
+  @apply inline-flex min-h-13 items-center justify-center gap-2 rounded-[14px] border-2 border-edge px-5 py-3 font-display text-[1.0625rem] font-bold tracking-[-0.01em] no-underline transition-[transform,box-shadow,background-color] duration-100 select-none;
+  box-shadow: 3px 3px 0 var(--shadow);
+  &:active:not(:disabled) { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--shadow); }
+  &:disabled { opacity: 0.45; box-shadow: none; cursor: not-allowed; }
+}
+@utility btn-primary { @apply btn bg-accent text-on-accent; &:hover:not(:disabled) { filter: brightness(1.04) saturate(1.05); } }
+@utility btn-ghost { @apply btn bg-surface text-fg; &:hover:not(:disabled) { background: var(--sunken); } }
+@utility btn-quiet { @apply inline-flex min-h-11 items-center justify-center rounded-xl px-3 py-2 font-display text-sm font-semibold text-muted underline-offset-4 hover:text-fg hover:underline; }
+
+@utility card { @apply rounded-[20px] border-[1.5px] border-line bg-surface p-5 sm:p-6; }
+@utility card-raised { @apply rounded-[20px] border-2 border-edge bg-surface p-5 sm:p-6; box-shadow: 5px 5px 0 var(--shadow); }
+
+@utility field {
+  @apply w-full min-h-13 rounded-[14px] border-2 border-line bg-surface px-4 py-3 text-fg placeholder:text-muted/70 transition-colors;
+  &:focus { border-color: var(--edge); outline: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 45%, transparent); }
+}
+@utility label { @apply mb-1.5 block font-display text-sm font-semibold tracking-[-0.005em] text-muted; }
+@utility eyebrow { @apply font-display text-xs font-bold uppercase tracking-[0.16em] text-accent-ink; }
+
+/* Answer tiles (questionnaire scales, checks, tasters). */
+@utility choice {
+  @apply flex min-h-13 cursor-pointer items-center rounded-[14px] border-2 border-line bg-surface px-4 py-3 font-semibold transition-[border-color,background-color,transform] duration-100;
+  &:hover { border-color: var(--edge); }
+  &:active { transform: scale(0.985); }
+}
+@utility choice-on { @apply border-edge bg-accent text-on-accent; box-shadow: 3px 3px 0 var(--shadow); }
+
+@utility chip { @apply inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-line bg-surface px-3 py-1 font-display text-xs font-semibold; }
+
+/* Paper grain + contour lines for hero areas. Inline SVG, ~1 KB, no requests. */
+@utility bg-contours {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23887766' stroke-opacity='.22' stroke-width='1'%3E%3Cpath d='M-10 40c40-18 70 14 110 0s70-26 150-4'/%3E%3Cpath d='M-10 80c50-20 80 12 120-2s80-22 140 2'/%3E%3Cpath d='M-10 122c40-14 90 16 130 2s70-20 130 0'/%3E%3Cpath d='M-10 162c46-16 76 12 116-2s84-24 144 0'/%3E%3Cpath d='M-10 204c40-18 84 14 124 0s76-22 136 2'/%3E%3C/g%3E%3C/svg%3E");
+}
 
 @keyframes draw { from { stroke-dashoffset: var(--len, 1000); } to { stroke-dashoffset: 0; } }
-@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.animate-fade-up { animation: fade-up 0.6s ease-out both; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes drop { 0% { transform: translateY(-6px); opacity: 0; } 100% { transform: none; opacity: 1; } }
+@keyframes glint { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.animate-fade-up { animation: fade-up 0.6s cubic-bezier(.2,.7,.2,1) both; }
+.animate-drop { animation: drop 0.5s cubic-bezier(.2,.7,.2,1) both; }
+.animate-glint { animation: glint 2.4s ease-in-out infinite; }

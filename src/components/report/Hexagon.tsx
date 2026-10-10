@@ -19,14 +19,14 @@ export function Hexagon({ scores, before, delayMs = 200 }: { scores: Scores; bef
     <figure className="mx-auto w-full max-w-sm">
       <svg viewBox="0 0 320 320" role="img" aria-label={`What you'd love doing: ${ORDER.map((t) => `${NAMES[t]} ${scores[t] ?? "not scored"}`).join(", ")}`}>
         {[0.25, 0.5, 0.75, 1].map((f) => (
-          <polygon key={f} points={ORDER.map((_, i) => pt(i, f * 100).join(",")).join(" ")} fill="none" stroke="var(--color-ink-3)" strokeWidth="1" />
+          <polygon key={f} points={ORDER.map((_, i) => pt(i, f * 100).join(",")).join(" ")} fill="none" stroke="var(--color-line)" strokeWidth="1" />
         ))}
         {ORDER.map((t, i) => {
           const [x, y] = pt(i, 100);
           const [lx, ly] = pt(i, 128);
           return (
             <g key={t}>
-              <line x1={C} y1={C} x2={x} y2={y} stroke="var(--color-ink-3)" />
+              <line x1={C} y1={C} x2={x} y2={y} stroke="var(--color-line)" />
               <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fill="var(--color-muted)" fontSize="13">{NAMES[t]}</text>
             </g>
           );
@@ -35,7 +35,7 @@ export function Hexagon({ scores, before, delayMs = 200 }: { scores: Scores; bef
         <polygon
           points={poly(scores)}
           fill="rgba(200,151,58,0.18)"
-          stroke="var(--color-amber)"
+          stroke="var(--color-accent)"
           strokeWidth="2.5"
           strokeLinejoin="round"
           pathLength={1000}

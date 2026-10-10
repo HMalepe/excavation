@@ -1,20 +1,28 @@
 import Link from "next/link";
 import { LogoutButton } from "@/components/client/LoginForms";
+import { ThemeToggle } from "@/components/client/ThemeToggle";
+import { StrataRule, Wordmark } from "./Brand";
 
 export function StaffShell({ title, nav, children }: { title: string; nav: { href: string; label: string }[]; children: React.ReactNode }) {
   return (
     <div className="min-h-dvh">
-      <header className="border-b border-ink-3 bg-ink-2">
+      <header className="border-b-[1.5px] border-line bg-surface">
+        <StrataRule />
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
-          <div className="flex items-center gap-5">
-            <span className="text-sm uppercase tracking-[0.2em] text-amber">The Excavation</span>
-            <nav className="flex gap-4 text-sm">{nav.map((n) => <Link key={n.href} href={n.href} className="no-underline">{n.label}</Link>)}</nav>
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
+            <Wordmark sub="School Edition" />
+            <nav className="flex flex-wrap gap-1 font-display text-sm font-semibold">
+              {nav.map((n) => <Link key={n.href} href={n.href} className="rounded-lg px-3 py-2 text-fg no-underline hover:bg-sunken">{n.label}</Link>)}
+            </nav>
           </div>
-          <LogoutButton className="btn-ghost min-h-10 px-3 py-1 text-sm" />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <LogoutButton className="btn-ghost min-h-11 px-4 py-1.5 text-sm" />
+          </div>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl space-y-6 px-4 py-6">
-        <h1 className="text-3xl">{title}</h1>
+      <main className="mx-auto max-w-6xl space-y-6 px-4 py-8">
+        <h1 className="text-4xl">{title}</h1>
         {children}
       </main>
     </div>

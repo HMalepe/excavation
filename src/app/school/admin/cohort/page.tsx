@@ -28,7 +28,7 @@ function Dist({ title, d, kind }: { title: string; d: Distribution | null; kind:
             <li key={c.label} className="flex items-center gap-2">
               <span className="w-44 shrink-0">{label(kind, c.label)}</span>
               {c.suppressed ? <span className="text-muted">fewer than {MIN_GROUP}</span> : (
-                <><span className="h-3 rounded bg-amber" style={{ width: `${Math.max(4, (c.count! / d.total!) * 100)}%` }} /><span className="tabular-nums">{c.count}</span></>
+                <><span className="h-3 rounded bg-accent" style={{ width: `${Math.max(4, (c.count! / d.total!) * 100)}%` }} /><span className="tabular-nums">{c.count}</span></>
               )}
             </li>
           ))}
@@ -71,9 +71,9 @@ export default async function Cohort() {
           {g.suppressed ? <p className="card text-muted">Fewer than {MIN_GROUP} learners in this grade — nothing is shown.</p> : (
             <>
               <div className="grid gap-3 sm:grid-cols-3">
-                <div className="card"><p className="text-sm text-muted">Learners</p><p className="serif text-3xl">{g.learners}</p></div>
-                <div className="card"><p className="text-sm text-muted">Completed</p><p className="serif text-3xl">{g.completed}</p></div>
-                <div className="card"><p className="text-sm text-muted">Completion rate</p><p className="serif text-3xl">{g.completion_rate}%</p></div>
+                <div className="card"><p className="text-sm text-muted">Learners</p><p className="font-display text-3xl">{g.learners}</p></div>
+                <div className="card"><p className="text-sm text-muted">Completed</p><p className="font-display text-3xl">{g.completed}</p></div>
+                <div className="card"><p className="text-sm text-muted">Completion rate</p><p className="font-display text-3xl">{g.completion_rate}%</p></div>
               </div>
               <div className="grid gap-3 lg:grid-cols-2">
                 <Dist title="Strongest interest (first letter of the code)" d={g.interest_first_letter} kind="riasec" />
@@ -87,7 +87,7 @@ export default async function Cohort() {
                   {!g.recommended_vs_offered.length ? <p className="text-sm text-muted">Hidden: fewer than {MIN_GROUP} completed learners.</p> : (
                     <table className="w-full text-sm"><thead className="text-muted"><tr><th className="text-left">Combination</th><th className="text-left">Times recommended</th><th className="text-left">Offered?</th></tr></thead>
                       <tbody>{g.recommended_vs_offered.map((r) => (
-                        <tr key={r.id} className="border-t border-ink-3"><td className="py-1">{combinationById.get(r.id)?.name ?? r.id}</td><td>{r.count ?? `fewer than ${MIN_GROUP}`}</td><td className={r.offered === false ? "text-danger" : ""}>{r.offered === null ? "not uploaded" : r.offered ? "yes" : "no"}</td></tr>
+                        <tr key={r.id} className="border-t border-line"><td className="py-1">{combinationById.get(r.id)?.name ?? r.id}</td><td>{r.count ?? `fewer than ${MIN_GROUP}`}</td><td className={r.offered === false ? "text-danger" : ""}>{r.offered === null ? "not uploaded" : r.offered ? "yes" : "no"}</td></tr>
                       ))}</tbody></table>
                   )}
                 </div>

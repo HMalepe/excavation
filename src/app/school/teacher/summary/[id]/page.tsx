@@ -19,11 +19,11 @@ export default async function TeacherSummaryPage({ params }: { params: Promise<{
   return (
     <StaffShell title={`${s.learner_first_name} — ${s.touchpoint === "G9" ? "Grade 9 Foundation" : "Grade 11 Confirmation"}`} nav={[{ href: "/school/teacher", label: "My learners" }]}>
       <article className="card max-w-2xl space-y-4">
-        <div><h2 className="font-semibold text-amber-soft">Learns best when</h2><p>{s.learns_best_when}</p></div>
-        <div><h2 className="font-semibold text-amber-soft">Strengths</h2><ul className="list-disc pl-5">{s.strengths.map((x, i) => <li key={i}>{x}</li>)}</ul></div>
-        <div><h2 className="font-semibold text-amber-soft">Recommendation</h2><p>{s.recommendation}</p></div>
-        <div><h2 className="font-semibold text-amber-soft">Flags</h2><ul className="list-disc pl-5">{s.flags.map((x, i) => <li key={i}>{x}</li>)}</ul></div>
-        <div><h2 className="font-semibold text-amber-soft">One thing that helps most</h2><p>{s.one_thing_that_helps}</p></div>
+        <div><h2 className="font-semibold text-accent-ink">Learns best when</h2><p>{s.learns_best_when}</p></div>
+        <div><h2 className="font-semibold text-accent-ink">Strengths</h2><ul className="list-disc pl-5">{s.strengths.map((x, i) => <li key={i}>{x}</li>)}</ul></div>
+        <div><h2 className="font-semibold text-accent-ink">Recommendation</h2><p>{s.recommendation}</p></div>
+        <div><h2 className="font-semibold text-accent-ink">Flags</h2><ul className="list-disc pl-5">{s.flags.map((x, i) => <li key={i}>{x}</li>)}</ul></div>
+        <div><h2 className="font-semibold text-accent-ink">One thing that helps most</h2><p>{s.one_thing_that_helps}</p></div>
         {s.quality_note && <p className="text-muted">{s.quality_note}</p>}
         <a href={`/api/report/pdf?kind=teacher&id=${data.id}`} className="btn-ghost inline-flex no-underline">Download PDF</a>
       </article>

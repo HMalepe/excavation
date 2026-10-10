@@ -88,7 +88,7 @@ export function ScoredLayer({ sectionId, title, stem, intro, items, startIndex, 
       <header className="space-y-2">
         <h1 id="sec-title" className="text-2xl">{title}</h1>
         {offset === 0 && startIndex === 0 && intro && <p className="text-muted">{intro}</p>}
-        {stem && <p className="font-semibold text-amber-soft">{stem}</p>}
+        {stem && <p className="font-semibold text-accent-ink">{stem}</p>}
       </header>
 
       <ol className="space-y-6">
@@ -99,7 +99,7 @@ export function ScoredLayer({ sectionId, title, stem, intro, items, startIndex, 
               {it.points.map(([v, label]) => {
                 const on = values[it.id] === v;
                 return (
-                  <label key={v} className={`flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-3 py-3 text-center text-sm font-semibold transition-colors ${on ? "border-amber bg-amber text-ink" : "border-ink-3 bg-ink hover:border-amber"}`}>
+                  <label key={v} className={`flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-3 py-3 text-center text-sm font-semibold transition-colors ${on ? "border-edge bg-accent text-on-accent" : "border-line bg-canvas hover:border-edge"}`}>
                     <input type="radio" name={it.id} value={v} checked={on} onChange={() => choose(it.id, v)} className="sr-only" />
                     {label}
                   </label>

@@ -35,7 +35,7 @@ export default async function SchoolSafeguarding() {
           return (
             <li key={e.id} className={`card space-y-2 ${!e.school_confirmed_at ? "border-danger" : ""}`}>
               <p><strong className="text-danger">URGENT</strong> · {l?.first_name} {l?.last_name} · Grade {l?.current_grade} {l?.class_label ?? ""} · {new Date(e.created_at).toLocaleString("en-ZA")}</p>
-              {m && <p className="rounded-xl bg-ink p-3 text-sm">&ldquo;{m.content}&rdquo;</p>}
+              {m && <p className="rounded-xl bg-canvas p-3 text-sm">&ldquo;{m.content}&rdquo;</p>}
               {e.school_confirmed_at ? <p className="text-sm text-ok">Confirmed {new Date(e.school_confirmed_at).toLocaleString("en-ZA")}</p>
                 : <SafeguardingActions eventId={e.id} confirmed={false} reviewed endpoint="/api/school/safeguarding" school />}
             </li>

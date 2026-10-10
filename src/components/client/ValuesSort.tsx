@@ -57,8 +57,8 @@ export function ValuesSort({ cards, resources }: { cards: Card[]; resources: Rea
         <ol className="space-y-2" aria-label="Your top three, in order">
           {top.map((id, i) => (
             <li key={id} draggable onDragStart={() => setDragId(id)} onDragOver={(e) => e.preventDefault()} onDrop={() => dropOn(id)}
-              className="flex items-center gap-3 rounded-xl border border-amber bg-ink-2 px-3 py-2">
-              <span className="serif w-6 text-center text-2xl text-amber">{i + 1}</span>
+              className="flex items-center gap-3 rounded-xl border border-edge bg-surface px-3 py-2">
+              <span className="font-display w-6 text-center text-2xl text-accent-ink">{i + 1}</span>
               <span className="flex-1">{text(id)}</span>
               <button aria-label="Move up" className="btn-ghost min-h-10 px-3 py-1" onClick={() => move(i, -1)} disabled={i === 0}>↑</button>
               <button aria-label="Move down" className="btn-ghost min-h-10 px-3 py-1" onClick={() => move(i, 1)} disabled={i === top.length - 1}>↓</button>
@@ -74,7 +74,7 @@ export function ValuesSort({ cards, resources }: { cards: Card[]; resources: Rea
           return (
             <button key={c.id} onClick={() => (step === "top" ? toggleTop(c.id) : toggleBottom(c.id))} disabled={full}
               aria-pressed={on}
-              className={`min-h-14 rounded-xl border px-4 py-3 text-left transition-colors disabled:opacity-40 ${on ? "border-danger bg-ink-3" : "border-ink-3 bg-ink-2 hover:border-amber"}`}>
+              className={`min-h-14 rounded-xl border px-4 py-3 text-left transition-colors disabled:opacity-40 ${on ? "border-danger bg-sunken" : "border-line bg-surface hover:border-edge"}`}>
               {c.text}{on ? <span className="ml-2 text-xs text-danger">least</span> : null}
             </button>
           );

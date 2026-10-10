@@ -25,8 +25,8 @@ export function ShareToggles({ initial }: { initial: { teacher: boolean; parent:
     <div className="card flex items-start justify-between gap-4">
       <div><p className="font-semibold">{label}</p><p className="mt-1 text-sm text-muted">{help}</p></div>
       <button role="switch" aria-checked={state[audience]} aria-label={label} disabled={busy !== null} onClick={() => toggle(audience)}
-        className={`relative h-8 w-14 shrink-0 rounded-full transition-colors ${state[audience] ? "bg-amber" : "bg-ink-3"}`}>
-        <span className={`absolute top-1 h-6 w-6 rounded-full bg-cream transition-all ${state[audience] ? "left-7" : "left-1"}`} />
+        className={`relative h-8 w-14 shrink-0 rounded-full transition-colors ${state[audience] ? "bg-accent" : "bg-sunken"}`}>
+        <span className={`absolute top-1 h-6 w-6 rounded-full bg-surface transition-all ${state[audience] ? "left-7" : "left-1"}`} />
       </button>
     </div>
   );
@@ -36,7 +36,7 @@ export function ShareToggles({ initial }: { initial: { teacher: boolean; parent:
       <Row audience="teacher" label="Share a summary with my LO teacher" help="A one-page summary: how you learn best, your strengths and your subject options. Never your conversation." />
       <Row audience="parent" label="Share a summary with my parent/guardian" help="A short summary to help you have one good conversation at home. You get a private link to send them." />
       {link && (
-        <div className="card space-y-3 border-amber">
+        <div className="card space-y-3 border-edge">
           <p className="font-semibold">Your parent/guardian link</p>
           <p className="break-all text-sm">{link}</p>
           <div className="flex flex-wrap gap-2">

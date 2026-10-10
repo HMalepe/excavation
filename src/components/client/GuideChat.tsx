@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { Mark } from "@/components/ui/Brand";
 import { useEffect, useRef, useState } from "react";
 
 interface Msg { id: number | string; role: "learner" | "guide"; text: string }
@@ -90,12 +91,15 @@ export function GuideChat({ initial }: { initial: Initial }) {
   const lastIsLearner = messages.at(-1)?.role === "learner";
   return (
     <section className="flex min-h-[70dvh] flex-col gap-4" aria-label="Conversation with The Guide">
-      <p className="text-center text-xs text-muted">You&apos;re chatting with The Guide, an AI.</p>
+      <p className="mx-auto chip text-muted"><Mark className="h-4 w-4" /> You&apos;re chatting with The Guide, an AI</p>
       <ol className="flex flex-1 flex-col gap-4" aria-live="polite">
         {messages.map((m) => (
-          <li key={m.id} className={m.role === "guide" ? "max-w-[92%] self-start" : "max-w-[85%] self-end"}>
-            <div className={`whitespace-pre-wrap rounded-2xl px-4 py-3 leading-relaxed ${m.role === "guide" ? "serif bg-ink-2 text-lg" : "bg-amber/15"}`}>
-              {m.text || <span className="text-muted">…</span>}
+          <li key={m.id} className={m.role === "guide" ? "flex max-w-[94%] items-end gap-2 self-start" : "max-w-[85%] self-end"}>
+            {m.role === "guide" && <Mark className="mb-1 h-7 w-7 shrink-0" />}
+            <div className={`whitespace-pre-wrap px-4 py-3 text-lg leading-relaxed ${m.role === "guide"
+              ? "rounded-[20px] rounded-bl-md border-[1.5px] border-line bg-surface"
+              : "rounded-[20px] rounded-br-md border-2 border-edge bg-accent text-on-accent"}`}>
+              {m.text || <span className="inline-flex gap-1" aria-label="The Guide is typing"><span className="h-2 w-2 animate-bounce rounded-full bg-muted" /><span className="h-2 w-2 animate-bounce rounded-full bg-muted [animation-delay:120ms]" /><span className="h-2 w-2 animate-bounce rounded-full bg-muted [animation-delay:240ms]" /></span>}
             </div>
           </li>
         ))}
@@ -111,14 +115,14 @@ export function GuideChat({ initial }: { initial: Initial }) {
       ) : needsRetry && lastIsLearner ? (
         <button className="btn-primary" disabled={busy} onClick={() => send(null)}>{busy ? "Trying…" : "Retry"}</button>
       ) : (
-        <form className="sticky bottom-0 flex items-end gap-2 bg-ink pb-3 pt-2" onSubmit={(e) => { e.preventDefault(); const t = draft.trim(); if (t && !busy) { setDraft(""); void send(t); } }}>
+        <form className="sticky bottom-0 -mx-4 flex items-end gap-2 border-t-[1.5px] border-line bg-canvas/95 px-4 pb-3 pt-3 backdrop-blur" onSubmit={(e) => { e.preventDefault(); const t = draft.trim(); if (t && !busy) { setDraft(""); void send(t); } }}>
           <label htmlFor="reply" className="sr-only">Your answer</label>
           <textarea id="reply" rows={2} value={draft} maxLength={4000} onChange={(e) => setDraft(e.target.value)} placeholder={busy ? "The Guide is replying…" : "Type, or tap the mic"}
             className="field min-h-14 flex-1 resize-none"
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey && window.matchMedia("(min-width: 768px)").matches) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }} />
           {canSpeak && (
             <button type="button" onClick={toggleMic} aria-pressed={listening} aria-label={listening ? "Stop voice input" : "Speak your answer"}
-              className={`btn min-w-12 border ${listening ? "border-danger bg-danger/20" : "border-ink-3 bg-ink-2"}`}>
+              className={`btn min-w-13 px-3 ${listening ? "bg-danger text-surface" : "bg-surface"}`}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg>
             </button>
           )}

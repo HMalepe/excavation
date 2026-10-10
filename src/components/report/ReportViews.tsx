@@ -17,7 +17,7 @@ function WhatYouTried({ skills, marks }: { skills: SkillsResult; marks: Record<s
     <Section title="What you tried">
       <p className="text-muted">Before the conversation you did three short checks and some taster tasks. The checks could only ever help you: they never lowered anything.</p>
       {skills.gate_lift && (
-        <p className="card border-amber/60 text-lg">Your maths check went well enough to open the Mathematics option. Your marks alone pointed somewhere safer — see the Maths section above.</p>
+        <p className="card border-accent text-lg">Your maths check went well enough to open the Mathematics option. Your marks alone pointed somewhere safer — see the Maths section above.</p>
       )}
       <ul className="space-y-2 text-lg">{checks.map((c) => <li key={c.check}>{c.you}</li>)}</ul>
       {practise.length > 0 && <p><strong>Worth practising:</strong> {practise.join(" · ")}</p>}
@@ -27,7 +27,7 @@ function WhatYouTried({ skills, marks }: { skills: SkillsResult; marks: Record<s
       )}
       {tasters.length > 0 && (
         <>
-          <h3 className="font-semibold text-amber-soft">Taster tasks</h3>
+          <h3 className="font-semibold text-accent-ink">Taster tasks</h3>
           <ul className="space-y-2">{tasters.map((t) => <li key={t.id}><strong>{t.title}</strong> <span className="text-muted">({t.work})</span> — {t.you}.</li>)}</ul>
           <p className="text-sm text-muted">How much you enjoyed real work counted a little towards your subject options. Getting answers right didn&apos;t.</p>
         </>
@@ -37,13 +37,13 @@ function WhatYouTried({ skills, marks }: { skills: SkillsResult; marks: Record<s
 }
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <section className="space-y-3 border-t border-ink-3 pt-8">
+  <section className="space-y-3 border-t border-line pt-8">
     <h2 className="text-2xl">{title}</h2>
     {children}
   </section>
 );
 const Paras = ({ text }: { text: string }) => <>{text.split(/\n{2,}/).map((p, i) => <p key={i} className="text-lg leading-relaxed">{p}</p>)}</>;
-const Headline = ({ text }: { text: string }) => <h1 className="serif text-3xl leading-tight sm:text-4xl">&ldquo;{text}&rdquo;</h1>;
+const Headline = ({ text }: { text: string }) => <h1 className="font-display text-3xl leading-tight sm:text-4xl">&ldquo;{text}&rdquo;</h1>;
 
 /** The Grade 9 Foundation Report. Closing line is the last element; nothing after it. */
 export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile }) {
@@ -53,9 +53,9 @@ export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile })
         <div className="space-y-10">
           <Hexagon scores={profile.interests.scores} />
           <Section title="Your shape">
-            <h3 className="font-semibold text-amber-soft">What you&apos;d love doing</h3><p className="text-lg">{r.shape.interests_plain}</p>
-            <h3 className="font-semibold text-amber-soft">How you&apos;re wired</h3><p className="text-lg">{r.shape.personality_plain}</p>
-            <h3 className="font-semibold text-amber-soft">What matters most</h3><p className="text-lg">{r.shape.values_plain}</p>
+            <h3 className="font-semibold text-accent-ink">What you&apos;d love doing</h3><p className="text-lg">{r.shape.interests_plain}</p>
+            <h3 className="font-semibold text-accent-ink">How you&apos;re wired</h3><p className="text-lg">{r.shape.personality_plain}</p>
+            <h3 className="font-semibold text-accent-ink">What matters most</h3><p className="text-lg">{r.shape.values_plain}</p>
             {r.shape.quality_note && <p className="text-muted">{r.shape.quality_note}</p>}
             {profile.norm_state === "pre_norm" && <p className="text-xs text-muted">These are reflective insights from your answers, not a measurement.</p>}
           </Section>
@@ -94,8 +94,8 @@ export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile })
             <p><strong>Counter-move:</strong> {r.pattern_to_watch.counter_move}</p>
           </Section>
           <Section title={`Your first move (${r.first_move.by_when})`}><p className="text-lg">{r.first_move.action}</p></Section>
-          <Section title="The question we'll ask you in Grade 11"><p className="serif text-xl">&ldquo;{r.grade11_question}&rdquo;</p></Section>
-          <p className="serif border-t border-ink-3 pt-10 text-2xl leading-snug">{r.closing_line}</p>
+          <Section title="The question we'll ask you in Grade 11"><p className="font-display text-xl">&ldquo;{r.grade11_question}&rdquo;</p></Section>
+          <p className="font-display border-t border-line pt-10 text-2xl leading-snug">{r.closing_line}</p>
         </div>
       </Reveal>
     </article>
@@ -123,9 +123,9 @@ export function G11Report({ r, profile, g9Profile, verdict, planState }: { r: Re
           <Section title="Your subjects, honestly">
             <ul className="space-y-2">{r.subjects.map((s) => <li key={s.subject} className="text-lg"><strong>{s.subject}</strong> — {s.plain}</li>)}</ul>
           </Section>
-          <section className="space-y-3 border-t border-ink-3 pt-8">
+          <section className="space-y-3 border-t border-line pt-8">
             <p className="text-sm uppercase tracking-widest text-muted">Verdict</p>
-            <p className="serif text-5xl text-amber">{VERDICT_WORD[verdict.verdict]}</p>
+            <p className="font-display text-5xl text-accent-ink">{VERDICT_WORD[verdict.verdict]}</p>
             <p className="text-xl">{r.verdict.headline}</p>
             <Paras text={r.verdict.explanation} />
           </section>
@@ -140,7 +140,7 @@ export function G11Report({ r, profile, g9Profile, verdict, planState }: { r: Re
             <p className="text-lg">{r.pattern_to_watch.how_it_shows_up}</p><p><strong>Counter-move:</strong> {r.pattern_to_watch.counter_move}</p>
           </Section>
           <Section title={`Your first move (${r.first_move.by_when})`}><p className="text-lg">{r.first_move.action}</p></Section>
-          <p className="serif border-t border-ink-3 pt-10 text-2xl leading-snug">{r.closing_line}</p>
+          <p className="font-display border-t border-line pt-10 text-2xl leading-snug">{r.closing_line}</p>
         </div>
       </Reveal>
     </article>

@@ -38,7 +38,7 @@ export default async function TeacherHome() {
               const s = (sessions ?? []).filter((x) => x.learner_id === l.id);
               const st = s.map((x) => `${x.touchpoint === "G9_FOUNDATION" ? "G9" : "G11"}: ${STATUS[x.status] ?? x.status}`).join(" · ") || "Not started";
               return (
-                <tr key={l.id} className="border-t border-ink-3">
+                <tr key={l.id} className="border-t border-line">
                   <td className="py-2">{l.first_name} {l.last_name}</td><td>{l.class_label ?? "—"}</td><td>{l.current_grade}</td><td>{st}</td>
                   <td>{(sharedBy.get(l.id) ?? []).map((r) => <Link key={r.id} href={`/school/teacher/summary/${r.id}`} className="mr-3">{r.tp} summary</Link>)}{!sharedBy.get(l.id) && <span className="text-muted">Not shared</span>}</td>
                 </tr>

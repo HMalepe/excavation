@@ -25,9 +25,9 @@ export default async function StaffHome() {
   return (
     <StaffShell title="Review queue" nav={STAFF_NAV}>
       <div className="grid gap-3 sm:grid-cols-3">
-        <div className="card"><p className="text-sm text-muted">Waiting for review</p><p className="serif text-4xl">{queue?.length ?? 0}</p></div>
-        <div className="card"><p className="text-sm text-muted">Learner reports released</p><p className="serif text-4xl">{released ?? 0}</p><p className="text-xs text-muted">Launch review applies to the first {serverEnv().REVIEW_FIRST_N_REPORTS}</p></div>
-        <Link href="/staff/safeguarding" className="card no-underline"><p className="text-sm text-muted">Hard safeguarding events not yet reviewed</p><p className={`serif text-4xl ${openSg ? "text-danger" : ""}`}>{openSg ?? 0}</p></Link>
+        <div className="card"><p className="text-sm text-muted">Waiting for review</p><p className="font-display text-4xl">{queue?.length ?? 0}</p></div>
+        <div className="card"><p className="text-sm text-muted">Learner reports released</p><p className="font-display text-4xl">{released ?? 0}</p><p className="text-xs text-muted">Launch review applies to the first {serverEnv().REVIEW_FIRST_N_REPORTS}</p></div>
+        <Link href="/staff/safeguarding" className="card no-underline"><p className="text-sm text-muted">Hard safeguarding events not yet reviewed</p><p className={`font-display text-4xl ${openSg ? "text-danger" : ""}`}>{openSg ?? 0}</p></Link>
       </div>
       <section className="card overflow-x-auto">
         <table className="w-full text-left text-sm">
@@ -37,7 +37,7 @@ export default async function StaffHome() {
               const n = name(r);
               const meta = r.meta as { release_reason?: string; lint?: string[] };
               return (
-                <tr key={r.id} className="border-t border-ink-3">
+                <tr key={r.id} className="border-t border-line">
                   <td className="py-2"><Link href={`/staff/reviews/${r.id}`}>{n.learner}</Link></td>
                   <td>{n.school}</td><td>{n.g} · {r.kind}</td><td>{r.status}</td>
                   <td className="max-w-xs text-muted">{meta.release_reason ?? "—"}{meta.lint?.length ? ` · ${meta.lint.length} check(s)` : ""}</td>

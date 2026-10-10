@@ -14,7 +14,7 @@ export function PlanChecklist({ plan, initial }: { plan: { action: string; by_wh
     <ul className="space-y-3">
       {plan.map((p, i) => (
         <li key={i} className="card flex gap-3">
-          <input type="checkbox" className="mt-1 h-6 w-6 accent-amber" checked={!!done[i]} onChange={() => toggle(i)} aria-label={`Done: ${p.action}`} />
+          <input type="checkbox" className="mt-1 h-6 w-6 accent-[var(--accent)]" checked={!!done[i]} onChange={() => toggle(i)} aria-label={`Done: ${p.action}`} />
           <div className={done[i] ? "opacity-60" : ""}>
             <p className={done[i] ? "line-through" : ""}>{p.action}</p>
             <p className="mt-1 text-sm text-muted">{p.by_when} · {p.who}</p>

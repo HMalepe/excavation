@@ -62,7 +62,7 @@ export function Intake() {
       <h1 className="text-2xl">First, three quick ones about you.</h1>
       {INTAKE_QUESTIONS.map((q) => (
         <div key={q.key}>
-          <label className="label text-base text-cream" htmlFor={q.key}>{q.label}</label>
+          <label className="label text-base text-fg" htmlFor={q.key}>{q.label}</label>
           {"hint" in q && <p className="mb-2 text-sm text-muted">{q.hint}</p>}
           <textarea id={q.key} name={q.key} rows={3} maxLength={800} className="field" />
         </div>
@@ -81,7 +81,7 @@ export function Snapshot({ subjects, imported }: { subjects: string[]; imported:
       <section className="space-y-6">
         <h1 className="text-2xl">Your latest marks</h1>
         <p className="text-muted">Your school sent these. If something looks wrong, tell your LO teacher.</p>
-        <ul className="card divide-y divide-ink-3">
+        <ul className="card divide-y divide-line">
           {Object.entries(imported).map(([s, m]) => <li key={s} className="flex justify-between py-2"><span>{s}</span><span className="font-semibold">{m}%</span></li>)}
         </ul>
         <ErrorLine error={error} />
@@ -156,7 +156,7 @@ export function TwoYears({ headline, fits, taken }: { headline: string | null; f
       <h1 className="text-2xl">Two years ago…</h1>
       {headline ? (
         <div className="card space-y-3">
-          <p className="serif text-xl">&ldquo;{headline}&rdquo;</p>
+          <p className="font-display text-xl">&ldquo;{headline}&rdquo;</p>
           {fits.length > 0 && <p className="text-muted">Your top combinations were: {fits.join(" · ")}</p>}
           {taken.length > 0 && <p className="text-muted">You took: {taken.join(", ")}</p>}
         </div>
@@ -164,7 +164,7 @@ export function TwoYears({ headline, fits, taken }: { headline: string | null; f
         <p className="card text-muted">We don&apos;t have a Grade 9 report for you, so today becomes your first baseline. That&apos;s fine — your report will say so.</p>
       )}
       <div>
-        <label className="label text-base text-cream" htmlFor="text">Reading this now — what still fits, and what doesn&apos;t?</label>
+        <label className="label text-base text-fg" htmlFor="text">Reading this now — what still fits, and what doesn&apos;t?</label>
         <textarea id="text" name="text" rows={4} maxLength={800} className="field" />
       </div>
       <ErrorLine error={error} />
@@ -185,7 +185,7 @@ export function MarksG11({ imported, subjects }: { imported: { subject: string; 
         <p className="text-muted">From your school: Grade 10 final and your latest Grade 11 term.</p>
         <table className="card w-full text-left">
           <thead><tr className="text-sm text-muted"><th className="py-1">Subject</th><th>Gr 10</th><th>Gr 11</th></tr></thead>
-          <tbody>{imported.map((r) => <tr key={r.subject} className="border-t border-ink-3"><td className="py-2">{r.subject}</td><td>{r.m10 ?? "—"}</td><td className="font-semibold">{r.m11 ?? "—"}</td></tr>)}</tbody>
+          <tbody>{imported.map((r) => <tr key={r.subject} className="border-t border-line"><td className="py-2">{r.subject}</td><td>{r.m10 ?? "—"}</td><td className="font-semibold">{r.m11 ?? "—"}</td></tr>)}</tbody>
         </table>
         <ErrorLine error={error} />
         <button className="btn-primary w-full" disabled={busy} onClick={() => run("marks_g11", {})}>These are right — continue</button>
@@ -229,14 +229,14 @@ export function PerSubjectLikert({ action, subject, header, stem, items, points 
   return (
     <section className="space-y-6">
       <h1 className="text-2xl">{header}</h1>
-      {stem && <p className="font-semibold text-amber-soft">{stem}</p>}
+      {stem && <p className="font-semibold text-accent-ink">{stem}</p>}
       <ol className="space-y-5">
         {items.map((it) => (
           <li key={it.id} className="card space-y-3">
             <p id={`q-${it.id}`}>{it.text}</p>
             <div role="radiogroup" aria-labelledby={`q-${it.id}`} className="grid gap-2 sm:grid-cols-5">
               {points.map(([v, label]) => (
-                <label key={v} className={`flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-2 py-2 text-center text-sm font-semibold ${answers[it.id] === v ? "border-amber bg-amber text-ink" : "border-ink-3 bg-ink"}`}>
+                <label key={v} className={`flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-2 py-2 text-center text-sm font-semibold ${answers[it.id] === v ? "border-edge bg-accent text-on-accent" : "border-line bg-canvas"}`}>
                   <input type="radio" className="sr-only" name={it.id} checked={answers[it.id] === v} onChange={() => setAnswers((a) => ({ ...a, [it.id]: v }))} />{label}
                 </label>
               ))}
@@ -258,13 +258,13 @@ export function CareerUpdate({ cu2Options, cu3Options }: { cu2Options: string[];
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); run("career_update", { cu1: String(new FormData(e.currentTarget).get("cu1") ?? ""), cu2, cu3 }); }}>
       <h1 className="text-2xl">Where you&apos;re heading</h1>
       <div>
-        <label className="label text-base text-cream" htmlFor="cu1">What career or field are you leaning towards right now? (It&apos;s fine to say &ldquo;not sure&rdquo;.)</label>
+        <label className="label text-base text-fg" htmlFor="cu1">What career or field are you leaning towards right now? (It&apos;s fine to say &ldquo;not sure&rdquo;.)</label>
         <input id="cu1" name="cu1" className="field" maxLength={300} required />
       </div>
       <fieldset className="space-y-2">
         <legend className="mb-2">Compared to Grade 9, your direction is…</legend>
         {cu2Options.map((o) => (
-          <label key={o} className={`flex min-h-12 items-center gap-3 rounded-xl border px-4 ${cu2 === o ? "border-amber" : "border-ink-3"}`}>
+          <label key={o} className={`flex min-h-12 items-center gap-3 rounded-xl border px-4 ${cu2 === o ? "border-edge" : "border-line"}`}>
             <input type="radio" name="cu2" checked={cu2 === o} onChange={() => setCu2(o)} /> {o}
           </label>
         ))}
@@ -272,7 +272,7 @@ export function CareerUpdate({ cu2Options, cu3Options }: { cu2Options: string[];
       <fieldset className="space-y-2">
         <legend className="mb-2">What have you done to explore careers since Grade 9? Tick all that apply.</legend>
         {cu3Options.map((o) => (
-          <label key={o} className={`flex min-h-12 items-center gap-3 rounded-xl border px-4 ${cu3.includes(o) ? "border-amber" : "border-ink-3"}`}>
+          <label key={o} className={`flex min-h-12 items-center gap-3 rounded-xl border px-4 ${cu3.includes(o) ? "border-edge" : "border-line"}`}>
             <input type="checkbox" checked={cu3.includes(o)} onChange={(e) => setCu3((c) => (e.target.checked ? [...c, o] : c.filter((x) => x !== o)))} /> {o}
           </label>
         ))}

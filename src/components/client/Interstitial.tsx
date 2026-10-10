@@ -13,7 +13,7 @@ export function Interstitial({ events, onContinue, resources }: { events: Sectio
   if (events.softInterstitial) {
     return (
       <section className="space-y-6 py-6" aria-live="polite">
-        <p className="serif text-xl leading-relaxed">{SOFT_COPY}</p>
+        <p className="font-display text-xl leading-relaxed">{SOFT_COPY}</p>
         <details className="card">
           <summary className="cursor-pointer font-semibold">People you can talk to now</summary>
           <div className="mt-4">{resources}</div>
@@ -27,7 +27,7 @@ export function Interstitial({ events, onContinue, resources }: { events: Sectio
   }
   return (
     <section className="flex min-h-[60dvh] flex-col justify-center gap-8 animate-fade-up" aria-live="polite">
-      <p className="serif text-2xl leading-relaxed">{events.microMoment}</p>
+      <p className="font-display text-2xl leading-relaxed">{events.microMoment}</p>
       <button className="btn-primary" onClick={onContinue} autoFocus>Keep going</button>
     </section>
   );

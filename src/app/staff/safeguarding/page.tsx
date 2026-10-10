@@ -29,7 +29,7 @@ export default async function StaffSafeguarding() {
                 <p><strong className={e.level === "hard" ? "text-danger" : ""}>{e.level.toUpperCase()}</strong> · {l.first_name} {l.last_name} · Gr {l.current_grade} · {l.schools.name} · {e.trigger_source}</p>
                 <p className="text-sm text-muted">{t(e.created_at)}</p>
               </div>
-              {e.level === "hard" && one(e.conversation_messages as { content: string } | null)?.content && <p className="rounded-xl bg-ink p-3 text-sm">&ldquo;{one(e.conversation_messages as { content: string } | null)!.content}&rdquo;</p>}
+              {e.level === "hard" && one(e.conversation_messages as { content: string } | null)?.content && <p className="rounded-xl bg-canvas p-3 text-sm">&ldquo;{one(e.conversation_messages as { content: string } | null)!.content}&rdquo;</p>}
               {e.level === "soft" && e.trigger_source === "scored_layer" && <p className="text-sm text-muted">{e.notes}</p>}
               {e.level === "hard" && <p className="text-sm text-muted">School notified {t(e.school_notified_at)} · confirmed {t(e.school_confirmed_at)} · escalated {t(e.escalated_at)} · reviewed {t(e.reviewed_at)}</p>}
               {e.level === "hard" && <SafeguardingActions eventId={e.id} confirmed={!!e.school_confirmed_at} reviewed={!!e.reviewed_at} />}

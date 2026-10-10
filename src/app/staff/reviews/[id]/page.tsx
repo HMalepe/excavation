@@ -11,7 +11,7 @@ import type { ReportG9, ReportG11 } from "@/lib/ai/schemas";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Review report" };
 
-const Json = ({ v }: { v: unknown }) => <pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap rounded-xl bg-ink p-3 text-xs">{JSON.stringify(v, null, 2)}</pre>;
+const Json = ({ v }: { v: unknown }) => <pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap rounded-xl bg-canvas p-3 text-xs">{JSON.stringify(v, null, 2)}</pre>;
 
 /** Side-by-side ScoreProfile, signals and report (spec 10 Step 5). Every view is audited. */
 export default async function ReviewPage({ params }: { params: Promise<{ id: string }> }) {

@@ -14,7 +14,7 @@ function OptionList({ name, options, chosen, onChoose, disabled, correct }: {
       {options.map((o) => {
         const on = chosen === o.i;
         const isRight = correct !== undefined && correct !== null && o.i === correct;
-        const tone = disabled && isRight ? "border-2 border-ok bg-ok/15" : on ? "border-amber bg-amber text-ink" : "border-ink-3 bg-ink hover:border-amber";
+        const tone = disabled && isRight ? "border-2 border-ok bg-ok/15" : on ? "border-edge bg-accent text-on-accent" : "border-line bg-canvas hover:border-edge";
         return (
           <label key={o.i} className={`flex min-h-12 cursor-pointer items-center rounded-xl border px-4 py-3 text-base transition-colors ${tone} ${disabled ? "cursor-default" : ""}`}>
             <input type="radio" name={name} value={o.i} checked={on} disabled={disabled} onChange={() => onChoose(o.i)} className="sr-only" />
@@ -33,7 +33,7 @@ function Scale({ name, labels, value, onChange }: { name: string; labels: string
       {labels.map((l, i) => {
         const v = i + 1, on = value === v;
         return (
-          <label key={v} className={`flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-3 py-3 text-center text-sm font-semibold transition-colors ${on ? "border-amber bg-amber text-ink" : "border-ink-3 bg-ink hover:border-amber"}`}>
+          <label key={v} className={`flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-3 py-3 text-center text-sm font-semibold transition-colors ${on ? "border-edge bg-accent text-on-accent" : "border-line bg-canvas hover:border-edge"}`}>
             <input type="radio" name={name} value={v} checked={on} onChange={() => onChange(v)} className="sr-only" />{l}
           </label>
         );
@@ -88,7 +88,7 @@ export function CheckRunner({ v }: { v: CheckView }) {
       </header>
       {v.passage && (
         <details open className="card">
-          <summary className="cursor-pointer font-semibold text-amber-soft">{v.passage.title}</summary>
+          <summary className="cursor-pointer font-semibold text-accent-ink">{v.passage.title}</summary>
           <div className="mt-3 space-y-3 text-lg leading-relaxed">{v.passage.text.split(/\n{2,}/).map((p, i) => <p key={i}>{p}</p>)}</div>
         </details>
       )}
@@ -157,8 +157,8 @@ function StepRunner({ steps, onDone, prefix }: { steps: TasterStepView[]; onDone
         <p className="text-lg leading-snug">{s.stem}</p>
         <OptionList key={`${prefix}${i}`} name={`${prefix}${i}`} options={s.options} chosen={chosen} onChoose={setChosen} disabled={revealed} correct={revealed ? s.answer : undefined} />
         {revealed && (
-          <p className="rounded-xl bg-ink p-4 leading-relaxed" role="status">
-            {verdict === null ? "" : verdict ? <strong className="text-ok">Yes. </strong> : <strong className="text-amber-soft">Not quite. </strong>}
+          <p className="rounded-xl bg-canvas p-4 leading-relaxed" role="status">
+            {verdict === null ? "" : verdict ? <strong className="text-ok">Yes. </strong> : <strong className="text-accent-ink">Not quite. </strong>}
             {s.feedback}
           </p>
         )}

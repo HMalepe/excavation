@@ -5,7 +5,7 @@ export function Resources({ compact = false }: { compact?: boolean }) {
   return (
     <ul className={compact ? "space-y-2" : "space-y-3"}>
       {resources.resources.map((r) => (
-        <li key={r.id} className="flex flex-wrap items-baseline justify-between gap-x-3 rounded-xl border border-ink-3 bg-ink px-4 py-3">
+        <li key={r.id} className="flex flex-wrap items-baseline justify-between gap-x-3 rounded-xl border border-line bg-canvas px-4 py-3">
           <span className="font-semibold">{r.name}</span>
           <span className="flex gap-3">
             <a href={`tel:${r.tel}`} className="font-semibold">{r.contact}</a>
