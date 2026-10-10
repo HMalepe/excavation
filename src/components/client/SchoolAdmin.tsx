@@ -44,7 +44,7 @@ export function SettingsForm({ initial, combinations, subjects }: { initial: Set
       <section className="card space-y-3">
         <h2 className="text-xl">Safeguarding contacts <span className="text-sm text-danger">(required — no school goes live without them)</span></h2>
         <div className="grid gap-3 sm:grid-cols-3">
-          <Field k="safeguarding_contact_name" label="Designated contact" /><Field k="safeguarding_contact_phone" label="Phone (SMS)" /><Field k="safeguarding_contact_email" label="Email" type="email" />
+          <Field k="safeguarding_contact_name" label="Designated contact" /><Field k="safeguarding_contact_phone" label="Phone (for us to call)" /><Field k="safeguarding_contact_email" label="Email" type="email" />
           <Field k="safeguarding_backup_name" label="Backup contact" /><Field k="safeguarding_backup_phone" label="Backup phone" /><Field k="safeguarding_backup_email" label="Backup email" type="email" />
           <Field k="school_day_start" label="School day starts" type="time" /><Field k="school_day_end" label="School day ends" type="time" /><Field k="partnership_agreement_signed" label="Partnership agreement signed" type="date" />
         </div>

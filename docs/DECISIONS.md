@@ -69,11 +69,12 @@ which can't be known without marks. The flow takes marks first.
 - **Every learner message is screened before The Guide sees it.** Result = max(AI screen, keyword floor).
   The floor can only raise. A classifier refusal is treated as **hard** (false positives are acceptable, spec 09 §5.2.6).
   If the screen is unavailable, the message is saved but **never** passed on unscreened; the learner retries.
-- Hard → safeguarding event + SMS/email to contact **and** backup + Excavation lead *before* the reply streams;
+- **No SMS (owner's decision, 2026-10-10):** flags are monitored on the staff dashboard. Spec 09/10 asked for SMS + email.
+- Hard → safeguarding event on the dashboards + email to contact **and** backup + Excavation lead *before* the reply streams;
   session locked; reply must contain the crisis numbers or a deterministic resource block is appended.
 - Keyword floor (`lib/safeguarding/keywords.ts`) is a starting list. Past self-harm is "soft", per spec 07 3A.
-- Alert content: name, grade, time, level, trigger message — nothing else (SMS excludes the message text).
-- Escalation: 4 **school** hours (weekdays, school timezone), then the lead is alerted to phone the school.
+- Alert content: name, grade, time, level, trigger message — nothing else.
+- Escalation: 4 **school** hours (weekdays, school timezone), then the lead gets an escalation email to phone the school.
 - Unlocking after review appends a system message; history is never edited.
 
 ---

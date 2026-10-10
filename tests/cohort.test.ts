@@ -45,8 +45,7 @@ describe("safeguarding alert", () => {
     expect(a.body).toContain("Level: urgent");
     expect(a.body).toContain('"I don\'t want to wake up"');
     expect(a.body).toContain("11:15"); // SAST
-    expect(a.sms.length).toBeLessThan(300);
-    expect(a.sms).not.toContain("wake up"); // the trigger message goes by email, not SMS
+    expect(Object.keys(a)).toEqual(["subject", "body"]);
   });
   it("counts only school hours on weekdays for the 4-hour escalation", () => {
     const tz = "Africa/Johannesburg";

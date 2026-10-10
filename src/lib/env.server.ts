@@ -21,10 +21,7 @@ const schema = z.object({
   REVIEW_FIRST_N_REPORTS: z.coerce.number().int().min(0).default(200),
   RESEND_API_KEY: z.string().optional(),
   SAFEGUARDING_FROM_EMAIL: z.string().default("safeguarding@theexcavation.co.za"),
-  SMS_PROVIDER_URL: z.string().optional(),
-  SMS_PROVIDER_TOKEN: z.string().optional(),
   EXCAVATION_SAFEGUARDING_LEAD_EMAIL: z.string().optional(),
-  EXCAVATION_SAFEGUARDING_LEAD_PHONE: z.string().optional(),
   CRON_SECRET: z.string().min(16).optional(),
 });
 

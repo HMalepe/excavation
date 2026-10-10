@@ -26,8 +26,7 @@ export function composeAlert(a: AlertInput) {
     "The learner has been shown crisis resources and told that a trusted adult at school will be let know.",
     `Please confirm you have received this: ${a.confirmUrl}`,
   ].join("\n");
-  const sms = `Excavation ${a.level.toUpperCase()} alert: ${a.learnerName} (Gr ${a.grade}) at ${when}. Check email for details. Confirm: ${a.confirmUrl}`;
-  return { subject, body, sms };
+  return { subject, body };
 }
 
 /**

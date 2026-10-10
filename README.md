@@ -60,7 +60,7 @@ password is printed by the seed (or set `SEED_STAFF_PASSWORD`).
 | `SUPABASE_SERVICE_ROLE_KEY`, `ANTHROPIC_API_KEY` | **Server only.** Importing them from client code fails the build (`server-only`), lint, and `npm run check:secrets` |
 | `AI_MODEL_FAST` / `AI_MODEL_STRONG` / `AI_EFFORT_CONVERSATION` | Defaults: `claude-haiku-5-5` (safety screen), `claude-opus-5-5` (everything else), `medium` |
 | `REVIEW_FIRST_N_REPORTS` | Human review for the first N reports (default 200) |
-| `RESEND_API_KEY`, `SMS_PROVIDER_URL`, `SMS_PROVIDER_TOKEN`, `EXCAVATION_SAFEGUARDING_LEAD_*` | Safeguarding alerts. Unset in dev = alerts are logged, not sent |
+| `RESEND_API_KEY`, `SAFEGUARDING_FROM_EMAIL`, `EXCAVATION_SAFEGUARDING_LEAD_EMAIL` | Urgent safeguarding emails (every flag is always on the staff dashboard). Unset in dev = emails are logged, not sent |
 | `CRON_SECRET` | Bearer token for `/api/cron/*` |
 
 ---
@@ -98,7 +98,7 @@ npm run typecheck && npm run lint
 | Cohort dashboard suppresses groups smaller than 10 | ✅ incl. complementary suppression (`tests/cohort.test.ts`) |
 | Grade 9 on a phone over slow data in < 90 min | ⏳ Needs a device test. Built for it: no web fonts, 103–115 kB first load per page, one item per screen |
 | Safety screen tested on 200 sample messages with the clinical advisor | ⏳ Needs the advisor and the message set |
-| Safeguarding alert reaches a test phone within 60 s | ⏳ Needs the SMS provider configured |
+| Safeguarding flags visible to staff | ✅ `/staff/safeguarding` on creation; urgent ones also emailed (no SMS, by decision) |
 | File 09 §7 checklist | ⏳ Legal / clinical / registration items — see spec 09 |
 
 ## Project map

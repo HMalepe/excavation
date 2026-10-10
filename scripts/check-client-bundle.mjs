@@ -13,7 +13,6 @@ const CANARY = {
   SUPABASE_SERVICE_ROLE_KEY: "canary-service-role-7f3a9c1e5b2d",
   ANTHROPIC_API_KEY: "canary-anthropic-key-4e8b2a6d0c9f",
   RESEND_API_KEY: "canary-resend-key-1a2b3c4d",
-  SMS_PROVIDER_TOKEN: "canary-sms-token-9z8y7x",
   CRON_SECRET: "canary-cron-secret-0123456789abcdef",
 };
 const env = {

@@ -8,7 +8,7 @@ import type { SchoolSettingsRow } from "@/lib/db/types";
 
 const sha256 = (s: string) => createHash("sha256").update(s).digest("hex");
 
-interface SendResult { channel: "sms" | "email"; to: string; ok: boolean; detail: string; at: string }
+interface SendResult { channel: "email"; to: string; ok: boolean; detail: string; at: string }
 
 /** Email through Resend's REST API; without a key (dev), the message is logged instead of sent. */
 async function sendEmail(to: string, subject: string, text: string): Promise<SendResult> {
@@ -25,24 +25,10 @@ async function sendEmail(to: string, subject: string, text: string): Promise<Sen
   } catch (e) { return { channel: "email", to, ok: false, detail: String(e), at }; }
 }
 
-/** SMS through a provider webhook ({to, message} + bearer token). Plug in the provider chosen for the pilot. */
-async function sendSms(to: string, message: string): Promise<SendResult> {
-  const env = serverEnv();
-  const at = new Date().toISOString();
-  if (!env.SMS_PROVIDER_URL) { console.warn(`[safeguarding:dev] sms to ${to}: ${message}`); return { channel: "sms", to, ok: true, detail: "dev-log", at }; }
-  try {
-    const r = await fetch(env.SMS_PROVIDER_URL, {
-      method: "POST",
-      headers: { authorization: `Bearer ${env.SMS_PROVIDER_TOKEN ?? ""}`, "content-type": "application/json" },
-      body: JSON.stringify({ to, message }),
-    });
-    return { channel: "sms", to, ok: r.ok, detail: `HTTP ${r.status}`, at };
-  } catch (e) { return { channel: "sms", to, ok: false, detail: String(e), at }; }
-}
-
 /**
- * Creates a hard safeguarding event and notifies the school's designated contact and backup
- * (SMS + email) and the Excavation safeguarding lead. Never throws: a notification failure must
+ * Creates a hard safeguarding event (it appears on the staff and school safeguarding dashboards
+ * immediately) and emails the school's designated contact, the backup and the Excavation
+ * safeguarding lead. Never throws: a notification failure must
  * not stop the learner from seeing their resources. Every attempt is logged on the event.
  */
 export async function raiseHardEvent(args: { sessionId: string; learnerId: string; triggerMessageId: number | null; triggerSource: "conversation" | "scored_layer" }): Promise<string | null> {
@@ -78,19 +64,16 @@ export async function notifyEvent(eventId: string, token: string | null, opts: {
 
   const results: SendResult[] = [];
   if (!opts.escalation && s) {
-    results.push(await sendSms(s.safeguarding_contact_phone, alert.sms));
     results.push(await sendEmail(s.safeguarding_contact_email, alert.subject, alert.body));
-    results.push(await sendSms(s.safeguarding_backup_phone, alert.sms));
     if (s.safeguarding_backup_email) results.push(await sendEmail(s.safeguarding_backup_email, alert.subject, alert.body));
   }
   // The Excavation safeguarding lead is always told (spec 09 §5.1 hard path).
   const leadSubject = opts.escalation ? `[ESCALATION — school has not confirmed] ${alert.subject}` : alert.subject;
   if (env.EXCAVATION_SAFEGUARDING_LEAD_EMAIL) results.push(await sendEmail(env.EXCAVATION_SAFEGUARDING_LEAD_EMAIL, leadSubject, alert.body));
-  if (env.EXCAVATION_SAFEGUARDING_LEAD_PHONE) results.push(await sendSms(env.EXCAVATION_SAFEGUARDING_LEAD_PHONE, (opts.escalation ? "ESCALATION: " : "") + alert.sms));
 
   const now = new Date().toISOString();
   const patch: Record<string, unknown> = { notification_log: [...((ev.notification_log as unknown[]) ?? []), ...results] };
-  if (!opts.escalation && results.some((r) => r.ok && r.to !== env.EXCAVATION_SAFEGUARDING_LEAD_EMAIL && r.to !== env.EXCAVATION_SAFEGUARDING_LEAD_PHONE)) patch.school_notified_at = now;
+  if (!opts.escalation && results.some((r) => r.ok && r.to !== env.EXCAVATION_SAFEGUARDING_LEAD_EMAIL)) patch.school_notified_at = now;
   patch.lead_notified_at = now;
   if (opts.escalation) patch.escalated_at = now;
   await db.from("safeguarding_events").update(patch).eq("id", eventId);
