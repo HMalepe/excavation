@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   title: { default: "The Excavation", template: "%s · The Excavation" },
   description: "Know Thy Self measures. The Excavation interprets. School Edition.",
   robots: { index: false, follow: false },
+  icons: { apple: "/icons/180" },
+  appleWebApp: { capable: true, title: "Excavation", statusBarStyle: "black-translucent" },
 };
 
 export const viewport: Viewport = {

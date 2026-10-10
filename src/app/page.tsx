@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { IconTile, StrataHero, StrataRule, Wordmark } from "@/components/ui/Brand";
 import { ThemeToggle } from "@/components/client/ThemeToggle";
+import { Hexagon } from "@/components/report/Hexagon";
+import { Doors } from "@/components/report/Doors";
+
+/** Sample learner (fictional, from the product spec): shown so a learner knows what they get. */
+const SAMPLE_SHAPE = { R: 30, I: 78, A: 64, S: 70, E: 25, C: 33 };
 
 const STEPS = [
   { icon: "reading", layer: 1, title: "Answer honestly", text: "What you love, how you work, what matters to you. No wrong answers." },
@@ -58,7 +63,35 @@ export default function Home() {
           </ol>
         </section>
 
-        <section className="mt-10 grid gap-3 sm:grid-cols-3">
+        <section aria-labelledby="sample" className="space-y-6 pt-16">
+          <div className="space-y-2">
+            <p className="eyebrow">What you get</p>
+            <h2 id="sample" className="text-4xl sm:text-5xl">A report that sounds like you.</h2>
+            <p className="max-w-2xl text-lg text-muted">Not a score and a label: a picture of how you think, the subject combinations that fit, the doors each one keeps open, and one thing to do this week.</p>
+          </div>
+          <div className="grid items-start gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="space-y-4">
+              <Hexagon scores={SAMPLE_SHAPE} />
+              <p className="text-center text-sm text-muted">Sample · a fictional learner</p>
+            </div>
+            <div className="space-y-4">
+              <div className="card-raised space-y-3">
+                <div className="flex items-start gap-4">
+                  <span className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-edge text-2xl font-extrabold" style={{ background: "var(--strata-1)", color: "#1a1613" }}>1</span>
+                  <div><h3 className="text-2xl">Humanities &amp; Social Sciences</h3><p className="text-sm text-muted">History · Geography · Life Sciences · Mathematics</p></div>
+                </div>
+                <p className="text-lg leading-snug">The closest match to how you think and what you care about. It keeps psychology, social work, law, journalism and teaching open.</p>
+                <Doors open={["Humanities, psychology & social sciences", "Law", "Teaching & education"]} closed={["Medicine, pharmacy & health sciences", "Engineering"]} />
+              </div>
+              <div className="rounded-[20px] border-2 border-edge bg-accent p-6 text-on-accent" style={{ boxShadow: "5px 5px 0 var(--shadow)" }}>
+                <p className="font-display text-xs font-bold uppercase tracking-[0.16em] opacity-75">Your first move · this week</p>
+                <p className="font-display mt-2 text-2xl font-bold leading-snug">Ask your gran why she thought of medicine for you. Not to argue, just to understand.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-16 grid gap-3 sm:grid-cols-3">
           {[
             ["Not a test", "There are no wrong answers. Results are insights, not a diagnosis."],
             ["Yours first", "Teachers and parents only see a summary if you choose to share it."],
@@ -71,6 +104,13 @@ export default function Home() {
           ))}
         </section>
       </main>
+
+      <footer className="border-t-[1.5px] border-line">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-8 sm:flex-row sm:items-center sm:justify-between">
+          <Wordmark sub="Know Thy Self × The Excavation" />
+          <p className="max-w-md text-sm text-muted">Reflective insights to support a decision: not a diagnosis, not a test. Questions about your information: <a href="mailto:privacy@theexcavation.co.za">privacy@theexcavation.co.za</a></p>
+        </div>
+      </footer>
     </div>
   );
 }

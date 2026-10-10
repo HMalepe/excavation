@@ -16,6 +16,7 @@
   --color-surface: var(--surface);
   --color-sunken: var(--sunken);
   --color-line: var(--line);
+  --color-control: var(--control);
   --color-edge: var(--edge);
   --color-fg: var(--fg);
   --color-muted: var(--muted);
@@ -40,6 +41,7 @@
   --surface: #fffcf5;
   --sunken: #e8dfcf;
   --line: #d5c8b3;
+  --control: #857460;        /* borders of interactive controls: ≥ 3:1 on every surface (WCAG 1.4.11) */
   --edge: #1a1613;
   --shadow: #1a1613;
   --fg: #1a1613;
@@ -64,6 +66,7 @@
   --surface: #1d1915;
   --sunken: #2a241e;
   --line: #3b332b;
+  --control: #80725f;
   --edge: #ebe1d0;
   --shadow: #000000;
   --fg: #f2eadc;
@@ -83,7 +86,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --canvas: #13100d; --surface: #1d1915; --sunken: #2a241e; --line: #3b332b; --edge: #ebe1d0; --shadow: #000000;
+    --canvas: #13100d; --surface: #1d1915; --sunken: #2a241e; --line: #3b332b; --control: #80725f; --edge: #ebe1d0; --shadow: #000000;
     --fg: #f2eadc; --muted: #b9ad9b; --accent: #f6bb1f; --on-accent: #13100d; --accent-ink: #f6c548;
     --danger: #f2826f; --ok: #6cc69c;
     --strata-1: #d9c08f; --strata-2: #c98a43; --strata-3: #a5582f; --strata-4: #5e3b29; --strata-5: #0b0907;
@@ -125,7 +128,7 @@
 @utility card-raised { @apply rounded-[20px] border-2 border-edge bg-surface p-5 sm:p-6; box-shadow: 5px 5px 0 var(--shadow); }
 
 @utility field {
-  @apply w-full min-h-13 rounded-[14px] border-2 border-line bg-surface px-4 py-3 text-fg placeholder:text-muted/70 transition-colors;
+  @apply w-full min-h-13 rounded-[14px] border-2 border-control bg-surface px-4 py-3 text-fg placeholder:text-muted/70 transition-colors;
   &:focus { border-color: var(--edge); outline: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 45%, transparent); }
 }
 @utility label { @apply mb-1.5 block font-display text-sm font-semibold tracking-[-0.005em] text-muted; }
@@ -133,11 +136,11 @@
 
 /* Answer tiles (questionnaire scales, checks, tasters). */
 @utility choice {
-  @apply flex min-h-13 cursor-pointer items-center rounded-[14px] border-2 border-line bg-surface px-4 py-3 font-semibold transition-[border-color,background-color,transform] duration-100;
+  @apply flex min-h-13 cursor-pointer items-center rounded-[14px] border-2 border-control bg-surface px-4 py-3 font-semibold transition-[border-color,background-color,transform] duration-100;
   &:hover { border-color: var(--edge); }
   &:active { transform: scale(0.985); }
 }
-@utility choice-on { @apply border-edge bg-accent text-on-accent; box-shadow: 3px 3px 0 var(--shadow); }
+@utility choice-on { @apply border-edge bg-accent text-on-accent; box-shadow: 3px 3px 0 var(--shadow); animation: pop 0.22s cubic-bezier(.3,1.6,.5,1); }
 
 @utility alert { @apply rounded-[14px] border-[1.5px] border-danger bg-danger/10 px-4 py-3 font-semibold text-danger; }
 @utility note { @apply rounded-[14px] border-[1.5px] border-line bg-sunken/60 px-4 py-3 text-muted; }
@@ -169,8 +172,28 @@
 
 @keyframes draw { from { stroke-dashoffset: var(--len, 1000); } to { stroke-dashoffset: 0; } }
 @keyframes fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { transform: scale(0.96); } 100% { transform: scale(1); } }
+@keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+/* Report sections ease in as they scroll into view (browsers that support scroll-driven animation; others just show them). */
+@supports (animation-timeline: view()) {
+  .reveal { animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
 @keyframes drop { 0% { transform: translateY(-6px); opacity: 0; } 100% { transform: none; opacity: 1; } }
 @keyframes glint { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
 .animate-fade-up { animation: fade-up 0.6s cubic-bezier(.2,.7,.2,1) both; }
 .animate-drop { animation: drop 0.5s cubic-bezier(.2,.7,.2,1) both; }
 .animate-glint { animation: glint 2.4s ease-in-out infinite; }
+
+/* Printing a report from the browser: always the light theme, no controls, no shadows. */
+@media print {
+  :root, :root[data-theme="dark"] {
+    --canvas: #ffffff; --surface: #ffffff; --sunken: #f3eee4; --line: #d5c8b3; --control: #857460; --edge: #1a1613; --shadow: transparent;
+    --fg: #1a1613; --muted: #5d5247; --accent: #f2b100; --on-accent: #1a1613; --accent-ink: #855600; --danger: #b42318; --ok: #17704f;
+  }
+  html, body { background: #fff !important; }
+  header, nav, button, .no-print { display: none !important; }
+  .card, .card-raised { break-inside: avoid; box-shadow: none !important; }
+  h2, h3 { break-after: avoid; }
+  .reveal, .animate-fade-up { animation: none !important; opacity: 1 !important; transform: none !important; }
+}

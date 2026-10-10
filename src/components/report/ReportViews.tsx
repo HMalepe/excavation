@@ -37,7 +37,7 @@ function WhatYouTried({ skills, marks }: { skills: SkillsResult; marks: Record<s
 }
 
 const Section = ({ title, children, tone }: { title: string; children: React.ReactNode; tone?: 1 | 2 | 3 | 4 | 5 }) => (
-  <section className="space-y-4 pt-10">
+  <section className="reveal space-y-4 pt-10">
     <div className="flex items-center gap-3">
       <span className="h-2.5 w-10 shrink-0 rounded-full border-[1.5px] border-edge" style={{ background: `var(--strata-${tone ?? 2})` }} aria-hidden="true" />
       <h2 className="text-3xl">{title}</h2>

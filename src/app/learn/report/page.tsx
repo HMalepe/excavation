@@ -40,7 +40,7 @@ export default async function ReportPage() {
   const g9 = session.touchpoint === "G9_FOUNDATION";
   return (
     <div className="min-h-dvh">
-      <header className="sticky top-0 z-10 border-b-[1.5px] border-line bg-canvas/90 backdrop-blur-md">
+      <header className="sticky top-0 z-10 border-b-[1.5px] border-line bg-canvas/90 backdrop-blur-md print:hidden">
         <StrataRule />
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-2.5">
           <Wordmark />

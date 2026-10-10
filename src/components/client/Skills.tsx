@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { learn } from "./api";
 import { IconTile } from "@/components/ui/Brand";
+import { TasterArt } from "@/components/ui/TasterArt";
 import type { CheckView, OptionView, TasterStepView, TasterView } from "@/lib/skills/views";
 
 const ErrorLine = ({ error }: { error: string | null }) => (error ? <p role="alert" className="alert">{error}</p> : null);
@@ -219,8 +220,8 @@ export function TasterRunner({ v }: { v: TasterView }) {
 
       {phase === "task" && (
         <div className="space-y-4">
-          <p className="card-raised whitespace-pre-line text-lg leading-relaxed">{v.scene}</p>
-          {v.visual === "poster_ab" && <PosterAB />}
+          <p className={`card-raised whitespace-pre-line text-lg leading-relaxed ${v.id === "HEALTH" || v.id === "CODE" ? "sr-only" : ""}`}>{v.scene}</p>
+          {v.visual === "poster_ab" ? <PosterAB /> : <TasterArt id={v.id} />}
           <StepRunner steps={v.steps} prefix="s" onDone={(c) => { setSteps(c); setPhase("after"); }} />
         </div>
       )}
