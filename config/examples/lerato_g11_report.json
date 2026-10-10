@@ -1,0 +1,41 @@
+{
+  "_source": "spec/08_Report_Templates_and_Samples.md Part 4 — wording verbatim, arranged into the spec 07 §6 schema. Fictional learner.",
+  "headline": { "text": "Two years ago you were carrying a plan. Now you're choosing one.", "archetype": "reversal" },
+  "two_years": {
+    "what_stayed": ["You're still a thinker first. Your curiosity hasn't dropped at all.", "Looking after your people and freedom to choose your path are still your top two values.", "You still feel pressure strongly before tests."],
+    "what_moved": ["Helping people overtook thinking as your strongest interest. That's a real shift, and it fits everything you said today.", "Your follow-through jumped. You said it yourself: \"I actually plan.\"", "\"Fairness for everyone\" entered your top three values."],
+    "identity_shift": "In Grade 9 you'd accepted a plan without testing it. Now you're questioning it, and you went and job-shadowed at an OT practice to find out. That's what testing a plan looks like."
+  },
+  "subjects": [
+    { "subject": "Life Sciences", "quadrant": "CONFIRM", "plain": "Fits and working. Your best mark and your favourite class." },
+    { "subject": "Geography", "quadrant": "CONFIRM", "plain": "Fits and working. Solid." },
+    { "subject": "Mathematics", "quadrant": "CONFIRM", "plain": "Working. Not your favourite, but steady, and you need it." },
+    { "subject": "Physical Sciences", "quadrant": "RESCUE", "plain": "Fits, but struggling. You dropped from 52% to 41%. You told us you only study it before tests. That's the cause, and it's fixable." }
+  ],
+  "verdict": {
+    "code": "RESCUE",
+    "headline": "Right subjects, fixable problem",
+    "explanation": "Rescue: your subjects fit where you're heading. Both psychology and occupational therapy are open from here, and OT typically needs Physical Sciences, so switching would close a door you're actively considering. The problem isn't the subject. It's how you're studying it: last-minute only, which works for Life Sciences because you love it, and fails for Physical Sciences because you don't. Your follow-through has grown by a lot since Grade 9 — \"I actually plan.\" Point it at this one subject for one term and see what moves."
+  },
+  "pathway": {
+    "pass_type_now": "On your current marks you're tracking towards a Bachelor's pass. Keep it.",
+    "gap_to_next": "You're already at the highest pass type. For OT, Physical Sciences matters: aim for 50%+ by the June exams; many programmes want higher.",
+    "aps_note": "Your generic APS is about 28 (best six, excluding LO). Each university calculates it differently — check their prospectus.",
+    "grade11_finals_note": "Most universities make provisional offers on Grade 11 final marks, so the next nine months count more than any other stretch of school.",
+    "career_check": "Psychology and occupational therapy are both open with your subjects. OT typically requires Maths, Physical Sciences and Life Sciences, which is why Physical Sciences matters. Check the requirements at the universities you're considering, because they vary and change every year."
+  },
+  "plan": [
+    { "action": "Swap re-reading for self-testing in Physical Sciences: close the book, write what you remember, check it", "by_when": "Starting this week", "who": "you" },
+    { "action": "Three fixed 30-minute Physical Sciences slots a week, same time and place, one past-paper question each", "by_when": "Every week until the June exams", "who": "you" },
+    { "action": "Show your Physical Sciences teacher the two topics that feel shakiest and ask for one worked example of each", "by_when": "Before the end of Term 1", "who": "you + subject teacher" },
+    { "action": "Talk to one psychologist and one OT about their actual week", "by_when": "Before the June holidays", "who": "you (LO teacher can help find contacts)" },
+    { "action": "Decide: psychology or OT", "by_when": "June holidays (your words)", "who": "you" }
+  ],
+  "pattern_to_watch": {
+    "name": "Last-minute studying for subjects you don't love",
+    "how_it_shows_up": "It works when you care, and it costs you when you don't. The early warning sign: you open Physical Sciences notes for the first time the night before a test.",
+    "counter_move": "Book the three slots in your phone now, before you feel like it."
+  },
+  "first_move": { "action": "Put three 30-minute Physical Sciences slots in your phone calendar, then do the first one before Sunday.", "by_when": "this week" },
+  "closing_line": "At eight you made magazines about people's lives. At sixteen you went to find out what helping them actually looks like. Keep going."
+}

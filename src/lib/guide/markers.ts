@@ -61,6 +61,8 @@ export class MarkerFilter {
     if (kind === "CHECKPOINT") return `checkpoint-${arg}`;
     return kind!.toLowerCase();
   }
+  /** The leading tag as written (e.g. "Q:7"), kept in stored history so the model keeps tagging. */
+  get rawTag(): string | null { return this.markers.find((m) => !END.includes(m as EndMarker)) ?? null; }
   has(m: EndMarker): boolean { return this.markers.includes(m); }
 }
 

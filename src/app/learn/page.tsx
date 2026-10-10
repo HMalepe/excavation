@@ -159,7 +159,7 @@ export default async function LearnPage() {
     }
 
     case "conversation": {
-      const chat = await loadChat(session.id);
+      const chat = await loadChat(session, learner);
       return <LearnerShell at="The floor"><GuideChat initial={chat} /></LearnerShell>;
     }
 

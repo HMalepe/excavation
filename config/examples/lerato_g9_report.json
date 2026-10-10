@@ -1,0 +1,33 @@
+{
+  "_source": "spec/08_Report_Templates_and_Samples.md Part 2 — wording verbatim, arranged into the spec 07 §5 schema. Fictional learner.",
+  "headline": { "text": "You've been interviewing people since you were eight. You just didn't call it that.", "archetype": "reversal" },
+  "shape": {
+    "interests_plain": "You light up when you get to figure out why things happen, when you're helping someone through something, and when you're making something original. Selling, admin and spreadsheets pull you much less. Your three strongest pulls are thinking, helping and creating, in that order.",
+    "personality_plain": "You're very curious, and warm in a way people notice. You feel pressure strongly, so deadlines land heavier on you than on some of your friends. Your follow-through is in the middle: you finish what matters to you, and drift on what doesn't.",
+    "values_plain": "Looking after your people comes first. Close behind is freedom to choose your own path. Those two can pull against each other, and you'll feel that more over the next few years.",
+    "quality_note": null
+  },
+  "who_you_are": "You said you used to make whole magazines for your cousins, \"with interviews and drawings\". That's the clearest picture in your whole session. Asking questions, listening, then making something out of what you heard. You still do it. \"People tell me their problems. I don't mind, I actually like it.\" Plenty of people find that draining. You find it interesting.\n\nYour answers say you're a thinker first. But you're not a lab-coat thinker. You think about people: why they do what they do, and what would help. That's a specific kind of mind, and it fits more futures than you might expect.\n\nThere's one thing worth being honest about. You sounded sure about medicine, then said: \"Doctor was my gran's idea. I think. I never really asked myself.\" That's not a problem. Plenty of people end up loving the plan their family hoped for. But right now it's your gran's plan that you're carrying, not yet one you've tested yourself.",
+  "how_you_work": "You work hardest when something matters to you, not when someone is watching. That's a strength, and it means boring subjects will feel twice as heavy. You believe effort makes you better, which matters more than any mark right now. Your study habits are in the middle: you don't always have a set time and place, and you tend to re-read notes instead of testing yourself. That's the easiest thing in this report to fix.",
+  "subject_options": {
+    "fits": [
+      { "combination_id": "HUMANITIES", "name": "Humanities & Social Sciences", "why": "This is the closest match to how you think and what you care about. History and Life Sciences were two of the three subjects you picked when we took the pressure away. It keeps psychology, social work, law, journalism and teaching open. With Maths instead of Maths Lit, commerce stays open too.", "doors_open": ["Humanities, psychology & social sciences", "Law", "Teaching & education", "Commerce, management & economics"], "doors_closed": ["Medicine, pharmacy & health sciences", "Engineering"], "readiness_note": "Your marks are ready for every subject in this combination." },
+      { "combination_id": "VISUAL_CREATIVE", "name": "Visual Arts & Design", "why": "Your Creative Arts mark is your highest, and the magazine you made at eight wasn't an accident. This combination suits the maker in you: design, media, architecture-adjacent work, and creative careers that involve people. Some creative courses need a portfolio, so start keeping your work now.", "doors_open": ["Creative arts, design & media", "Humanities, psychology & social sciences"], "doors_closed": ["Medicine, pharmacy & health sciences", "Engineering", "Natural & applied sciences"], "readiness_note": "Your Creative Arts mark is strong; keep a portfolio of your work." },
+      { "combination_id": "HEALTH_SCI", "name": "Health & Life Sciences", "why": "You're capable here: your Natural Sciences mark is strong. This keeps medicine open, as well as occupational therapy, psychology, pharmacy and every science degree. It's the safest choice for options, and the hardest workload of the three. Before choosing it, ask yourself one question: would you pick Physical Sciences if your family had never mentioned medicine?", "doors_open": ["Medicine, pharmacy & health sciences", "Engineering", "Natural & applied sciences", "Humanities, psychology & social sciences"], "doors_closed": [], "readiness_note": "Your Natural Sciences and Maths marks are ready for this." }
+    ],
+    "cautions": [
+      { "combination_id": "COMMERCE", "type": "competence_trap", "why": "You told us you're good at Accounting and you hate it. Your mark will probably follow you into Grade 10, but your energy won't. You could do well here, but it's likely to drain you." }
+    ],
+    "maths_gate": "Take Mathematics, not Maths Literacy. Your 58% is enough, and it keeps far more doors open. Requirements differ between universities and change every year, so check the prospectus.",
+    "school_check": "Check with your school which of these combinations it actually offers."
+  },
+  "pattern_to_watch": {
+    "name": "Choosing for approval",
+    "how_it_shows_up": "You care deeply about your people, and you'd rather carry their plan than disappoint them. That's love, and it can also quietly make your choices for you.",
+    "early_warning": "You say yes to something and feel tired straight after.",
+    "counter_move": "When you notice that feeling, ask one question out loud: \"Is this mine, or am I carrying it for someone?\""
+  },
+  "first_move": { "action": "Ask your gran why she thought of medicine for you. Not to argue, just to understand. Write her answer down, then write yours underneath it.", "by_when": "this week" },
+  "grade11_question": "Is the plan you're living now one you chose, or one you carried?",
+  "closing_line": "You were making magazines about people before anyone told you what a career was. Start there."
+}
