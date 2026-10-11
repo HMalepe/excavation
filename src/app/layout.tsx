@@ -7,6 +7,7 @@ import { ErrorReporter } from "@/components/client/ErrorReporter";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
   title: { default: "The Excavation", template: "%s · The Excavation" },
   description: "Know Thy Self measures. The Excavation interprets. School Edition.",
   robots: { index: false, follow: false },

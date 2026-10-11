@@ -16,7 +16,8 @@
     "db:types": "supabase gen types typescript --local > src/lib/db/database.types.ts",
     "norms": "tsx --env-file=.env.local --tsconfig tsconfig.json scripts/run-norming.ts",
     "seed": "tsx --env-file=.env.local scripts/seed.ts",
-    "validity": "tsx --env-file=.env.local --tsconfig tsconfig.json scripts/run-validity.ts"
+    "validity": "tsx --env-file=.env.local --tsconfig tsconfig.json scripts/run-validity.ts",
+    "test:e2e": "playwright test"
   },
   "engines": {
     "node": ">=20"
@@ -33,7 +34,9 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/eslintrc": "^3.3.7",
+    "@playwright/test": "^1.64.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",
