@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { adminDb } from "@/lib/db/admin";
 import { userDb } from "@/lib/db/server";
 import { HttpError } from "./guards";
+import { assertNotThrottled, recordAttempt } from "./throttle";
 import type { LearnerRow } from "@/lib/db/types";
 
 export const MAX_FAILED_PER_WINDOW = 10;
@@ -13,13 +14,6 @@ export const normaliseCode = (s: string) => s.trim().toUpperCase().replace(/\s+/
 /** Learners have no email; Supabase Auth needs one. This address can never receive mail. */
 export const learnerAuthEmail = (learnerId: string) => `learner-${learnerId}@learners.excavation.invalid`;
 
-async function throttle(key: string) {
-  const since = new Date(Date.now() - WINDOW_MINUTES * 60_000).toISOString();
-  const { count } = await adminDb().from("login_attempts").select("id", { count: "exact", head: true })
-    .eq("key", key).eq("succeeded", false).gte("at", since);
-  if ((count ?? 0) >= MAX_FAILED_PER_WINDOW) throw new HttpError(429, "Too many tries. Wait 15 minutes and try again, or ask your teacher to check your codes.");
-}
-
 /**
  * School code + personal login code → a Supabase session cookie, without passwords:
  * the server mints a one-time magic-link token with the service role and verifies it immediately.
@@ -27,10 +21,10 @@ async function throttle(key: string) {
 export async function loginLearner(schoolCodeRaw: string, loginCodeRaw: string, ip: string): Promise<LearnerRow> {
   const schoolCode = normaliseCode(schoolCodeRaw), loginCode = normaliseCode(loginCodeRaw);
   const key = hash(`${ip}|${schoolCode}`);
-  await throttle(key);
+  await assertNotThrottled(key, { max: MAX_FAILED_PER_WINDOW, windowMinutes: WINDOW_MINUTES, message: "Too many tries. Wait 15 minutes and try again, or ask your teacher to check your codes." });
   const db = adminDb();
   const fail = async () => {
-    await db.from("login_attempts").insert({ key, succeeded: false });
+    await recordAttempt(key, false);
     return new HttpError(401, "Those codes don't match. Check them against what your teacher gave you.");
   };
 
@@ -55,6 +49,6 @@ export async function loginLearner(schoolCodeRaw: string, loginCodeRaw: string, 
   const { error: otpErr } = await session.auth.verifyOtp({ type: "magiclink", token_hash: link.properties.hashed_token });
   if (otpErr) throw new Error(`verifyOtp failed: ${otpErr.message}`);
 
-  await db.from("login_attempts").insert({ key, succeeded: true });
+  await recordAttempt(key, true);
   return { ...(learner as LearnerRow), profile_id: profileId };
 }

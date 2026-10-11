@@ -8,6 +8,7 @@ import { screenMessage, ScreenUnavailable } from "@/lib/ai/safety";
 import { raiseHardEvent } from "@/lib/safeguarding/notify";
 import { advanceTo, updateSession } from "@/lib/session/service";
 import { MarkerFilter } from "./markers";
+import { assertGuideAllowance } from "./limits";
 import { guideBlock, loadMessages } from "./state";
 import type { LearnerRow, MessageRow, SessionRow } from "@/lib/db/types";
 
@@ -50,6 +51,7 @@ export function toApiMessages(rows: MessageRow[]): Anthropic.Beta.BetaMessagePar
 export async function guideTurn(session: SessionRow, learner: LearnerRow, text: string | null): Promise<{ stream: ReadableStream<Uint8Array>; done: Promise<TurnOutcome> }> {
   if (session.locked_at || session.status === "safety_stop") throw new HttpError(423, "This chat is paused.");
   if (session.stage !== "conversation") throw new HttpError(409, "The chat isn't open right now.");
+  await assertGuideAllowance(session.id);
   const db = adminDb();
   let rows = await loadMessages(session.id);
   const lastVisible = rows.filter((r) => r.role !== "system").at(-1);
@@ -131,7 +133,7 @@ export async function guideTurn(session: SessionRow, learner: LearnerRow, text: 
       let textOut = filter.text;
       if (refused && !textOut) {
         // Whole fallback chain declined or the call failed: never leave the learner with nothing.
-        textOut = isHard ? HARD_RESOURCES_FALLBACK : "Sorry — I lost my train of thought there. Could you say that again, maybe in different words?";
+        textOut = isHard ? HARD_RESOURCES_FALLBACK : "Sorry, I lost my train of thought there. Could you say that again, maybe in different words?";
         push(textOut);
       }
       // Safety net: a hard-path reply must carry the crisis numbers, whatever the model wrote.
