@@ -1,5 +1,5 @@
 import { handle } from "@/lib/http";
-import { HttpError, getCaller } from "@/lib/auth/guards";
+import { HttpError, assertMfa, getCaller } from "@/lib/auth/guards";
 import { userDb } from "@/lib/db/server";
 import { audit } from "@/lib/audit";
 import { getOrCreateSession } from "@/lib/session/service";
@@ -22,6 +22,7 @@ export const GET = handle(async (req: Request) => {
   const kind = url.searchParams.get("kind");
   const caller = await getCaller();
   if (!caller) throw new HttpError(401, "Not signed in");
+  assertMfa(caller);
 
   if (caller.role === "learner" && caller.learner && (kind === "learner" || kind === "parent")) {
     const session = await getOrCreateSession(caller.learner);

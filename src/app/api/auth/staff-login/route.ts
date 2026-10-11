@@ -3,13 +3,10 @@ import { handle, ok } from "@/lib/http";
 import { HttpError } from "@/lib/auth/guards";
 import { userDb } from "@/lib/db/server";
 import { adminDb } from "@/lib/db/admin";
+import { STAFF_HOME as HOME } from "@/lib/auth/mfa";
 import { assertNotThrottled, clientIp, recordAttempt, sha256, STAFF_LIMITS } from "@/lib/auth/throttle";
 
 const Body = z.object({ email: z.string().email(), password: z.string().min(8).max(200) });
-
-const HOME: Record<string, string> = {
-  teacher: "/school/teacher", school_admin: "/school/admin", safeguarding_contact: "/school/safeguarding", excavation_staff: "/staff",
-};
 
 export const POST = handle(async (req: Request) => {
   const { email, password } = Body.parse(await req.json());

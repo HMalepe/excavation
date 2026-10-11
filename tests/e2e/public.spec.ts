@@ -29,14 +29,14 @@ test.describe("security headers (production build)", () => {
 });
 
 test.describe("access control without a session", () => {
-  for (const [path, to] of [["/learn", "/login"], ["/staff", "/staff/login"], ["/school/admin", "/staff/login"], ["/school/admin/consent", "/staff/login"], ["/staff/privacy", "/staff/login"]] as const) {
+  for (const [path, to] of [["/learn", "/login"], ["/staff", "/staff/login"], ["/school/admin", "/staff/login"], ["/school/admin/consent", "/staff/login"], ["/staff/privacy", "/staff/login"], ["/staff/mfa", "/staff/login"]] as const) {
     test(`${path} sends a visitor to ${to}`, async ({ page }) => {
       await page.goto(path);
       await expect(page).toHaveURL(new RegExp(`${to}$`));
     });
   }
   test("APIs reject anonymous callers", async ({ request }) => {
-    for (const [method, url] of [["post", "/api/learn/answer"], ["post", "/api/guide/message"], ["post", "/api/staff/privacy"], ["post", "/api/school/consent"], ["get", "/api/school/consent-form"], ["get", "/api/report/pdf?kind=learner"]] as const) {
+    for (const [method, url] of [["post", "/api/learn/answer"], ["post", "/api/guide/message"], ["post", "/api/staff/privacy"], ["post", "/api/staff/mfa/enrol"], ["post", "/api/staff/mfa/verify"], ["post", "/api/school/consent"], ["get", "/api/school/consent-form"], ["get", "/api/report/pdf?kind=learner"]] as const) {
       const res = await request[method](url, method === "post" ? { data: {} } : undefined);
       expect([401, 403], `${method} ${url}`).toContain(res.status());
     }

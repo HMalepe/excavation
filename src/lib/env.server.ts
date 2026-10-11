@@ -23,6 +23,7 @@ const schema = z.object({
   SAFEGUARDING_FROM_EMAIL: z.string().default("safeguarding@theexcavation.co.za"),
   EXCAVATION_SAFEGUARDING_LEAD_EMAIL: z.string().optional(),
   CRON_SECRET: z.string().min(16).optional(),
+  STAFF_MFA: z.enum(["required", "off"]).optional(),
 });
 
 export type ServerEnv = z.infer<typeof schema>;
