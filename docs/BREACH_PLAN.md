@@ -56,6 +56,6 @@ real contact. Do not minimise. Do not blame learners.
 ## Known data flows to bear in mind
 
 - Database, auth: Supabase, Ireland (eu-west-1).
-- AI processing: Anthropic, United States. Messages sent to the AI contain the learner's first name only if the prompt includes it; check `src/lib/ai/prompts.ts` and the privacy notice. Cross-border transfer is disclosed in `/privacy`.
+- AI processing: Anthropic, United States. What goes to the AI: the learner's first name, grade, scores, intake answers and the Guide conversation. No surname, school name, ID or contact details. Check `src/lib/guide/scoreContext.ts` and the privacy notice. Cross-border transfer is disclosed in `/privacy`.
 - Email: Resend, urgent safeguarding alerts only.
 - Reports/PDFs are generated on demand and not stored.

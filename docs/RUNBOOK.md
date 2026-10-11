@@ -16,7 +16,7 @@ Who this is for: whoever is on call. Keep it open during a pilot.
 ## Health checks
 
 - `GET /api/health`: public, returns `{ok, time, version}`. Point an external uptime monitor at it (1-minute interval, alert by SMS).
-- `GET /api/health/deep` with `Authorization: Bearer $CRON_SECRET`: checks database and AI-key presence. Monitor it every 5 minutes.
+- `GET /api/health/deep` with `Authorization: Bearer $CRON_SECRET`: checks the database and reports which integrations and approval flags are configured (AI key, email, lead email, consent form, legal pages, retention). Monitor it every 5 minutes and alert on `database != ok`.
 - Browser errors are posted to `/api/client-error` and appear in Vercel runtime logs as `[client-error]`.
 
 ## Scheduled jobs (`vercel.json`)
