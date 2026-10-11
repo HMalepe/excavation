@@ -132,3 +132,14 @@ describe("school roles", () => {
     expect((await as(U.admin, "select * from login_attempts")).rows).toHaveLength(0);
   });
 });
+
+describe("hardening (migration 0004)", () => {
+  it("keeps the RLS helper functions out of the public API schema", async () => {
+    const r = await as(U.learnerA, "select proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname = 'public' and proname in ('my_role','my_school','my_learner_id','teacher_has_learner','teacher_can_read_report','learner_in_my_school')");
+    expect(r.rows).toHaveLength(0);
+  });
+  it("has no leftover write-everything policies on sessions, answers or shares", async () => {
+    const r = await as(U.learnerA, "select policyname from pg_policies where schemaname = 'public' and cmd = 'ALL' and tablename in ('sessions','item_responses','share_grants')");
+    expect(r.rows).toHaveLength(0);
+  });
+});
