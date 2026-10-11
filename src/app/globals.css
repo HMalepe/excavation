@@ -2,7 +2,7 @@
 
 /*
  * STRATA — The Excavation's design system.
- * Excavator yellow on bedrock ink, with five earth layers (sand → bedrock) that carry the
+ * Aqua signal on cool neutrals, with five depth layers (sky → midnight) that carry the
  * descent metaphor. Two themes: Limestone (light) and Bedrock (dark). The system preference
  * decides unless the learner picks one (data-theme on <html>, set before first paint).
  * Fonts are self-hosted at build time (next/font): Bricolage Grotesque for display,
@@ -46,9 +46,9 @@
   --shadow: #0d1117;
   --fg: #0d1117;
   --muted: #4a5361;          /* 6.6:1 on canvas */
-  --accent: #ffd60a;         /* excavator yellow; text on it is ink */
+  --accent: #2de0c4;         /* aqua signal; text on it is ink */
   --on-accent: #0d1117;
-  --accent-ink: #2347c5;     /* yellow is unreadable as text on light: use this instead (5.9:1) */
+  --accent-ink: #2347c5;     /* aqua is too light to read as text on light backgrounds: indigo instead (5.9:1) */
   --danger: #c8261a;
   --ok: #11794f;
   --strata-1: #c7e5ff;       /* Surface: sand */
@@ -71,9 +71,9 @@
   --shadow: #000000;
   --fg: #f3f5f8;
   --muted: #a3adbb;
-  --accent: #ffd60a;
+  --accent: #2de0c4;
   --on-accent: #0a0d12;
-  --accent-ink: #ffd60a;
+  --accent-ink: #2de0c4;
   --danger: #ff6b5e;
   --ok: #4fd1a1;
   --strata-1: #c7e5ff;
@@ -87,7 +87,7 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --canvas: #0a0d12; --surface: #121821; --sunken: #1b2330; --line: #262f3d; --control: #6c778a; --edge: #f3f5f8; --shadow: #000000;
-    --fg: #f3f5f8; --muted: #a3adbb; --accent: #ffd60a; --on-accent: #0a0d12; --accent-ink: #ffd60a;
+    --fg: #f3f5f8; --muted: #a3adbb; --accent: #2de0c4; --on-accent: #0a0d12; --accent-ink: #2de0c4;
     --danger: #ff6b5e; --ok: #4fd1a1;
     --strata-1: #c7e5ff; --strata-2: #4aa3ff; --strata-3: #2b5fe8; --strata-4: #1d2f8f; --strata-5: #0a1030;
     --grain: 0.08;
@@ -189,7 +189,7 @@
 @media print {
   :root, :root[data-theme="dark"] {
     --canvas: #ffffff; --surface: #ffffff; --sunken: #eceff3; --line: #cfd6df; --control: #778092; --edge: #0d1117; --shadow: transparent;
-    --fg: #0d1117; --muted: #4a5361; --accent: #ffd60a; --on-accent: #0d1117; --accent-ink: #2347c5; --danger: #c8261a; --ok: #11794f;
+    --fg: #0d1117; --muted: #4a5361; --accent: #2de0c4; --on-accent: #0d1117; --accent-ink: #2347c5; --danger: #c8261a; --ok: #11794f;
   }
   html, body { background: #fff !important; }
   header, nav, button, .no-print { display: none !important; }

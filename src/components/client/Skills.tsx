@@ -120,7 +120,7 @@ function PosterAB() {
           <p className="font-serif italic text-pink-600">come one come all!!!</p>
           <p className="font-mono text-blue-700">SCHOOL CONCERT featuring the choir, the band, poetry, dancers, the drama club and more</p>
           <p className="text-right font-bold text-green-700">tickets R20 · learners R10 · bring a friend</p>
-          <p className="mt-1 text-center text-[13px] font-black text-orange-500">MUSIC!!</p>
+          <p className="mt-1 text-center text-[13px] font-black text-fuchsia-600">MUSIC!!</p>
           <p className="font-serif text-purple-700">refreshments on sale · parking at the back gate · ask Mr Dlamini for details</p>
           <p className="mt-3 text-[7px] text-gray-500">Friday 7 November, 18:00, school hall</p>
         </div>
@@ -129,9 +129,9 @@ function PosterAB() {
       <figure className="space-y-1">
         <div className="flex aspect-[3/4] flex-col justify-between overflow-hidden rounded-lg bg-white p-3 text-black">
           <p className="text-[18px] font-black leading-none">SCHOOL CONCERT</p>
-          <div className="mx-auto h-12 w-12 rounded-full bg-gradient-to-br from-amber-400 to-red-500" />
+          <div className="mx-auto h-12 w-12 rounded-full bg-gradient-to-br from-cyan-400 to-indigo-600" />
           <div>
-            <p className="text-[12px] font-bold text-yellow-300">Fri 7 Nov · 18:00</p>
+            <p className="text-[12px] font-bold text-slate-300">Fri 7 Nov · 18:00</p>
             <p className="text-[10px]">School hall · R20 (learners R10)</p>
           </div>
         </div>

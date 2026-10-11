@@ -4,7 +4,7 @@ import { pathwayName } from "@/lib/scoring/doors";
 import type { ParentSummary, ReportG9, ReportG11, TeacherSummary } from "@/lib/ai/schemas";
 import type { skillsLines } from "@/lib/skills/plain";
 
-// Print-friendly Limestone: light paper, ink text, excavator yellow only as an accent, and the five
+// Print-friendly Limestone: light paper, ink text, aqua only as an accent, and the five
 // earth layers as a signature rule. Built-in fonts (no downloads): bold Helvetica stands in for the
 // display face on paper.
 const STRATA = ["#c7e5ff", "#4aa3ff", "#2b5fe8", "#1d2f8f", "#0a1030"];
@@ -14,7 +14,7 @@ const s = StyleSheet.create({
   brand: { fontFamily: "Helvetica-Bold", fontSize: 9, letterSpacing: 0.4, color: "#0d1117", marginBottom: 14 },
   kicker: { fontFamily: "Helvetica-Bold", fontSize: 8, letterSpacing: 1.6, color: "#2347c5", textTransform: "uppercase", marginBottom: 6 },
   h1: { fontFamily: "Helvetica-Bold", fontSize: 24, marginBottom: 14, lineHeight: 1.12, letterSpacing: -0.4 },
-  h2: { fontFamily: "Helvetica-Bold", fontSize: 14.5, marginTop: 16, marginBottom: 6, color: "#0d1117", paddingBottom: 3, borderBottomWidth: 2, borderBottomColor: "#ffd60a" },
+  h2: { fontFamily: "Helvetica-Bold", fontSize: 14.5, marginTop: 16, marginBottom: 6, color: "#0d1117", paddingBottom: 3, borderBottomWidth: 2, borderBottomColor: "#2de0c4" },
   h3: { fontFamily: "Helvetica-Bold", fontSize: 10.5, marginTop: 6, marginBottom: 2 },
   p: { marginBottom: 6 },
   muted: { color: "#4a5361", fontSize: 9 },

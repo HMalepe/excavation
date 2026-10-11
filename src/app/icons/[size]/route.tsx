@@ -16,7 +16,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ size: s
             <path d="M0 10C8 7 14 12 22 9.5S30 8.5 32 9.5V32H0Z" fill="#4aa3ff" />
             <path d="M0 16.5C7 14.5 15 18.5 22 16S30 15.5 32 16.5V32H0Z" fill="#2b5fe8" />
             <path d="M0 22.5C9 20.5 15 24.5 23 22S30 21.5 32 22.5V32H0Z" fill="#0a1030" />
-            <path d="M16 23.6l2.7 2.7-2.7 2.7-2.7-2.7z" fill="#ffd60a" />
+            <path d="M16 23.6l2.7 2.7-2.7 2.7-2.7-2.7z" fill="#2de0c4" />
           </svg>
         </div>
       </div>

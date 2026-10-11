@@ -19,7 +19,7 @@ export default function OgImage() {
         <div style={{ display: "flex", flexDirection: "column", width: 500, height: 630 }}>
           {layers.map((c, i) => (
             <div key={c} style={{ display: "flex", flex: 1, background: c, alignItems: "center", justifyContent: "center" }}>
-              {i === 4 ? <div style={{ display: "flex", width: 64, height: 64, background: "#ffd60a", transform: "rotate(45deg)", border: "5px solid #0d1117" }} /> : null}
+              {i === 4 ? <div style={{ display: "flex", width: 64, height: 64, background: "#2de0c4", transform: "rotate(45deg)", border: "5px solid #0d1117" }} /> : null}
             </div>
           ))}
         </div>

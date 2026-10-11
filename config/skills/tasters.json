@@ -136,8 +136,8 @@
       "steps": [
         { "id": "1", "stem": "Which poster works better from across a busy corridor?", "options": ["Poster B", "Poster A"], "answer": 0,
           "feedback": "B has one clear headline, then the date and place, then one picture. Designers call this hierarchy: the eye knows where to go first." },
-        { "id": "2", "stem": "Poster B prints the date in yellow on a white background. What do you change?", "options": ["Use dark text on a light background (or light on dark) for contrast", "Make the date smaller", "Add more colours", "Put the date in brackets"], "answer": 0,
-          "feedback": "Contrast is the first thing a designer checks. Yellow on white disappears, especially when printed." },
+        { "id": "2", "stem": "Poster B prints the date in pale grey on a white background. What do you change?", "options": ["Use dark text on a light background (or light on dark) for contrast", "Make the date smaller", "Add more colours", "Put the date in brackets"], "answer": 0,
+          "feedback": "Contrast is the first thing a designer checks. Pale grey on white disappears, especially when printed." },
         { "id": "3", "stem": "Pick the headline you'd put on the poster.", "options": ["SOUND. LIGHTS. US.", "Soweto Sounds — Live!", "Concert", "Music event information for learners"], "answer": null,
           "feedback": "No right answer here — designers argue about this all day. Short, specific headlines usually win; that's a starting point, not a rule." }
       ],

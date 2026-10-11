@@ -44,7 +44,7 @@ export function Hexagon({ scores, before, delayMs = 200 }: { scores: Scores; bef
         />
         {ORDER.map((t, i) => { const [x, y] = pt(i, scores[t] ?? 0); return <circle key={t} cx={x} cy={y} r="4.5" fill="var(--accent)" stroke="var(--edge)" strokeWidth="2" />; })}
       </svg>
-      {before && <figcaption className="mt-1 text-center text-sm text-muted">Dashed: Grade 9 · Yellow: now</figcaption>}
+      {before && <figcaption className="mt-1 text-center text-sm text-muted">Dashed: Grade 9 · Filled: now</figcaption>}
     </figure>
   );
 }
