@@ -13,12 +13,12 @@ export function Interstitial({ events, onContinue, resources }: { events: Sectio
   if (events.softInterstitial) {
     return (
       <section className="space-y-6 py-6" aria-live="polite">
-        <div className="card-raised space-y-3">
+        <div className="card space-y-3">
           <p className="eyebrow">A quick pause</p>
-          <p className="font-display text-2xl font-bold leading-snug">{SOFT_COPY}</p>
+          <p className="text-xl font-semibold leading-snug">{SOFT_COPY}</p>
         </div>
         <details className="card">
-          <summary className="font-display font-bold">People you can talk to now</summary>
+          <summary className="font-semibold">People you can talk to now</summary>
           <div className="mt-4">{resources}</div>
         </details>
         <div className="grid grid-cols-2 gap-3">
@@ -31,8 +31,8 @@ export function Interstitial({ events, onContinue, resources }: { events: Sectio
   return (
     <section className="flex min-h-[60dvh] flex-col justify-center gap-8 animate-fade-up" aria-live="polite">
       <div className="space-y-5">
-        <span className="diamond !mt-0 block h-4 w-4" aria-hidden="true" />
-        <p className="font-display text-3xl font-bold leading-tight tracking-[-0.02em]">{events.microMoment}</p>
+        <span className="diamond !mt-0 block h-3 w-3" aria-hidden="true" />
+        <p className="text-2xl font-semibold leading-tight tracking-[-0.02em] sm:text-3xl">{events.microMoment}</p>
       </div>
       <button className="btn-primary" onClick={onContinue} autoFocus>Keep going</button>
     </section>

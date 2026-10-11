@@ -97,8 +97,8 @@ export function GuideChat({ initial }: { initial: Initial }) {
           <li key={m.id} className={m.role === "guide" ? "flex max-w-[94%] items-end gap-2 self-start" : "max-w-[85%] self-end"}>
             {m.role === "guide" && <Mark className="mb-1 h-7 w-7 shrink-0" />}
             <div className={`whitespace-pre-wrap px-4 py-3 text-lg leading-relaxed ${m.role === "guide"
-              ? "rounded-[20px] rounded-bl-md border-[1.5px] border-line bg-surface"
-              : "rounded-[20px] rounded-br-md border-2 border-edge bg-accent text-on-accent"}`}>
+              ? "rounded-2xl rounded-bl-md border border-line bg-surface"
+              : "rounded-2xl rounded-br-md bg-accent text-on-accent"}`}>
               {m.text || <span className="inline-flex gap-1" aria-label="The Guide is typing"><span className="h-2 w-2 animate-bounce rounded-full bg-muted" /><span className="h-2 w-2 animate-bounce rounded-full bg-muted [animation-delay:120ms]" /><span className="h-2 w-2 animate-bounce rounded-full bg-muted [animation-delay:240ms]" /></span>}
             </div>
           </li>

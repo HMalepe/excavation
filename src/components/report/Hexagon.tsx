@@ -27,7 +27,7 @@ export function Hexagon({ scores, before, delayMs = 200 }: { scores: Scores; bef
           return (
             <g key={t}>
               <line x1={C} y1={C} x2={x} y2={y} stroke="var(--line)" />
-              <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fill="var(--fg)" fontSize="14" fontWeight="700" letterSpacing="-0.2" style={{ fontFamily: "var(--font-display)" }}>{NAMES[t]}</text>
+              <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fill="var(--fg)" fontSize="14" fontWeight="600" letterSpacing="-0.2" style={{ fontFamily: "var(--font-display)" }}>{NAMES[t]}</text>
             </g>
           );
         })}
@@ -35,14 +35,14 @@ export function Hexagon({ scores, before, delayMs = 200 }: { scores: Scores; bef
         <polygon
           points={poly(scores)}
           fill="var(--accent)"
-          fillOpacity=".38"
-          stroke="var(--edge)"
-          strokeWidth="3"
+          fillOpacity=".18"
+          stroke="var(--accent)"
+          strokeWidth="2.5"
           strokeLinejoin="round"
           pathLength={1000}
           style={{ strokeDasharray: 1000, ["--len" as string]: 1000, animation: `draw 1.6s ease-out ${delayMs}ms both` }}
         />
-        {ORDER.map((t, i) => { const [x, y] = pt(i, scores[t] ?? 0); return <circle key={t} cx={x} cy={y} r="4.5" fill="var(--accent)" stroke="var(--edge)" strokeWidth="2" />; })}
+        {ORDER.map((t, i) => { const [x, y] = pt(i, scores[t] ?? 0); return <circle key={t} cx={x} cy={y} r="4.5" fill="var(--surface)" stroke="var(--accent)" strokeWidth="2.5" />; })}
       </svg>
       {before && <figcaption className="mt-1 text-center text-sm text-muted">Dashed: Grade 9 · Filled: now</figcaption>}
     </figure>

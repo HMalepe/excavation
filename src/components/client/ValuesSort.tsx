@@ -58,8 +58,8 @@ export function ValuesSort({ cards, resources }: { cards: Card[]; resources: Rea
         <ol className="space-y-2" aria-label="Your top three, in order">
           {top.map((id, i) => (
             <li key={id} draggable onDragStart={() => setDragId(id)} onDragOver={(e) => e.preventDefault()} onDrop={() => dropOn(id)}
-              className="flex items-center gap-3 rounded-[14px] border-2 border-edge bg-surface px-3 py-2" style={{ boxShadow: "3px 3px 0 var(--shadow)" }}>
-              <span className="font-display flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-edge bg-accent text-lg font-extrabold text-on-accent">{i + 1}</span>
+              className="flex items-center gap-3 rounded-xl border border-tint-line bg-tint px-3 py-2">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-base font-bold text-on-accent">{i + 1}</span>
               <span className="flex-1">{text(id)}</span>
               <button aria-label="Move up" className="btn-ghost min-h-11 min-w-11 px-3 py-1" onClick={() => move(i, -1)} disabled={i === 0}>↑</button>
               <button aria-label="Move down" className="btn-ghost min-h-11 min-w-11 px-3 py-1" onClick={() => move(i, 1)} disabled={i === top.length - 1}>↓</button>

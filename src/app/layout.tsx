@@ -1,11 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Atkinson_Hyperlegible_Next } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ErrorReporter } from "@/components/client/ErrorReporter";
 
 // Self-hosted at build time (no request to Google from the learner's phone), latin subset only.
-const bricolage = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage", display: "swap" });
-const atkinson = Atkinson_Hyperlegible_Next({ subsets: ["latin"], variable: "--font-atkinson", display: "swap" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
   title: { default: "The Excavation", template: "%s · The Excavation" },
@@ -19,8 +18,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#eceff3" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0d12" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f7fb" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a101c" },
   ],
 };
 
@@ -29,7 +28,7 @@ const THEME_SCRIPT = `try{var t=localStorage.getItem("theme");if(t==="light"||t=
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-ZA" className={`${bricolage.variable} ${atkinson.variable}`} suppressHydrationWarning>
+    <html lang="en-ZA" className={inter.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>

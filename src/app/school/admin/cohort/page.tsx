@@ -72,9 +72,9 @@ export default async function Cohort() {
           {g.suppressed ? <p className="card text-muted">Fewer than {MIN_GROUP} learners in this grade — nothing is shown.</p> : (
             <>
               <div className="grid gap-3 sm:grid-cols-3">
-                <Stat label="Learners" value={g.learners} layer={1} />
-                <Stat label="Completed" value={g.completed} layer={3} />
-                <Stat label="Completion rate" value={`${g.completion_rate}%`} layer={4} />
+                <Stat label="Learners" value={g.learners} icon="users" />
+                <Stat label="Completed" value={g.completed} icon="check" />
+                <Stat label="Completion rate" value={`${g.completion_rate}%`} icon="chart" />
               </div>
               <div className="grid gap-3 lg:grid-cols-2">
                 <Dist title="Strongest interest (first letter of the code)" d={g.interest_first_letter} kind="riasec" />

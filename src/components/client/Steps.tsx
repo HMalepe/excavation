@@ -145,7 +145,7 @@ export function GuideNotice({ offerRetake }: { offerRetake: boolean }) {
   return (
     <section className="space-y-6">
       <h1 className="text-4xl">Next: a conversation</h1>
-      <p className="card-raised text-lg leading-relaxed">
+      <p className="card text-lg leading-relaxed">
         For this part you&apos;ll chat with The Guide, an AI built for The Excavation. It&apos;s designed to listen carefully and ask good questions.
         Nobody at school sees this conversation unless you choose to share it, except if The Guide thinks you might be unsafe; then someone who can help will be told.
       </p>
@@ -163,7 +163,7 @@ export function TwoYears({ headline, fits, taken }: { headline: string | null; f
       <h1 className="text-4xl">Two years ago…</h1>
       {headline ? (
         <div className="card space-y-3">
-          <p className="font-display text-2xl font-bold leading-snug">&ldquo;{headline}&rdquo;</p>
+          <p className="text-xl font-semibold sm:text-2xl leading-snug">&ldquo;{headline}&rdquo;</p>
           {fits.length > 0 && <p className="text-muted">Your top combinations were: {fits.join(" · ")}</p>}
           {taken.length > 0 && <p className="text-muted">You took: {taken.join(", ")}</p>}
         </div>
@@ -239,7 +239,7 @@ export function PerSubjectLikert({ action, subject, header, stem, items, points 
       {stem && <p className="eyebrow !normal-case !tracking-normal text-base">{stem}</p>}
       <ol className="space-y-5">
         {items.map((it) => (
-          <li key={it.id} className="card-raised space-y-3">
+          <li key={it.id} className="card space-y-3">
             <p id={`q-${it.id}`}>{it.text}</p>
             <div role="radiogroup" aria-labelledby={`q-${it.id}`} className="grid gap-2 sm:grid-cols-5">
               {points.map(([v, label]) => (

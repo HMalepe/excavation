@@ -12,16 +12,19 @@ function OptionList({ name, options, chosen, onChoose, disabled, correct }: {
   name: string; options: OptionView[]; chosen: number | null; onChoose: (i: number) => void; disabled?: boolean; correct?: number | null;
 }) {
   return (
-    <div role="radiogroup" aria-label={name} className="grid gap-2">
-      {options.map((o) => {
+    <div role="radiogroup" aria-label={name} className="grid gap-2.5">
+      {options.map((o, n) => {
         const on = chosen === o.i;
-        const isRight = correct !== undefined && correct !== null && o.i === correct;
-        const tone = disabled && isRight ? "!border-ok !bg-ok/15" : on ? "choice-on" : "";
+        const isRight = disabled && correct !== undefined && correct !== null && o.i === correct;
+        const tone = isRight ? "!border-teal !bg-teal-soft" : on ? "choice-on" : "";
         return (
-          <label key={o.i} className={`choice text-base ${tone} ${disabled ? "!cursor-default" : ""}`}>
+          <label key={o.i} className={`choice justify-start gap-3 text-base ${tone} ${disabled ? "!cursor-default" : ""}`}>
             <input type="radio" name={name} value={o.i} checked={on} disabled={disabled} onChange={() => onChoose(o.i)} className="sr-only" />
-            <span className="whitespace-pre-line">{o.text}</span>
-            {disabled && isRight && <span className="ml-auto pl-3 text-sm font-semibold" aria-label="correct answer">✓</span>}
+            <span aria-hidden="true" className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 text-xs font-bold ${isRight ? "border-teal bg-teal text-white" : on ? "border-accent bg-accent text-on-accent" : "border-control text-muted"}`}>
+              {isRight ? "✓" : String.fromCharCode(65 + n)}
+            </span>
+            <span className="whitespace-pre-line text-left">{o.text}</span>
+            {isRight && <span className="sr-only">correct answer</span>}
           </label>
         );
       })}
@@ -66,10 +69,10 @@ export function CheckRunner({ v }: { v: CheckView }) {
     return (
       <section className="space-y-6">
         <div className="flex items-center gap-4">
-          <IconTile name={v.check} layer={v.check === "maths" ? 2 : v.check === "science" ? 3 : 1} />
+          <IconTile name={v.check} />
           <p className="eyebrow">Check {v.checkNumber} of {v.checkCount} · about {v.minutes} minutes</p>
         </div>
-        <h1 className="text-5xl">{v.title}</h1>
+        <h1 className="text-[2rem] sm:text-4xl">{v.title}</h1>
         <p className="text-lg leading-relaxed">{v.intro}</p>
         <ul className="note list-disc space-y-1 pl-9">
           <li>No timer. Take your time.</li>
@@ -93,12 +96,12 @@ export function CheckRunner({ v }: { v: CheckView }) {
       </header>
       {v.passage && (
         <details open className="card">
-          <summary className="font-display font-bold">{v.passage.title}</summary>
+          <summary className="font-semibold">{v.passage.title}</summary>
           <div className="mt-3 space-y-3 text-lg leading-relaxed">{v.passage.text.split(/\n{2,}/).map((p, i) => <p key={i}>{p}</p>)}</div>
         </details>
       )}
-      <div className="card-raised space-y-4">
-        <p id="stem" className="font-display text-xl font-semibold leading-snug tracking-[-0.01em]">{v.stem}</p>
+      <div className="card space-y-4">
+        <p id="stem" className="text-xl font-semibold leading-snug tracking-[-0.01em]">{v.stem}</p>
         <OptionList key={v.itemId} name={v.itemId} options={v.options} chosen={chosen} onChoose={setChosen} disabled={busy} />
       </div>
       <ErrorLine error={error} />
@@ -162,7 +165,7 @@ function StepRunner({ steps, onDone, prefix }: { steps: TasterStepView[]; onDone
         <p className="text-lg leading-snug">{s.stem}</p>
         <OptionList key={`${prefix}${i}`} name={`${prefix}${i}`} options={s.options} chosen={chosen} onChoose={setChosen} disabled={revealed} correct={revealed ? s.answer : undefined} />
         {revealed && (
-          <p className="rounded-[14px] border-[1.5px] border-line bg-sunken/60 p-4 leading-relaxed" role="status">
+          <p className="rounded-xl border border-line bg-sunken p-4 leading-relaxed" role="status">
             {verdict === null ? "" : verdict ? <strong className="text-ok">Yes. </strong> : <strong className="text-accent-ink">Not quite. </strong>}
             {s.feedback}
           </p>
@@ -199,10 +202,10 @@ export function TasterRunner({ v }: { v: TasterView }) {
     <section className="space-y-6">
       <header className="space-y-1">
         <div className="flex items-center gap-4">
-          <IconTile name={v.id} layer={((v.index % 5) + 1) as 1 | 2 | 3 | 4 | 5} />
+          <IconTile name={v.id} />
           <p className="eyebrow">Taster {v.index + 1} of {v.total} · {v.work}</p>
         </div>
-        <h1 className="text-5xl">{phase === "bonus" || phase === "bonus_after" ? v.bonus.title : v.title}</h1>
+        <h1 className="text-[2rem] sm:text-4xl">{phase === "bonus" || phase === "bonus_after" ? v.bonus.title : v.title}</h1>
       </header>
 
       {phase === "before" && (
@@ -220,7 +223,7 @@ export function TasterRunner({ v }: { v: TasterView }) {
 
       {phase === "task" && (
         <div className="space-y-4">
-          <p className={`card-raised whitespace-pre-line text-lg leading-relaxed ${v.id === "HEALTH" || v.id === "CODE" ? "sr-only" : ""}`}>{v.scene}</p>
+          <p className={`card whitespace-pre-line text-lg leading-relaxed ${v.id === "HEALTH" || v.id === "CODE" ? "sr-only" : ""}`}>{v.scene}</p>
           {v.visual === "poster_ab" ? <PosterAB /> : <TasterArt id={v.id} />}
           <StepRunner steps={v.steps} prefix="s" onDone={(c) => { setSteps(c); setPhase("after"); }} />
         </div>
@@ -247,7 +250,7 @@ export function TasterRunner({ v }: { v: TasterView }) {
 
       {phase === "bonus" && (
         <div className="space-y-4">
-          <p className="card-raised whitespace-pre-line text-lg leading-relaxed">{v.bonus.scene}</p>
+          <p className="card whitespace-pre-line text-lg leading-relaxed">{v.bonus.scene}</p>
           <StepRunner steps={v.bonus.steps} prefix="b" onDone={(c) => { setBonusSteps(c); setPhase("bonus_after"); }} />
         </div>
       )}
@@ -281,7 +284,7 @@ export function PartOneBreak() {
   return (
     <section className="space-y-6">
       <p className="eyebrow">Halfway</p>
-      <h1 className="text-5xl">Part 1 is done.</h1>
+      <h1 className="text-[2rem] sm:text-4xl">Part 1 is done.</h1>
       <p className="text-lg leading-relaxed">Questions, checks, tasks — all saved. Part 2 is a conversation with The Guide, about 30–40 minutes. It goes best when you&apos;re fresh, so this is a good place for a break.</p>
       <p className="text-muted">If you stop now, log in with the same codes later (or tomorrow) and you&apos;ll start right at the conversation.</p>
       <ErrorLine error={error} />

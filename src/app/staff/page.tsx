@@ -26,8 +26,8 @@ export default async function StaffHome() {
   return (
     <StaffShell title="Review queue" nav={STAFF_NAV}>
       <div className="grid gap-3 sm:grid-cols-3">
-        <Stat label="Waiting for review" value={queue?.length ?? 0} layer={2} />
-        <Stat label="Learner reports released" value={released ?? 0} note={`Launch review applies to the first ${serverEnv().REVIEW_FIRST_N_REPORTS}`} layer={4} />
+        <Stat label="Waiting for review" value={queue?.length ?? 0} icon="inbox" />
+        <Stat label="Learner reports released" value={released ?? 0} note={`Launch review applies to the first ${serverEnv().REVIEW_FIRST_N_REPORTS}`} icon="doc" />
         <Link href="/staff/safeguarding" className="block no-underline"><Stat label="Hard safeguarding events not yet reviewed" value={openSg ?? 0} tone={openSg ? "danger" : undefined} layer={5} /></Link>
       </div>
       <section className="card overflow-x-auto">

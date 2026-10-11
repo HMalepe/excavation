@@ -19,7 +19,7 @@ export default async function Paused() {
           <p className="eyebrow">Taking a break</p>
           <h1 className="text-5xl">We&apos;ve paused here for now.</h1>
           <p className="text-lg">Thank you for telling us what&apos;s going on. An adult at your school who can help has been let know, so you&apos;re not alone with this. Nothing you&apos;ve done is lost — you can finish later.</p>
-          <p className="font-display text-lg font-bold">If you need someone right now:</p>
+          <p className="text-lg font-semibold">If you need someone right now:</p>
           <Resources />
         </>
       ) : (
@@ -28,7 +28,7 @@ export default async function Paused() {
           <h1 className="text-5xl">Everything is saved.</h1>
           <p className="text-lg text-muted">Come back any time with the same codes and you&apos;ll pick up exactly where you left off.</p>
           <Link href="/learn" className="btn-primary">Carry on now</Link>
-          <details className="card"><summary className="font-display font-bold">People you can talk to</summary><div className="mt-4"><Resources compact /></div></details>
+          <details className="card"><summary className="font-semibold">People you can talk to</summary><div className="mt-4"><Resources compact /></div></details>
         </>
       )}
       <LogoutButton className="btn-quiet self-start" />

@@ -1,18 +1,17 @@
 /**
- * The Excavation brand artwork. All inline SVG (a few KB, no image requests on slow data),
- * coloured through the theme tokens so Limestone and Bedrock both look right.
+ * Brand artwork for Clear Progress. Inline SVG/HTML only (no image requests), coloured through the
+ * theme tokens so light and dark both work.
  */
 import type { CSSProperties } from "react";
 
-/** The mark: a core sample. Four earth layers, a find at the bottom. */
+/** The mark: three layers going down, the last one lit. Cobalt tile, white layers, teal at depth. */
 export function Mark({ className = "h-8 w-8", title }: { className?: string; title?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={`${className} shrink-0 overflow-hidden rounded-[28%] border-2 border-edge`} role={title ? "img" : undefined} aria-hidden={title ? undefined : true} aria-label={title}>
-      <rect width="32" height="32" fill="var(--strata-1)" />
-      <path d="M0 10C8 7 14 12 22 9.5S30 8.5 32 9.5V32H0Z" fill="var(--strata-2)" />
-      <path d="M0 16.5C7 14.5 15 18.5 22 16S30 15.5 32 16.5V32H0Z" fill="var(--strata-3)" />
-      <path d="M0 22.5C9 20.5 15 24.5 23 22S30 21.5 32 22.5V32H0Z" fill="var(--strata-5)" />
-      <path d="M16 23.6l2.7 2.7-2.7 2.7-2.7-2.7z" fill="var(--accent)" />
+    <svg viewBox="0 0 32 32" className={`${className} shrink-0`} role={title ? "img" : undefined} aria-hidden={title ? undefined : true} aria-label={title}>
+      <rect width="32" height="32" rx="9" fill="var(--accent)" />
+      <rect x="7" y="8.5" width="18" height="3.6" rx="1.8" fill="#fff" />
+      <rect x="9.5" y="14.2" width="13" height="3.6" rx="1.8" fill="#fff" fillOpacity=".72" />
+      <rect x="12" y="19.9" width="8" height="3.6" rx="1.8" fill="#37e0c5" />
     </svg>
   );
 }
@@ -22,81 +21,44 @@ export function Wordmark({ className = "", sub }: { className?: string; sub?: st
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <Mark className="h-8 w-8" />
       <span className="flex flex-col leading-none">
-        <span className="font-display text-[1.15rem] font-extrabold tracking-[-0.04em] text-fg">The Excavation</span>
-        {sub && <span className="mt-1 font-display text-[0.65rem] font-bold uppercase tracking-[0.18em] text-muted">{sub}</span>}
+        <span className="text-[1.05rem] font-bold tracking-[-0.03em] text-fg">The Excavation</span>
+        {sub && <span className="mt-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-muted">{sub}</span>}
       </span>
     </span>
   );
 }
 
-/** Five-colour rule used as a signature at the top of every page. */
-export function StrataRule({ className = "" }: { className?: string }) {
-  return (
-    <div className={`flex h-1.5 w-full ${className}`} aria-hidden="true">
-      {[1, 2, 3, 4, 5].map((i) => <span key={i} className="flex-1" style={{ background: `var(--strata-${i})` }} />)}
-    </div>
-  );
-}
-
-const LAYER_TOPS = [48, 104, 160, 216, 272];
-const LAYER_PATHS = [
-  "M0 48C60 34 120 60 200 46S330 34 400 50V340H0Z",
-  "M0 104C70 92 140 118 210 104S340 90 400 108V340H0Z",
-  "M0 160C80 148 150 174 230 158S350 146 400 164V340H0Z",
-  "M0 216C60 204 150 230 220 214S340 202 400 220V340H0Z",
-  "M0 272C90 260 160 284 240 268S350 258 400 274V340H0Z",
-];
-const DEPTHS = ["Surface", "Wading in", "Deep water", "The trench", "The floor"];
+export const DEPTHS = ["Surface", "Wading in", "Deep water", "The trench", "The floor"] as const;
 
 /**
- * The cover art: a cross-section of the ground. The shaft on the right is the learner's
- * descent (the same five stages as the progress gauge); what's buried is what they find.
+ * Progress as ordered marks: done = teal check, here = cobalt, ahead = outline. Named stages only,
+ * never a percentage (spec 02 §3.7).
  */
-export function StrataHero({ className = "", depth = 4, labels = true, crop = false }: { className?: string; depth?: number; labels?: boolean; crop?: boolean }) {
-  const mid = (i: number) => (LAYER_TOPS[i]! + (LAYER_TOPS[i + 1] ?? 330)) / 2 + 2;
+export function Stepper({ at, className = "" }: { at: string; className?: string }) {
+  const idx = Math.max(0, DEPTHS.indexOf(at as (typeof DEPTHS)[number]));
   return (
-    <svg viewBox="0 0 400 330" preserveAspectRatio={crop ? "xMidYMid slice" : undefined} className={className} role="img" aria-label="A cross-section of the ground: five layers from sand down to bedrock, with a shaft dug through them and a find at the bottom.">
-      {LAYER_PATHS.map((d, i) => <path key={i} d={d} fill={`var(--strata-${i + 1})`} />)}
-      {/* layer edges */}
-      {LAYER_PATHS.slice(1).map((d, i) => <path key={i} d={d.split("V")[0]} fill="none" stroke="#0d1117" strokeOpacity=".18" strokeWidth="1.5" />)}
-      {/* pebbles and grit */}
-      <g fill="var(--strata-4)" fillOpacity=".28">
-        <ellipse cx="60" cy="78" rx="7" ry="4" /><ellipse cx="170" cy="70" rx="4" ry="2.5" /><ellipse cx="226" cy="84" rx="6" ry="3.5" /><ellipse cx="90" cy="134" rx="5" ry="3" />
-        <ellipse cx="250" cy="138" rx="8" ry="4.5" /><ellipse cx="34" cy="128" rx="3" ry="2" />
-      </g>
-      <g fill="#f3f5f8" fillOpacity=".22">
-        <circle cx="200" cy="198" r="2" /><circle cx="58" cy="186" r="1.6" /><circle cx="250" cy="240" r="1.8" /><circle cx="130" cy="300" r="1.5" /><circle cx="70" cy="306" r="2" />
-      </g>
-      {/* ammonite in the laterite */}
-      <g stroke="var(--strata-1)" strokeWidth="2.4" fill="none" strokeLinecap="round" opacity=".9">
-        <path d="M112 190a14 14 0 1 1 28 0a10.5 10.5 0 1 1-21 0a7 7 0 1 1 14 0a3.5 3.5 0 1 1-7 0" />
-        <path d="M126 176v5M138 184l-4 2M139 196l-4-1M126 204v-4M114 197l4-2" strokeWidth="1.6" />
-      </g>
-      {/* crystals in the umber */}
-      <g stroke="#0d1117" strokeWidth="1.5" strokeLinejoin="round">
-        <path d="M44 262l7-24 7 24z" fill="var(--accent)" /><path d="M56 262l9-32 8 32z" fill="var(--accent)" /><path d="M70 262l5-16 6 16z" fill="var(--accent)" />
-        <path d="M65 230l-1 32" stroke="#0d1117" strokeOpacity=".35" />
-      </g>
-      {/* the find, in bedrock */}
-      <g className="animate-glint">
-        <path d="M180 286l14 14-14 14-14-14z" fill="var(--accent)" stroke="#0d1117" strokeWidth="1.5" />
-        <path d="M180 278v-6M196 290l5-4M164 290l-5-4M180 322v5" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" />
-      </g>
-      {/* the shaft: your descent */}
-      <path d="M300 36V312" stroke="#0d1117" strokeOpacity=".55" strokeWidth="2" strokeDasharray="4 5" />
-      {DEPTHS.map((name, i) => (
-        <g key={name}>
-          <circle cx="300" cy={mid(i)} r={i === depth ? 8 : 4} fill={i === depth ? "var(--accent)" : "#f3f5f8"} stroke="#0d1117" strokeWidth="2" />
-          {labels && (
-            <text x="314" y={mid(i) + 4} fontSize="12" fontWeight="700" letterSpacing="-0.2" fill={i < 2 ? "#0d1117" : "#f3f5f8"} style={{ fontFamily: "var(--font-display)" }}>{name}</text>
-          )}
-        </g>
-      ))}
-    </svg>
+    <nav aria-label={`How far along you are: ${at}, stage ${idx + 1} of ${DEPTHS.length}`} className={className}>
+      <ol className="flex items-start">
+        {DEPTHS.map((name, i) => {
+          const done = i < idx, here = i === idx;
+          return (
+            <li key={name} className="relative flex flex-1 flex-col items-center gap-1.5 text-center">
+              {i > 0 && <span aria-hidden="true" className="absolute right-1/2 top-[11px] h-0.5 w-full -translate-y-1/2" style={{ background: i <= idx ? "var(--teal)" : "var(--line)" }} />}
+              <span aria-current={here ? "step" : undefined}
+                className={`relative z-10 flex h-[22px] w-[22px] items-center justify-center rounded-full border-2 ${here ? "border-accent bg-accent" : done ? "border-teal bg-teal" : "border-control bg-surface"}`}>
+                {done && <svg viewBox="0 0 12 12" className="h-2.5 w-2.5" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2.5 6.4l2.3 2.3 4.7-5" /></svg>}
+                {here && <span className="h-1.5 w-1.5 rounded-full bg-on-accent" />}
+              </span>
+              <span className={`text-[0.7rem] leading-tight sm:text-xs ${here ? "font-semibold text-accent-ink" : done ? "font-medium text-fg" : "text-muted"}`}>{name}</span>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
   );
 }
 
-/** Line icons for checks and taster tasks (24px grid, currentColor). */
+/** Line icons for checks, tasks and navigation (24px grid, currentColor). */
 const ICONS: Record<string, React.ReactNode> = {
   maths: <><path d="M5 7h6M8 4v6M14 7h5M5 17l4-4M9 17l-4-4M14 15h5M14 19h5" /></>,
   science: <><path d="M10 3h4M11 3v6l-5.5 9.5A2 2 0 0 0 7.2 21.5h9.6a2 2 0 0 0 1.7-3L13 9V3" /><path d="M8 15h8" /></>,
@@ -107,6 +69,15 @@ const ICONS: Record<string, React.ReactNode> = {
   BUSINESS: <><ellipse cx="12" cy="6" rx="7" ry="2.5" /><path d="M5 6v4c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6M5 10v4c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-4M5 14v4c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-4" /></>,
   FIELD: <><path d="M12 21v-9M12 12C12 7 8.5 4.5 4 4.5 4 9 7 12 12 12zM12 14c0-4 3-6.5 7.5-6.5 0 4-3 6.5-7.5 6.5z" /></>,
   DESIGN: <><path d="M12 3l6 7-6 11-6-11z" /><path d="M12 13v8M10 10.5a2 2 0 1 0 4 0 2 2 0 0 0-4 0" /></>,
+  inbox: <><path d="M3 13l2.6-7.2A2 2 0 0 1 7.5 4.5h9a2 2 0 0 1 1.9 1.3L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><path d="M3 13h5l1.5 2.5h5L16 13h5" /></>,
+  shield: <><path d="M12 3l7.5 3v5.5c0 4.5-3.2 8-7.5 9.5-4.3-1.5-7.5-5-7.5-9.5V6z" /><path d="M9 12l2.2 2.2L15.5 10" /></>,
+  settings: <><circle cx="12" cy="12" r="3" /><path d="M19.4 14a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></>,
+  chart: <><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></>,
+  users: <><circle cx="9" cy="8" r="3.2" /><path d="M2.8 20c.4-3.4 3-5.2 6.2-5.2s5.8 1.8 6.2 5.2M16.5 4.9a3.2 3.2 0 0 1 0 6.2M18 14.8c2 .5 3.4 2 3.7 4.6" /></>,
+  check: <><circle cx="12" cy="12" r="9" /><path d="M8 12.3l2.7 2.7L16 9.5" /></>,
+  doc: <><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></>,
+  spark: <><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18" /></>,
+  logout: <><path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M15 16l4-4-4-4M19 12H9" /></>,
 };
 
 export function Icon({ name, className = "h-6 w-6", style }: { name: string; className?: string; style?: CSSProperties }) {
@@ -117,12 +88,36 @@ export function Icon({ name, className = "h-6 w-6", style }: { name: string; cla
   );
 }
 
-/** Icon in a strata-coloured tile, for section headers. */
-export function IconTile({ name, layer = 2 }: { name: string; layer?: 1 | 2 | 3 | 4 | 5 }) {
-  const dark = layer >= 3;
+/** Icon in a tinted tile (cobalt = what to do, teal = done). */
+export function IconTile({ name, tone = "accent", className = "" }: { name: string; tone?: "accent" | "teal"; layer?: number; className?: string }) {
+  const t = tone === "teal" ? "bg-teal-soft text-teal-ink border-teal/30" : "bg-tint text-accent-ink border-tint-line";
   return (
-    <span className="inline-flex h-12 w-12 items-center justify-center rounded-[14px] border-2 border-edge" style={{ background: `var(--strata-${layer})`, color: dark ? "#f3f5f8" : "#0d1117", boxShadow: "3px 3px 0 var(--shadow)" }}>
-      <Icon name={name} className="h-6 w-6" />
+    <span className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${t} ${className}`}>
+      <Icon name={name} className="h-5 w-5" />
     </span>
+  );
+}
+
+/** Static preview of the learner experience, used on the landing and login pages. Decorative. */
+export function AppPreview({ className = "" }: { className?: string }) {
+  const opts = ["Really dislike", "Dislike", "Not sure", "Like", "Love"];
+  return (
+    <div className={`overflow-hidden rounded-2xl border border-line bg-surface ${className}`} style={{ boxShadow: "var(--shadow-soft)" }} aria-hidden="true">
+      <div className="flex items-center justify-between border-b border-line px-5 py-3.5">
+        <span className="inline-flex items-center gap-2"><Mark className="h-6 w-6" /><span className="text-sm font-bold tracking-[-0.02em]">The Excavation</span></span>
+        <span className="rounded-full bg-tint px-2.5 py-0.5 text-xs font-semibold text-accent-ink">Wading in</span>
+      </div>
+      <div className="space-y-5 px-5 py-6 sm:px-7">
+        <div className="space-y-1.5"><p className="eyebrow">What you&apos;d love doing</p><p className="text-xl font-semibold leading-snug tracking-[-0.02em]">Investigating why something went wrong.</p></div>
+        <div className="grid grid-cols-5 gap-1.5 text-center text-[0.68rem] font-medium sm:text-xs">
+          {opts.map((o, i) => <span key={o} className={`flex min-h-11 items-center justify-center rounded-lg border px-1 ${i === 3 ? "border-accent bg-tint text-fg" : "border-line bg-surface text-muted"}`} style={i === 3 ? { boxShadow: "0 0 0 1px var(--accent) inset" } : undefined}>{o}</span>)}
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-teal-ink"><Icon name="check" className="h-4 w-4" />Your answers are saved</span>
+          <span className="rounded-[10px] bg-accent px-4 py-2 text-sm font-semibold text-on-accent">Next</span>
+        </div>
+      </div>
+      <div className="border-t border-line bg-sunken/60 px-4 pb-3 pt-4"><Stepper at="Wading in" /></div>
+    </div>
   );
 }

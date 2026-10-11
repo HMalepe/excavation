@@ -1,12 +1,11 @@
 @import "tailwindcss";
 
 /*
- * STRATA — The Excavation's design system.
- * Aqua signal on cool neutrals, with five depth layers (sky → midnight) that carry the
- * descent metaphor. Two themes: Limestone (light) and Bedrock (dark). The system preference
- * decides unless the learner picks one (data-theme on <html>, set before first paint).
- * Fonts are self-hosted at build time (next/font): Bricolage Grotesque for display,
- * Atkinson Hyperlegible Next for reading (designed by the Braille Institute for legibility).
+ * CLEAR PROGRESS — The Excavation's design system.
+ * Near-white surfaces, ink text, cobalt for the next action, soft teal for completion.
+ * Colour carries meaning, never decoration: cobalt = do this, teal = done, red = needs care,
+ * everything else is quiet neutral. Thin borders, generous space, one confident sans-serif.
+ * Two themes (light default, dark follows the phone); both audited for WCAG AA.
  */
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
@@ -23,87 +22,105 @@
   --color-accent: var(--accent);
   --color-on-accent: var(--on-accent);
   --color-accent-ink: var(--accent-ink);
+  --color-tint: var(--tint);
+  --color-tint-line: var(--tint-line);
+  --color-teal: var(--teal);
+  --color-teal-ink: var(--teal-ink);
+  --color-teal-soft: var(--teal-soft);
   --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
   --color-ok: var(--ok);
   --color-strata-1: var(--strata-1);
   --color-strata-2: var(--strata-2);
   --color-strata-3: var(--strata-3);
   --color-strata-4: var(--strata-4);
   --color-strata-5: var(--strata-5);
-  --font-display: var(--font-bricolage), "Arial Narrow", system-ui, sans-serif;
-  --font-sans: var(--font-atkinson), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-/* ---------- Limestone (light) ---------- */
+/* ---------- Light ---------- */
 :root {
   color-scheme: light;
-  --canvas: #eceff3;
+  --canvas: #f5f7fb;
   --surface: #ffffff;
-  --sunken: #dfe4ea;
-  --line: #cfd6df;
-  --control: #778092;        /* borders of interactive controls: ≥ 3:1 on every surface (WCAG 1.4.11) */
-  --edge: #0d1117;
-  --shadow: #0d1117;
-  --fg: #0d1117;
-  --muted: #4a5361;          /* 6.6:1 on canvas */
-  --accent: #2de0c4;         /* aqua signal; text on it is ink */
-  --on-accent: #0d1117;
-  --accent-ink: #2347c5;     /* aqua is too light to read as text on light backgrounds: indigo instead (5.9:1) */
-  --danger: #c8261a;
-  --ok: #11794f;
-  --strata-1: #c7e5ff;       /* Surface: sand */
-  --strata-2: #4aa3ff;       /* Wading in: ochre */
-  --strata-3: #2b5fe8;       /* Deep water: laterite */
-  --strata-4: #1d2f8f;       /* The trench: umber */
-  --strata-5: #0a1030;       /* The floor: bedrock */
-  --grain: 0.05;
+  --sunken: #eef2f8;
+  --line: #e1e6ee;
+  --control: #7e8ba0;        /* outline of interactive controls: ≥ 3:1 (WCAG 1.4.11) */
+  --edge: #0e1a2b;
+  --shadow: transparent;
+  --shadow-soft: 0 1px 2px rgb(14 26 43 / 0.06), 0 10px 28px -14px rgb(14 26 43 / 0.16);
+  --fg: #0e1a2b;
+  --muted: #566276;
+  --accent: #1b57e5;         /* cobalt: the next action */
+  --on-accent: #ffffff;
+  --accent-ink: #1b57e5;
+  --tint: #edf3ff;           /* selected / current */
+  --tint-line: #bcd0fb;
+  --teal: #0f9b8a;           /* completion (graphics) */
+  --teal-ink: #0a6f63;       /* completion (text) */
+  --teal-soft: #e6f6f3;
+  --danger: #c62828;
+  --danger-soft: #fdecec;
+  --ok: #0a7a6c;
+  --strata-1: #dbe8ff;
+  --strata-2: #9fbfff;
+  --strata-3: #4f86f7;
+  --strata-4: #1b57e5;
+  --strata-5: #0f2f8f;
 }
 
-/* ---------- Bedrock (dark) ---------- */
+/* ---------- Dark ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --canvas: #0a0d12;
-  --surface: #121821;
-  --sunken: #1b2330;
-  --line: #262f3d;
-  --control: #6c778a;
-  --edge: #f3f5f8;
-  --shadow: #000000;
-  --fg: #f3f5f8;
-  --muted: #a3adbb;
-  --accent: #2de0c4;
-  --on-accent: #0a0d12;
-  --accent-ink: #2de0c4;
-  --danger: #ff6b5e;
-  --ok: #4fd1a1;
-  --strata-1: #c7e5ff;
-  --strata-2: #4aa3ff;
-  --strata-3: #2b5fe8;
-  --strata-4: #1d2f8f;
-  --strata-5: #0a1030;
-  --grain: 0.08;
+  --canvas: #0a101c;
+  --surface: #111a2b;
+  --sunken: #172236;
+  --line: #243149;
+  --control: #6d7d96;
+  --edge: #e9eef7;
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.4), 0 10px 28px -14px rgb(0 0 0 / 0.6);
+  --fg: #e9eef7;
+  --muted: #9aa7bd;
+  --accent: #5b8dff;
+  --on-accent: #07122b;
+  --accent-ink: #8db0ff;
+  --tint: #14224a;
+  --tint-line: #2f4a8f;
+  --teal: #35d0bb;
+  --teal-ink: #4fe0cb;
+  --teal-soft: #0f2a2a;
+  --danger: #ff7a7a;
+  --danger-soft: #2a1417;
+  --ok: #4fe0cb;
+  --strata-1: #1d2f66;
+  --strata-2: #2f4fa8;
+  --strata-3: #4f7bf0;
+  --strata-4: #8db0ff;
+  --strata-5: #c9daff;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --canvas: #0a0d12; --surface: #121821; --sunken: #1b2330; --line: #262f3d; --control: #6c778a; --edge: #f3f5f8; --shadow: #000000;
-    --fg: #f3f5f8; --muted: #a3adbb; --accent: #2de0c4; --on-accent: #0a0d12; --accent-ink: #2de0c4;
-    --danger: #ff6b5e; --ok: #4fd1a1;
-    --strata-1: #c7e5ff; --strata-2: #4aa3ff; --strata-3: #2b5fe8; --strata-4: #1d2f8f; --strata-5: #0a1030;
-    --grain: 0.08;
+    --canvas: #0a101c; --surface: #111a2b; --sunken: #172236; --line: #243149; --control: #6d7d96; --edge: #e9eef7;
+    --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.4), 0 10px 28px -14px rgb(0 0 0 / 0.6);
+    --fg: #e9eef7; --muted: #9aa7bd; --accent: #5b8dff; --on-accent: #07122b; --accent-ink: #8db0ff;
+    --tint: #14224a; --tint-line: #2f4a8f; --teal: #35d0bb; --teal-ink: #4fe0cb; --teal-soft: #0f2a2a;
+    --danger: #ff7a7a; --danger-soft: #2a1417; --ok: #4fe0cb;
+    --strata-1: #1d2f66; --strata-2: #2f4fa8; --strata-3: #4f7bf0; --strata-4: #8db0ff; --strata-5: #c9daff;
   }
 }
 
-/* Base element styles live in @layer base so utility classes (text-on-accent, text-muted…) can override them. */
+/* Base element styles live in @layer base so utility classes can override them. */
 @layer base {
-  html { background: var(--canvas); color: var(--fg); font-family: var(--font-sans); -webkit-text-size-adjust: 100%; }
+  html { background: var(--canvas); color: var(--fg); font-family: var(--font-sans); -webkit-text-size-adjust: 100%; font-feature-settings: "cv11", "ss01"; }
   body { min-height: 100dvh; line-height: 1.55; font-size: 1.0625rem; }
-  h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.025em; line-height: 1.08; font-weight: 750; }
-  h3 { letter-spacing: -0.015em; font-weight: 700; }
+  h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.028em; line-height: 1.12; font-weight: 650; }
+  h3 { letter-spacing: -0.018em; font-weight: 620; }
   ::selection { background: var(--accent); color: var(--on-accent); }
-  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; box-shadow: 0 0 0 6px var(--edge); }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
   a { color: var(--accent-ink); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-
+  .tabular, td, th { font-variant-numeric: tabular-nums; }
 }
 
 /* Low-data / reduced motion: no animations at all. */
@@ -113,86 +130,83 @@
 .low-data *, .low-data *::before, .low-data *::after { animation: none !important; transition: none !important; }
 
 /* ---------- components ---------- */
-/* Buttons are physical: an ink outline and a hard shadow that presses down when tapped. */
 @utility btn {
-  @apply inline-flex min-h-13 items-center justify-center gap-2 rounded-[14px] border-2 border-edge px-5 py-3 font-display text-[1.0625rem] font-bold tracking-[-0.01em] no-underline transition-[transform,box-shadow,background-color] duration-100 select-none;
-  box-shadow: 3px 3px 0 var(--shadow);
-  &:active:not(:disabled) { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--shadow); }
-  &:disabled { opacity: 0.45; box-shadow: none; cursor: not-allowed; }
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-[10px] border border-transparent px-5 py-3 text-[1rem] font-semibold tracking-[-0.005em] no-underline transition-[background-color,border-color,box-shadow,transform] duration-150 select-none;
+  &:active:not(:disabled) { transform: translateY(1px); }
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
 }
-@utility btn-primary { @apply btn bg-accent text-on-accent; &:hover:not(:disabled) { filter: brightness(1.04) saturate(1.05); } }
-@utility btn-ghost { @apply btn bg-surface text-fg; &:hover:not(:disabled) { background: var(--sunken); } }
-@utility btn-quiet { @apply inline-flex min-h-11 items-center justify-center rounded-xl px-3 py-2 font-display text-sm font-semibold text-muted underline-offset-4 hover:text-fg hover:underline; }
+@utility btn-primary { @apply btn bg-accent text-on-accent; box-shadow: 0 1px 2px rgb(14 26 43 / 0.18), inset 0 1px 0 rgb(255 255 255 / 0.12); &:hover:not(:disabled) { filter: brightness(1.08); } }
+@utility btn-ghost { @apply btn border-control/60 bg-surface text-accent-ink; border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); &:hover:not(:disabled) { background: var(--tint); } }
+@utility btn-quiet { @apply inline-flex min-h-11 items-center justify-center rounded-lg px-3 py-2 text-sm font-semibold text-muted; &:hover { color: var(--fg); background: var(--sunken); } }
 
-@utility card { @apply rounded-[20px] border-[1.5px] border-line bg-surface p-5 sm:p-6; }
-@utility card-raised { @apply rounded-[20px] border-2 border-edge bg-surface p-5 sm:p-6; box-shadow: 5px 5px 0 var(--shadow); }
+@utility card { @apply rounded-xl border border-line bg-surface p-5 sm:p-6; box-shadow: var(--shadow-soft); }
+@utility card-raised { @apply rounded-xl border border-line bg-surface p-5 sm:p-7; box-shadow: var(--shadow-soft); }
 
 @utility field {
-  @apply w-full min-h-13 rounded-[14px] border-2 border-control bg-surface px-4 py-3 text-fg placeholder:text-muted/70 transition-colors;
-  &:focus { border-color: var(--edge); outline: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 45%, transparent); }
+  @apply w-full min-h-12 rounded-[10px] border border-control bg-surface px-4 py-3 text-fg transition-[border-color,box-shadow];
+  &::placeholder { color: var(--muted); opacity: 0.75; }
+  &:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent); }
 }
-@utility label { @apply mb-1.5 block font-display text-sm font-semibold tracking-[-0.005em] text-muted; }
-@utility eyebrow { @apply font-display text-xs font-bold uppercase tracking-[0.16em] text-accent-ink; }
+@utility label { @apply mb-1.5 block text-sm font-semibold text-muted; }
+@utility eyebrow { @apply text-xs font-semibold uppercase tracking-[0.1em] text-accent-ink; }
 
-/* Answer tiles (questionnaire scales, checks, tasters). */
+/* Answer tiles: segmented scales (questionnaire) and radio rows (checks, tasters). */
 @utility choice {
-  @apply flex min-h-13 cursor-pointer items-center rounded-[14px] border-2 border-control bg-surface px-4 py-3 font-semibold transition-[border-color,background-color,transform] duration-100;
-  &:hover { border-color: var(--edge); }
-  &:active { transform: scale(0.985); }
+  @apply flex min-h-12 cursor-pointer items-center rounded-[10px] border border-line bg-surface px-4 py-3 font-medium text-fg transition-[border-color,background-color,box-shadow] duration-150;
+  border-color: color-mix(in srgb, var(--control) 55%, var(--line));
+  &:hover { border-color: var(--accent); background: var(--tint); }
 }
-@utility choice-on { @apply border-edge bg-accent text-on-accent; box-shadow: 3px 3px 0 var(--shadow); animation: pop 0.22s cubic-bezier(.3,1.6,.5,1); }
+@utility choice-on { @apply bg-tint text-fg; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; &:hover { background: var(--tint); } }
 
-@utility alert { @apply rounded-[14px] border-[1.5px] border-danger bg-danger/10 px-4 py-3 font-semibold text-danger; }
-@utility note { @apply rounded-[14px] border-[1.5px] border-line bg-sunken/60 px-4 py-3 text-muted; }
-@utility diamond { @apply mt-[0.55em] h-2.5 w-2.5 shrink-0 rotate-45 border-[1.5px] border-edge bg-accent; }
+@utility chip { @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-sunken px-2.5 py-0.5 text-xs font-semibold text-muted; }
+@utility alert { @apply rounded-[10px] border border-danger/40 bg-danger-soft px-4 py-3 font-medium text-danger; }
+@utility note { @apply rounded-[10px] border border-line bg-sunken px-4 py-3 text-muted; }
+@utility diamond { @apply mt-[0.6em] h-2 w-2 shrink-0 rounded-full bg-accent; }
 
-@utility chip { @apply inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-line bg-surface px-3 py-1 font-display text-xs font-semibold; }
-
-/* Paper grain + contour lines for hero areas. Inline SVG, ~1 KB, no requests. */
+/* Subtle page texture for hero areas: a faint dot grid, no requests. */
 @utility bg-contours {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%2370809a' stroke-opacity='.22' stroke-width='1'%3E%3Cpath d='M-10 40c40-18 70 14 110 0s70-26 150-4'/%3E%3Cpath d='M-10 80c50-20 80 12 120-2s80-22 140 2'/%3E%3Cpath d='M-10 122c40-14 90 16 130 2s70-20 130 0'/%3E%3Cpath d='M-10 162c46-16 76 12 116-2s84-24 144 0'/%3E%3Cpath d='M-10 204c40-18 84 14 124 0s76-22 136 2'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--fg) 7%, transparent) 1px, transparent 0);
+  background-size: 22px 22px;
 }
 
+/* Native <details> disclosure markers, restyled to match. */
 @layer base {
-  /* Native <details> disclosure markers, restyled to match. */
   summary { list-style: none; }
   summary::-webkit-details-marker { display: none; }
   details > summary { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; min-height: 2.75rem; }
-  details > summary::before { content: ""; width: 0.55rem; height: 0.55rem; border-right: 2.5px solid var(--edge); border-bottom: 2.5px solid var(--edge); transform: rotate(-45deg); transition: transform 0.15s; flex-shrink: 0; }
+  details > summary::before { content: ""; width: 0.5rem; height: 0.5rem; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(-45deg); transition: transform 0.15s; flex-shrink: 0; }
   details[open] > summary::before { transform: rotate(45deg); }
 
-  /* Data tables: quiet rules, display-font headers. */
+  /* Data tables: header row on a light fill, hairline row rules, tabular figures. */
   table { border-collapse: collapse; }
-  th { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: left; }
-  th, td { padding: 0.6rem 0.75rem; }
-  tbody tr { border-top: 1.5px solid var(--line); }
-
+  th { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-align: left; background: var(--sunken); }
+  th, td { padding: 0.7rem 1rem; }
+  tbody tr { border-top: 1px solid var(--line); }
 }
 
 @keyframes draw { from { stroke-dashoffset: var(--len, 1000); } to { stroke-dashoffset: 0; } }
 @keyframes fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-@keyframes pop { 0% { transform: scale(0.96); } 100% { transform: scale(1); } }
-@keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-/* Report sections ease in as they scroll into view (browsers that support scroll-driven animation; others just show them). */
+@keyframes pop { 0% { transform: scale(0.985); } 100% { transform: scale(1); } }
+@keyframes reveal { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes pulse-soft { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+/* Report sections ease in as they scroll into view (browsers with scroll-driven animation; others just show them). */
 @supports (animation-timeline: view()) {
   .reveal { animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
 }
+.animate-fade-up { animation: fade-up 0.5s cubic-bezier(.2,.7,.2,1) both; }
+.animate-glint { animation: pulse-soft 1.8s ease-in-out infinite; }
+.animate-drop { animation: fade-up 0.4s cubic-bezier(.2,.7,.2,1) both; }
 
-@keyframes drop { 0% { transform: translateY(-6px); opacity: 0; } 100% { transform: none; opacity: 1; } }
-@keyframes glint { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
-.animate-fade-up { animation: fade-up 0.6s cubic-bezier(.2,.7,.2,1) both; }
-.animate-drop { animation: drop 0.5s cubic-bezier(.2,.7,.2,1) both; }
-.animate-glint { animation: glint 2.4s ease-in-out infinite; }
-
-/* Printing a report from the browser: always the light theme, no controls, no shadows. */
+/* Printing a report from the browser: always light, no controls, no shadows. */
 @media print {
   :root, :root[data-theme="dark"] {
-    --canvas: #ffffff; --surface: #ffffff; --sunken: #eceff3; --line: #cfd6df; --control: #778092; --edge: #0d1117; --shadow: transparent;
-    --fg: #0d1117; --muted: #4a5361; --accent: #2de0c4; --on-accent: #0d1117; --accent-ink: #2347c5; --danger: #c8261a; --ok: #11794f;
+    --canvas: #ffffff; --surface: #ffffff; --sunken: #eef2f8; --line: #e1e6ee; --control: #7e8ba0; --edge: #0e1a2b;
+    --fg: #0e1a2b; --muted: #566276; --accent: #1b57e5; --on-accent: #ffffff; --accent-ink: #1b57e5; --tint: #edf3ff; --tint-line: #bcd0fb;
+    --teal: #0f9b8a; --teal-ink: #0a6f63; --teal-soft: #e6f6f3; --danger: #c62828; --danger-soft: #fdecec; --ok: #0a7a6c;
+    --shadow-soft: none;
   }
   html, body { background: #fff !important; }
-  header, nav, button, .no-print { display: none !important; }
+  header, nav, aside, button, .no-print { display: none !important; }
   .card, .card-raised { break-inside: avoid; box-shadow: none !important; }
   h2, h3 { break-after: avoid; }
   .reveal, .animate-fade-up { animation: none !important; opacity: 1 !important; transform: none !important; }

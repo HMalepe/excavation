@@ -173,3 +173,12 @@ Code: tokens and component utilities in `src/app/globals.css`; artwork in `src/c
 **F3. Palette change (owner's call, same day):** the first palette (cream, beige, terracotta, brown) was too recognisably the default "AI product" look. Replaced with cool neutral greys, hi-vis yellow as the single accent, and a sky-to-midnight depth scale that matches the stage names (Surface, Wading in, Deep water, The trench, The floor). No warm browns remain anywhere (UI, PDF, icons, share image). All text pairs re-audited: zero contrast failures in either theme.
 
 **F4. No warm hues at all (owner's call):** the hi-vis yellow accent from F3 still read as orange, so the accent is now aqua and every remaining warm element (illustration colours, a quiz example that said "yellow on white") was changed. Verified by rendering 25 screens in both themes in a browser and scanning every computed colour (text, backgrounds, borders, fills, strokes, shadows) for hues between brown, orange and yellow: none found.
+
+## F5. Clear Progress design system
+
+Replaces the aqua/strata look. Near-white canvas, ink text, cobalt (`--accent`) marks the next action, soft teal marks completion, neutral surfaces carry the rest. Inter only. A stable navigation edge (staff sidebar, learner stage footer) beside a working field.
+
+- Progress is ordered marks (`Stepper`: teal check = done, cobalt = here, outline = ahead) with named stages. No percentages in learner views (spec 02 §3.7).
+- Learner screens: one prominent question, a small set of choices. Staff screens: repeated rows, compact figures (`Stat`), tables.
+- AI interpretation stays separate from raw scores; nothing is decided without human review (unchanged: reports are reviewer-gated).
+- No brown, orange or yellow anywhere. Status uses slate, cobalt tint, teal or red. Verified by a computed-colour audit (hue 12–70°) and a WCAG AA contrast audit on both themes.

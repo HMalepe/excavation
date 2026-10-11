@@ -1,25 +1,33 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "The Excavation: dig deeper than your marks";
+export const alt = "The Excavation: choose your subjects from who you are";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 /** The preview shown when a link is shared on WhatsApp or by email. */
 export default function OgImage() {
-  const layers = ["#c7e5ff", "#4aa3ff", "#2b5fe8", "#1d2f8f", "#0a1030"];
   return new ImageResponse(
     (
-      <div style={{ width: 1200, height: 630, display: "flex", background: "#eceff3", color: "#0d1117" }}>
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 70px", width: 700, gap: 22 }}>
-          <div style={{ display: "flex", fontSize: 26, letterSpacing: 4, color: "#2347c5", fontWeight: 700 }}>THE EXCAVATION · SCHOOL EDITION</div>
-          <div style={{ display: "flex", fontSize: 92, fontWeight: 800, lineHeight: 1.0, letterSpacing: -3 }}>Dig deeper than your marks.</div>
-          <div style={{ display: "flex", fontSize: 30, color: "#4a5361" }}>Choose your subjects from who you are and what you can do.</div>
+      <div style={{ width: 1200, height: 630, display: "flex", background: "#f5f7fb", color: "#0e1a2b", alignItems: "center", padding: "0 80px", gap: 60 }}>
+        <div style={{ display: "flex", flexDirection: "column", width: 700, gap: 24 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <svg width="56" height="56" viewBox="0 0 32 32">
+              <rect width="32" height="32" rx="9" fill="#1b57e5" />
+              <rect x="7" y="8.5" width="18" height="3.6" rx="1.8" fill="#fff" />
+              <rect x="9.5" y="14.2" width="13" height="3.6" rx="1.8" fill="#dbe6fc" />
+              <rect x="12" y="19.9" width="8" height="3.6" rx="1.8" fill="#37e0c5" />
+            </svg>
+            <div style={{ display: "flex", fontSize: 30, fontWeight: 700 }}>The Excavation</div>
+          </div>
+          <div style={{ display: "flex", fontSize: 76, fontWeight: 700, lineHeight: 1.04, letterSpacing: -2.5 }}>Choose your subjects from who you are.</div>
+          <div style={{ display: "flex", fontSize: 28, color: "#566276" }}>School Edition · Grade 9 and Grade 11</div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", width: 500, height: 630 }}>
-          {layers.map((c, i) => (
-            <div key={c} style={{ display: "flex", flex: 1, background: c, alignItems: "center", justifyContent: "center" }}>
-              {i === 4 ? <div style={{ display: "flex", width: 64, height: 64, background: "#2de0c4", transform: "rotate(45deg)", border: "5px solid #0d1117" }} /> : null}
+        <div style={{ display: "flex", flexDirection: "column", flex: 1, gap: 14 }}>
+          {[["Surface", "#0f9b8a"], ["Wading in", "#0f9b8a"], ["Deep water", "#1b57e5"], ["The trench", "#cfd8e6"], ["The floor", "#cfd8e6"]].map(([n, c]) => (
+            <div key={n} style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <div style={{ display: "flex", width: 26, height: 26, borderRadius: 13, background: c }} />
+              <div style={{ display: "flex", fontSize: 26, fontWeight: 600, color: c === "#cfd8e6" ? "#566276" : "#0e1a2b" }}>{n}</div>
             </div>
           ))}
         </div>

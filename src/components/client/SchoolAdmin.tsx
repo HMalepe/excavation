@@ -99,7 +99,7 @@ export function ImportBox({ kind, help, example }: { kind: "roster" | "marks"; h
     <section className="card space-y-3">
       <h2 className="text-2xl">{kind === "roster" ? "Import learners" : "Import marks (SA-SAMS export)"}</h2>
       <p className="text-sm text-muted">{help}</p>
-      <pre className="overflow-x-auto rounded-[14px] border-[1.5px] border-line bg-sunken/60 p-3 text-xs">{example}</pre>
+      <pre className="overflow-x-auto rounded-xl border border-line bg-sunken/60 p-3 text-xs">{example}</pre>
       <input type="file" accept=".csv,text/csv" disabled={busy} onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0])} />
       {result && (
         <div className="space-y-2">

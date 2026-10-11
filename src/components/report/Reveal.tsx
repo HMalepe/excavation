@@ -13,9 +13,7 @@ export function Reveal({ headline, kicker, children }: { headline: React.ReactNo
     <>
       <div className={`animate-fade-up ${shown ? "pt-8" : "flex min-h-[70dvh] flex-col justify-center"}`}>
         <div className="mb-5 flex items-center gap-3" aria-hidden="true">
-          <span className="flex h-3 w-24 overflow-hidden rounded-full border-2 border-edge">
-            {[1, 2, 3, 4, 5].map((i) => <span key={i} className="flex-1" style={{ background: `var(--strata-${i})` }} />)}
-          </span>
+          <span className="h-1 w-10 rounded-full bg-accent" />
           {kicker && <span className="eyebrow">{kicker}</span>}
         </div>
         {headline}

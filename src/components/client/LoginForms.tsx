@@ -17,10 +17,10 @@ export function LearnerLoginForm() {
   return (
     <form onSubmit={submit} className="space-y-4">
       <div><label className="label" htmlFor="school">School code</label>
-        <input id="school" name="school" className="field font-display text-xl font-bold uppercase tracking-[0.12em] placeholder:font-normal placeholder:tracking-normal" placeholder="e.g. PILOT1" autoComplete="off" autoCapitalize="characters" required maxLength={32} /></div>
+        <input id="school" name="school" className="field text-lg font-semibold uppercase tracking-[0.08em] placeholder:font-normal placeholder:normal-case placeholder:tracking-normal" placeholder="e.g. PILOT1" autoComplete="off" autoCapitalize="characters" required maxLength={32} /></div>
       <div><label className="label" htmlFor="code">Your code</label>
-        <input id="code" name="code" className="field font-display text-xl font-bold uppercase tracking-[0.12em] placeholder:font-normal placeholder:tracking-normal" placeholder="e.g. ABC-0901" autoComplete="off" autoCapitalize="characters" required maxLength={32} /></div>
-      {error && <p role="alert" className="rounded-xl border-[1.5px] border-danger bg-danger/10 px-4 py-3 font-semibold text-danger">{error}</p>}
+        <input id="code" name="code" className="field text-lg font-semibold uppercase tracking-[0.08em] placeholder:font-normal placeholder:normal-case placeholder:tracking-normal" placeholder="e.g. ABC-0901" autoComplete="off" autoCapitalize="characters" required maxLength={32} /></div>
+      {error && <p role="alert" className="alert">{error}</p>}
       <button className="btn-primary w-full" disabled={busy}>{busy ? "Checking…" : "Start digging"}</button>
       <p className="text-sm text-muted">Your teacher gives you both codes. Lost yours? Ask them for it again.</p>
     </form>
@@ -43,7 +43,7 @@ export function StaffLoginForm() {
     <form onSubmit={submit} className="space-y-4">
       <div><label className="label" htmlFor="email">Email</label><input id="email" name="email" type="email" className="field" autoComplete="username" required /></div>
       <div><label className="label" htmlFor="password">Password</label><input id="password" name="password" type="password" className="field" autoComplete="current-password" required minLength={8} /></div>
-      {error && <p role="alert" className="rounded-xl border-[1.5px] border-danger bg-danger/10 px-4 py-3 font-semibold text-danger">{error}</p>}
+      {error && <p role="alert" className="alert">{error}</p>}
       <button className="btn-primary w-full" disabled={busy}>{busy ? "Signing in…" : "Sign in"}</button>
     </form>
   );

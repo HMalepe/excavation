@@ -6,7 +6,7 @@ import { loadReportBundle } from "@/lib/report/load";
 import { G9Report, G11Report } from "@/components/report/ReportViews";
 import { AutoRefresh } from "@/components/client/AutoRefresh";
 import { PlainPage } from "@/components/ui/PlainPage";
-import { Wordmark, StrataRule } from "@/components/ui/Brand";
+import { Wordmark } from "@/components/ui/Brand";
 import { ThemeToggle } from "@/components/client/ThemeToggle";
 import type { ReportG9, ReportG11 } from "@/lib/ai/schemas";
 
@@ -40,13 +40,12 @@ export default async function ReportPage() {
   const g9 = session.touchpoint === "G9_FOUNDATION";
   return (
     <div className="min-h-dvh">
-      <header className="sticky top-0 z-10 border-b-[1.5px] border-line bg-canvas/90 backdrop-blur-md print:hidden">
-        <StrataRule />
+      <header className="sticky top-0 z-10 border-b border-line bg-canvas/90 backdrop-blur-md print:hidden">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-2.5">
           <Wordmark />
-          <nav className="flex items-center gap-2 font-display text-sm font-bold">
-            <a href={`/api/report/pdf?kind=learner`} className="inline-flex h-11 items-center rounded-xl border-[1.5px] border-edge bg-surface px-3 text-fg no-underline hover:bg-sunken">PDF</a>
-            <Link href="/learn/report/share" className="inline-flex h-11 items-center rounded-xl border-[1.5px] border-edge bg-surface px-3 text-fg no-underline hover:bg-sunken">Share</Link>
+          <nav className="flex items-center gap-2 text-sm font-semibold">
+            <a href={`/api/report/pdf?kind=learner`} className="inline-flex h-11 items-center rounded-[10px] border border-line bg-surface px-3 text-fg no-underline hover:bg-sunken">PDF</a>
+            <Link href="/learn/report/share" className="inline-flex h-11 items-center rounded-[10px] border border-line bg-surface px-3 text-fg no-underline hover:bg-sunken">Share</Link>
             <ThemeToggle />
           </nav>
         </div>

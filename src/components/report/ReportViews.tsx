@@ -17,18 +17,18 @@ function WhatYouTried({ skills, marks }: { skills: SkillsResult; marks: Record<s
     <Section title="What you tried">
       <p className="text-muted">Before the conversation you did three short checks and some taster tasks. The checks could only ever help you: they never lowered anything.</p>
       {skills.gate_lift && (
-        <p className="card-raised text-lg">Your maths check went well enough to open the Mathematics option. Your marks alone pointed somewhere safer — see the Maths section above.</p>
+        <p className="card text-lg">Your maths check went well enough to open the Mathematics option. Your marks alone pointed somewhere safer — see the Maths section above.</p>
       )}
       <Bullets items={checks.map((c) => c.you)} />
-      {practise.length > 0 && <p className="note"><strong className="font-display">Worth practising:</strong> {practise.join(" · ")}</p>}
+      {practise.length > 0 && <p className="note"><strong>Worth practising:</strong> {practise.join(" · ")}</p>}
       {skills.reading_support && (
-        <p className="note"><strong className="font-display">Worth building:</strong> reading in English. Every Grade 10 subject is taught and tested in it, so 20 minutes of reading a day pays off everywhere.
+        <p className="note"><strong>Worth building:</strong> reading in English. Every Grade 10 subject is taught and tested in it, so 20 minutes of reading a day pays off everywhere.
           {skills.language_note ? " Some of your maths marks may reflect reading the question, not the maths itself." : ""}</p>
       )}
       {tasters.length > 0 && (
         <>
           <Sub>Taster tasks</Sub>
-          <ul className="space-y-3">{tasters.map((t) => <li key={t.id} className="card text-lg leading-snug"><strong className="font-display">{t.title}</strong> <span className="text-muted">({t.work})</span> — {t.you}.</li>)}</ul>
+          <ul className="space-y-3">{tasters.map((t) => <li key={t.id} className="card text-lg leading-snug"><strong>{t.title}</strong> <span className="text-muted">({t.work})</span> — {t.you}.</li>)}</ul>
           <p className="text-sm text-muted">How much you enjoyed real work counted a little towards your subject options. Getting answers right didn&apos;t.</p>
         </>
       )}
@@ -36,11 +36,11 @@ function WhatYouTried({ skills, marks }: { skills: SkillsResult; marks: Record<s
   );
 }
 
-const Section = ({ title, children, tone }: { title: string; children: React.ReactNode; tone?: 1 | 2 | 3 | 4 | 5 }) => (
+const Section = ({ title, children }: { title: string; children: React.ReactNode; tone?: 1 | 2 | 3 | 4 | 5 }) => (
   <section className="reveal space-y-4 pt-10">
     <div className="flex items-center gap-3">
-      <span className="h-2.5 w-10 shrink-0 rounded-full border-[1.5px] border-edge" style={{ background: `var(--strata-${tone ?? 2})` }} aria-hidden="true" />
-      <h2 className="text-3xl">{title}</h2>
+      <span className="h-1 w-6 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+      <h2 className="text-2xl sm:text-3xl">{title}</h2>
     </div>
     {children}
   </section>
@@ -49,11 +49,11 @@ const Bullets = ({ items }: { items: string[] }) => (
   <ul className="space-y-3">{items.map((x, i) => <li key={i} className="flex gap-3 text-lg leading-snug"><span className="diamond" aria-hidden="true" /><span>{x}</span></li>)}</ul>
 );
 const Closing = ({ text }: { text: string }) => (
-  <p className="font-display mt-14 border-t-2 border-edge pt-10 text-[2rem] font-bold leading-[1.15] tracking-[-0.02em] sm:text-4xl">{text}</p>
+  <p className="mt-14 border-t border-line pt-10 text-[1.75rem] font-semibold leading-[1.2] tracking-[-0.02em] sm:text-4xl">{text}</p>
 );
 const Sub = ({ children }: { children: React.ReactNode }) => <h3 className="eyebrow !text-sm">{children}</h3>;
 const Paras = ({ text }: { text: string }) => <>{text.split(/\n{2,}/).map((p, i) => <p key={i} className="text-lg leading-relaxed">{p}</p>)}</>;
-const Headline = ({ text }: { text: string }) => <h1 className="text-[2.4rem] leading-[1.05] sm:text-6xl">&ldquo;{text}&rdquo;</h1>;
+const Headline = ({ text }: { text: string }) => <h1 className="text-[2rem] leading-[1.1] sm:text-5xl">&ldquo;{text}&rdquo;</h1>;
 
 /** The Grade 9 Foundation Report. Closing line is the last element; nothing after it. */
 export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile }) {
@@ -78,9 +78,9 @@ export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile })
               {r.subject_options.fits.map((f, i) => {
                 const combo = profile.combinations.find((c) => c.id === f.combination_id);
                 return (
-                  <li key={f.combination_id} className={`space-y-3 ${i === 0 ? "card-raised" : "card"}`}>
+                  <li key={f.combination_id} className={`space-y-3 ${i === 0 ? "card" : "card"}`}>
                     <div className="flex items-start gap-4">
-                      <span className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-edge text-2xl font-extrabold" style={{ background: `var(--strata-${i + 1})`, color: i >= 2 ? "#f3f5f8" : "#0d1117" }}>{i + 1}</span>
+                      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-lg font-bold ${i === 0 ? "bg-accent text-on-accent" : "border border-tint-line bg-tint text-accent-ink"}`}>{i + 1}</span>
                       <div className="min-w-0 space-y-1">
                         <h3 className="text-2xl">{f.name}</h3>
                         {combo?.label === "keeps_most_doors_open" && <span className="chip">keeps the most doors open</span>}
@@ -113,12 +113,12 @@ export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile })
             </div>
           </Section>
           <Section title="Your first move" tone={5}>
-            <div className="rounded-[20px] border-2 border-edge bg-accent p-6 text-on-accent" style={{ boxShadow: "5px 5px 0 var(--shadow)" }}>
-              <p className="font-display text-xs font-bold uppercase tracking-[0.16em] opacity-75">{r.first_move.by_when}</p>
-              <p className="font-display mt-2 text-2xl font-bold leading-snug">{r.first_move.action}</p>
+            <div className="rounded-2xl bg-accent p-6 text-on-accent" style={{ boxShadow: "var(--shadow-soft)" }}>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] opacity-90">{r.first_move.by_when}</p>
+              <p className="mt-2 text-xl font-semibold leading-snug tracking-[-0.01em] sm:text-2xl">{r.first_move.action}</p>
             </div>
           </Section>
-          <Section title="The question we'll ask you in Grade 11" tone={5}><p className="font-display text-2xl font-semibold leading-snug">&ldquo;{r.grade11_question}&rdquo;</p></Section>
+          <Section title="The question we'll ask you in Grade 11" tone={5}><p className="text-xl font-semibold leading-snug sm:text-2xl">&ldquo;{r.grade11_question}&rdquo;</p></Section>
           <Closing text={r.closing_line} />
         </div>
       </Reveal>
@@ -140,17 +140,17 @@ export function G11Report({ r, profile, g9Profile, verdict, planState }: { r: Re
           <Section title="Two years: what stayed" tone={1}><Bullets items={r.two_years.what_stayed} /></Section>
           <Section title="Two years: what moved" tone={2}>
             <Bullets items={r.two_years.what_moved} />
-            <p className="card text-lg"><strong className="font-display">Who you&apos;re becoming:</strong> {r.two_years.identity_shift}</p>
+            <p className="card text-lg"><strong>Who you&apos;re becoming:</strong> {r.two_years.identity_shift}</p>
           </Section>
           <Section title="Your subjects, honestly" tone={3}>
-            <ul className="space-y-3">{r.subjects.map((s) => <li key={s.subject} className="card text-lg leading-snug"><strong className="font-display">{s.subject}</strong> — {s.plain}</li>)}</ul>
+            <ul className="space-y-3">{r.subjects.map((s) => <li key={s.subject} className="card text-lg leading-snug"><strong>{s.subject}</strong> — {s.plain}</li>)}</ul>
           </Section>
           <section className="pt-10">
-            <div className="card-raised relative space-y-3 overflow-hidden">
-              <div className="absolute inset-x-0 top-0 flex h-2.5" aria-hidden="true">{[1, 2, 3, 4, 5].map((i) => <span key={i} className="flex-1" style={{ background: `var(--strata-${i})` }} />)}</div>
+            <div className="card relative space-y-3 overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-1 bg-accent" aria-hidden="true" />
               <p className="eyebrow pt-2">Your verdict</p>
-              <p className="font-display text-5xl font-extrabold leading-none tracking-[-0.03em] sm:text-7xl">{VERDICT_WORD[verdict.verdict]}</p>
-              <p className="font-display text-2xl font-bold leading-snug">{r.verdict.headline}</p>
+              <p className="text-4xl font-bold leading-none tracking-[-0.03em] text-accent-ink sm:text-6xl">{VERDICT_WORD[verdict.verdict]}</p>
+              <p className="text-xl font-semibold leading-snug sm:text-2xl">{r.verdict.headline}</p>
               <Paras text={r.verdict.explanation} />
             </div>
           </section>
@@ -164,9 +164,9 @@ export function G11Report({ r, profile, g9Profile, verdict, planState }: { r: Re
             <div className="card space-y-1"><Sub>Counter-move</Sub><p>{r.pattern_to_watch.counter_move}</p></div>
           </Section>
           <Section title="Your first move" tone={5}>
-            <div className="rounded-[20px] border-2 border-edge bg-accent p-6 text-on-accent" style={{ boxShadow: "5px 5px 0 var(--shadow)" }}>
-              <p className="font-display text-xs font-bold uppercase tracking-[0.16em] opacity-75">{r.first_move.by_when}</p>
-              <p className="font-display mt-2 text-2xl font-bold leading-snug">{r.first_move.action}</p>
+            <div className="rounded-2xl bg-accent p-6 text-on-accent" style={{ boxShadow: "var(--shadow-soft)" }}>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] opacity-90">{r.first_move.by_when}</p>
+              <p className="mt-2 text-xl font-semibold leading-snug tracking-[-0.01em] sm:text-2xl">{r.first_move.action}</p>
             </div>
           </Section>
           <Closing text={r.closing_line} />
