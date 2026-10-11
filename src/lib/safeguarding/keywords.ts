@@ -9,17 +9,23 @@ export type Risk = "none" | "soft" | "hard";
 
 const HARD: RegExp[] = [
   // Present tense only: past self-harm ("I used to cut myself") is "soft" per spec 07 3A.
-  /(?<!used\s+to\s+)(?<!used\s+to\s+\w+\s+)\b(kill|hurt|harm|cut)(ting)?\s+my\s*self\b/i,
+  /(?<!used\s+to\s+)(?<!used\s+to\s+\w+\s+)\b(kill(s|ed|ing)?|hurt(s|ing)?|harm(s|ed|ing)?|cut(s|ting)?)\s+my\s*self\b/i,
   /\bsuicid(e|al)\b/i,
   /\bend\s+(it\s+all|my\s+life)\b/i,
-  /\b(want|wanna|going)\s+to\s+die\b/i,
+  /\b(want\s+to|wanna|going\s+to)\s+die\b/i,
   /\bwant(ed)?\s+to\s+not\s+(be\s+alive|exist|wake\s+up)\b/i,
   /\b(don'?t|do\s+not)\s+want\s+to\s+(live|be\s+alive|wake\s+up)\b/i,
   /\bself[-\s]?harm(ing)?\b/i,
-  /\b(he|she|they|my\s+\w+)\s+(hits?|beats?|touch(es)?|rapes?d?)\s+me\b/i,
+  /\b(he|she|they|my\s+[\w']+(\s+[\w']+)?)\s+(hits?|beats?(?!\s+me\s+at\b)|touch(es)?|rapes?d?)\s+me\b/i,
+  /\b(and|but)\s+(hits?|beats?|rapes?)\s+me\b/i,
   /\b(raped|molested|abused)\b/i,
   /\b(kill|hurt|shoot|stab)\s+(him|her|them|someone|people|everyone)\b/i,
   /\bnot\s+safe\s+at\s+home\b/i,
+  // Other South African languages: a DRAFT list of the clearest first-person phrases ("I want to die",
+  // "I no longer want to live", "kill myself"). Needs review by a first-language speaker per language.
+  /\b(ngifuna|ndifuna)\s+ukufa\b/i, /\b(angisafuni|andisafuni)\s+ukuphila\b/i, /\bukuzibulala\b/i, // isiZulu / isiXhosa
+  /\bek\s+wil\s+(myself\s+)?(doodmaak|doodgaan|sterf)\b/i, /\bek\s+wil\s+nie\s+meer\s+(lewe|leef)\b/i, // Afrikaans
+  /\bke\s+batla\s+(ho\s+(shwa|ipolaya)|go\s+(swa|ipolaya))\b/i, // Sesotho / Setswana
 ];
 
 const SOFT: RegExp[] = [

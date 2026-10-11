@@ -17,7 +17,8 @@
     "norms": "tsx --env-file=.env.local --tsconfig tsconfig.json scripts/run-norming.ts",
     "seed": "tsx --env-file=.env.local scripts/seed.ts",
     "validity": "tsx --env-file=.env.local --tsconfig tsconfig.json scripts/run-validity.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "eval:safety": "tsx --tsconfig tsconfig.json --conditions react-server --env-file=.env.local scripts/eval-safety.ts"
   },
   "engines": {
     "node": ">=20"
