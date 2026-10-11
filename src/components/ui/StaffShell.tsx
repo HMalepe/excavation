@@ -4,6 +4,7 @@ import { ThemeToggle } from "@/components/client/ThemeToggle";
 import { Icon, Wordmark } from "./Brand";
 
 const ICON_FOR: [RegExp, string][] = [
+  [/consent/i, "check"],
   [/review|queue/i, "inbox"], [/safeguard|alert/i, "shield"], [/setting|school|import/i, "settings"],
   [/cohort|result|dashboard/i, "chart"], [/learner|student/i, "users"],
 ];

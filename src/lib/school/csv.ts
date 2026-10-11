@@ -76,3 +76,26 @@ export function loginCode(rand: () => number, first: string): string {
   for (let i = 0; i < 5; i++) tail += ALPHABET[Math.floor(rand() * ALPHABET.length)];
   return `${prefix}-${tail}`;
 }
+
+
+export interface ConsentImportRow { learner_ref: string; guardian_name: string; relationship: string; consent_research: boolean; evidence_ref: string | null; given_on: string | null }
+/**
+ * Paper forms the school has collected, typed into a sheet. Columns: learner_ref, guardian_name, relationship,
+ * research (yes/no, optional), form_ref (optional), date (optional). Only rows for forms where the guardian ticked
+ * the three required boxes belong here: a declined form is simply not recorded.
+ */
+export function parseConsentCsv(text: string): ImportResult<ConsentImportRow> {
+  const out: ConsentImportRow[] = [], errors: string[] = [];
+  csvObjects(text).forEach((o, i) => {
+    const line = i + 2;
+    const ref = o.learner_ref || o.admission_no || "";
+    const name = o.guardian_name || o.guardian || "";
+    const rel = o.relationship || "";
+    if (!ref) return errors.push(`line ${line}: missing learner_ref`);
+    if (name.trim().length < 2) return errors.push(`line ${line}: missing guardian_name`);
+    if (rel.trim().length < 2) return errors.push(`line ${line}: missing relationship`);
+    const r = (o.research || o.consent_research || "").toLowerCase();
+    out.push({ learner_ref: ref, guardian_name: name.trim(), relationship: rel.trim(), consent_research: ["yes", "y", "true", "1"].includes(r), evidence_ref: o.form_ref || null, given_on: o.date || null });
+  });
+  return { rows: out, errors };
+}

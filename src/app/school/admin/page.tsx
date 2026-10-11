@@ -8,7 +8,7 @@ import { SettingsForm, ImportBox } from "@/components/client/SchoolAdmin";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "School settings" };
 
-export const ADMIN_NAV = [{ href: "/school/admin", label: "Settings & imports" }, { href: "/school/admin/cohort", label: "Cohort dashboard" }];
+export const ADMIN_NAV = [{ href: "/school/admin", label: "Settings & imports" }, { href: "/school/admin/consent", label: "Consent register" }, { href: "/school/admin/cohort", label: "Cohort dashboard" }];
 
 export default async function SchoolAdmin() {
   const admin = await pageRole(["school_admin"]);
