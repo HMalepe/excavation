@@ -53,7 +53,7 @@ export function Assent({ firstName }: { firstName: string }) {
       {question && (
         <div className="note space-y-2">
           <p>Ask your LO teacher before you start. You can come back to this screen any time with the same codes.</p>
-          <p>Questions about your information can also go to privacy@theexcavation.co.za.</p>
+          <p>Questions about your information can also go to privacy@theexcavation.co.za. You can read our <a href="/privacy" target="_blank" rel="noreferrer">privacy notice</a> any time.</p>
         </div>
       )}
       <ErrorLine error={error} />
