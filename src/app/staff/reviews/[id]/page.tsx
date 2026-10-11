@@ -24,6 +24,8 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
   const b = await loadReportBundle(rep.session_id);
   const { data: sig } = await db.from("signals").select("payload, model, extracted_at").eq("session_id", rep.session_id).maybeSingle();
   const { data: sg } = await db.from("safeguarding_events").select("level, trigger_source, created_at").eq("session_id", rep.session_id);
+  const { data: ra } = await db.from("audit_log").select("target").eq("action", "learner_read_aloud").like("target", `${rep.session_id}:%`);
+  const readAloud = (ra ?? []).reduce<Record<string, number>>((m, r) => { const w = r.target.split(":")[1]!; m[w] = (m[w] ?? 0) + 1; return m; }, {});
   const s = rep.sessions as { touchpoint: string; learners: { first_name: string; last_name: string } };
   const meta = rep.meta as { release_reason?: string; lint?: string[]; attempts?: { issues: string[] }[]; error?: string };
   const g9 = s.touchpoint === "G9_FOUNDATION";
@@ -35,6 +37,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
         <span className="card py-2">Status: <strong>{rep.status}</strong></span>
         <span className="card py-2">Why here: {meta.release_reason ?? "—"}</span>
         <span className="card py-2">Quality: {b.profile?.quality.status ?? "—"} {b.profile?.quality.flags.join(", ")}</span>
+        {!!ra?.length && <span className="card py-2">Read-aloud used {ra.length}× ({Object.entries(readAloud).map(([w, n]) => `${w} ${n}`).join(", ")})</span>}
         {!!sg?.length && <span className="card border-danger py-2 text-danger">Safeguarding: {sg.map((e) => `${e.level} (${e.trigger_source})`).join(", ")}</span>}
       </div>
       {meta.error && <p className="card border-danger text-danger">Pipeline error: {meta.error}</p>}

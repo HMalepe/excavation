@@ -192,6 +192,15 @@ export const actions = {
     return {};
   }),
 
+  /**
+   * The learner used read-aloud. Only the fact is stored (never the text), as an audit row rather than
+   * in sessions.progress, so a late request can never overwrite the learner's place in the flow.
+   */
+  read_aloud: action(z.object({ where: z.enum(["questions", "values", "checks", "tasters", "guide", "intro"]) }), async ({ session }, b) => {
+    await adminDb().from("audit_log").insert({ actor: null, action: "learner_read_aloud", target: `${session.id}:${b.where}` });
+    return {};
+  }),
+
   ...skillActions,
   ...g11Actions,
   ...reportActions,

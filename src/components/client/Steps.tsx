@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { learn } from "./api";
 import { Banner, QuestionCard, RatingScale } from "@/components/ui/Question";
+import { ListenButton } from "./readAloud";
 
 function useStep() {
   const router = useRouter();
@@ -20,6 +21,13 @@ function useStep() {
 const ErrorLine = ({ error }: { error: string | null }) => (error ? <p role="alert" className="alert">{error}</p> : null);
 
 // ---------- spec 09 §3.3 assent ----------
+const ASSENT_SPOKEN = [
+  "This isn't a test. There are no right or wrong answers, and nothing here is marked.",
+  "You'll talk to an AI. The Guide is an AI. It asks one question at a time and it's built to listen.",
+  "Your report is yours. Teachers and parents only see a summary if you choose to share it.",
+  "One exception. If what you write makes us think you might be unsafe, an adult at school who can help will be told. We'd rather tell someone than say nothing.",
+  "You're in control. Pause or stop whenever you want. Everything saves as you go.",
+];
 export function Assent({ firstName }: { firstName: string }) {
   const { busy, error, run } = useStep();
   const [question, setQuestion] = useState(false);
@@ -29,6 +37,7 @@ export function Assent({ firstName }: { firstName: string }) {
       <div className="space-y-2">
         <p className="eyebrow">Before you start</p>
         <h1 className="text-[2rem] sm:text-4xl">Hey {firstName}.</h1>
+        <div data-sec="interests"><ListenButton id="intro:assent" where="intro" parts={[`Hey ${firstName}.`, ...ASSENT_SPOKEN]} /></div>
       </div>
       <ul className="space-y-3">
         {[
@@ -132,6 +141,7 @@ export function Snapshot({ subjects, imported }: { subjects: string[]; imported:
 }
 
 // ---------- AI disclosure before The Guide (spec 03 §3) + retake offer (spec 04 §7) ----------
+const GUIDE_NOTICE_SPOKEN = "The Guide is an AI we built for The Excavation. It asks one question at a time and reads what you actually write. Nobody at school sees the chat unless you choose to share it. The one exception: if The Guide thinks you might be unsafe, someone who can help will be told.";
 export function GuideNotice({ offerRetake }: { offerRetake: boolean }) {
   const { busy, error, run } = useStep();
   if (offerRetake) {
@@ -152,6 +162,7 @@ export function GuideNotice({ offerRetake }: { offerRetake: boolean }) {
     <section className="space-y-6">
       <Banner sec="identity" art="guide" />
       <h1 className="text-[2rem] sm:text-4xl">Next: a chat with The Guide</h1>
+      <div data-sec="identity"><ListenButton id="intro:guide" where="intro" parts={[GUIDE_NOTICE_SPOKEN]} /></div>
       <p className="card text-lg leading-relaxed">
         The Guide is an AI we built for The Excavation. It asks one question at a time and reads what you actually write.
         Nobody at school sees the chat unless you choose to share it. The one exception: if The Guide thinks you might be unsafe, someone who can help will be told.
@@ -248,7 +259,7 @@ export function PerSubjectLikert({ action, subject, header, stem, items, points 
       <ol className="space-y-5">
         {items.map((it, k) => (
           <li key={it.id}>
-            <QuestionCard sec={action === "subject_experience" ? "identity" : "study"} label={subject} n={k + 1} art={action === "subject_experience" ? "identity" : "study"} id={`q-${it.id}`} stem={it.text}>
+            <QuestionCard sec={action === "subject_experience" ? "identity" : "study"} label={subject} n={k + 1} art={action === "subject_experience" ? "identity" : "study"} id={`q-${it.id}`} stem={it.text} listen={{ id: `s:${subject}:${it.id}`, where: "questions", choices: points.map((p) => p[1]) }}>
               <RatingScale name={it.id} labelledBy={`q-${it.id}`} points={points} value={answers[it.id]} onChange={(v) => setAnswers((a) => ({ ...a, [it.id]: v }))} />
             </QuestionCard>
           </li>

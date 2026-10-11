@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { learn } from "./api";
 import { TasterArt } from "@/components/ui/TasterArt";
+import { ListenButton } from "./readAloud";
 import { Figure, hasFigure } from "@/components/ui/Figures";
 import { Banner, QuestionCard, RatingScale, SectionHero } from "@/components/ui/Question";
 import type { CheckView, OptionView, TasterStepView, TasterView } from "@/lib/skills/views";
@@ -91,7 +92,8 @@ export function CheckRunner({ v }: { v: CheckView }) {
           </div>
         </details>
       )}
-      <QuestionCard sec={sec} label={v.title} n={v.index + 1} art={fig || v.passage ? undefined : v.check} id="stem" stem={v.stem}>
+      <QuestionCard sec={sec} label={v.title} n={v.index + 1} art={fig || v.passage ? undefined : v.check} id="stem" stem={v.stem}
+        listen={v.check === "reading" ? undefined : { id: `c:${v.itemId}`, where: "checks", choices: v.options.map((o) => o.text), lettered: true }}>
         {fig && <Figure id={fig} />}
         <OptionList key={v.itemId} name={v.itemId} options={v.options} chosen={chosen} onChoose={setChosen} disabled={busy} />
       </QuestionCard>
@@ -151,7 +153,8 @@ function StepRunner({ steps, onDone, prefix, sec, label }: { steps: TasterStepVi
   const verdict = s.answer === null ? null : chosen === s.answer;
   return (
     <div data-sec={sec} className="space-y-4">
-      <QuestionCard sec={sec} label={label} n={i + 1} stem={s.stem} id={`${prefix}stem${i}`} hint={`Step ${i + 1} of ${steps.length}`}>
+      <QuestionCard sec={sec} label={label} n={i + 1} stem={s.stem} id={`${prefix}stem${i}`} hint={`Step ${i + 1} of ${steps.length}`}
+        listen={{ id: `t:${label}:${prefix}${i}`, where: "tasters", choices: s.options.map((o) => o.text), lettered: true }}>
         <OptionList key={`${prefix}${i}`} name={`${prefix}${i}`} options={s.options} chosen={chosen} onChoose={setChosen} disabled={revealed} correct={revealed ? s.answer : undefined} />
         {revealed && (
           <p className="rounded-xl border-2 p-4 text-[1.05rem] leading-relaxed" style={{ background: "var(--sec-soft)", borderColor: "var(--sec-line)" }} role="status">
@@ -198,7 +201,7 @@ export function TasterRunner({ v }: { v: TasterView }) {
           {v.index === 0 && (
             <p className="note leading-relaxed">Six tiny slices of real jobs, about 3 minutes each. You get feedback after every step, but we&apos;re not marking you. What we want to know is whether you <em>enjoy</em> this kind of work. There&apos;s no wrong way to feel.</p>
           )}
-          <QuestionCard sec={sec} label="Before you start" stem={v.before_prompt} id="before-q">
+          <QuestionCard sec={sec} label="Before you start" stem={v.before_prompt} id="before-q" listen={{ id: `t:${v.id}:before`, where: "tasters", choices: v.before_scale }}>
             <Scale name="before" labels={v.before_scale} value={before} onChange={setBefore} />
           </QuestionCard>
           <ErrorLine error={error} />
@@ -210,6 +213,7 @@ export function TasterRunner({ v }: { v: TasterView }) {
       {phase === "task" && (
         <div className="space-y-4">
           <p className={`qcard whitespace-pre-line p-5 text-[1.15rem] font-semibold leading-relaxed ${v.id === "HEALTH" || v.id === "CODE" ? "sr-only" : ""}`}>{v.scene}</p>
+          <div data-sec={sec}><ListenButton id={`t:${v.id}:scene`} where="tasters" parts={[v.scene]} /></div>
           {v.visual === "poster_ab" ? <PosterAB /> : <TasterArt id={v.id} />}
           <StepRunner sec={TASTER_SEC[v.id]!} label={v.title} steps={v.steps} prefix="s" onDone={(c) => { setSteps(c); setPhase("after"); }} />
         </div>
@@ -217,7 +221,7 @@ export function TasterRunner({ v }: { v: TasterView }) {
 
       {phase === "after" && (
         <div className="space-y-5">
-          <QuestionCard sec={sec} label="How was that?" stem="Honestly, how much did you enjoy that?" id="after-q">
+          <QuestionCard sec={sec} label="How was that?" stem="Honestly, how much did you enjoy that?" id="after-q" listen={{ id: `t:${v.id}:after`, where: "tasters", choices: v.after_scale }}>
             <Scale name="after" labels={v.after_scale} value={after} onChange={setAfter} />
           </QuestionCard>
           <button className="btn-primary w-full !min-h-14 text-lg" disabled={after === null} onClick={() => setPhase("another")}>Next</button>
@@ -238,13 +242,14 @@ export function TasterRunner({ v }: { v: TasterView }) {
       {phase === "bonus" && (
         <div className="space-y-4">
           <p className="qcard whitespace-pre-line p-5 text-[1.15rem] font-semibold leading-relaxed">{v.bonus.scene}</p>
+          <div data-sec={sec}><ListenButton id={`t:${v.id}:bscene`} where="tasters" parts={[v.bonus.scene]} /></div>
           <StepRunner sec={TASTER_SEC[v.id]!} label={v.bonus.title} steps={v.bonus.steps} prefix="b" onDone={(c) => { setBonusSteps(c); setPhase("bonus_after"); }} />
         </div>
       )}
 
       {phase === "bonus_after" && (
         <div className="space-y-5">
-          <QuestionCard sec={sec} label="And that one?" stem="How much did you enjoy that one?" id="bonus-q">
+          <QuestionCard sec={sec} label="And that one?" stem="How much did you enjoy that one?" id="bonus-q" listen={{ id: `t:${v.id}:bonus`, where: "tasters", choices: v.after_scale }}>
             <Scale name="bonus_after" labels={v.after_scale} value={bonusAfter} onChange={setBonusAfter} />
           </QuestionCard>
           <ErrorLine error={error} />

@@ -5,6 +5,7 @@ import { learn } from "./api";
 import { Interstitial } from "./Interstitial";
 import { Art } from "@/components/ui/Art";
 import { SectionHero } from "@/components/ui/Question";
+import { ListenButton } from "./readAloud";
 import type { SectionEvents } from "./ScoredLayer";
 
 interface Card { id: string; text: string }
@@ -53,6 +54,8 @@ export function ValuesSort({ cards, resources }: { cards: Card[]; resources: Rea
           {step === "top" ? "Tap the 3 cards that matter most to you. The first one you tap is number 1. Use the arrows to change the order." : "Now tap the 2 that matter least to you."}
         </p>
       </SectionHero>
+
+      <ListenButton id={`values:${step}`} where="values" parts={[step === "top" ? "Tap the 3 cards that matter most to you. The first one you tap is number 1. The cards are:" : "Now tap the 2 that matter least to you. The cards are:", ...cards.filter((c) => !top.includes(c.id)).map((c) => `${c.text}.`)]} />
 
       {step === "top" && top.length > 0 && (
         <ol className="space-y-2" aria-label="Your top three, in order">

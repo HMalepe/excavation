@@ -192,3 +192,12 @@ Deliberately not changed: questionnaire items and response labels (instrument 1.
 ## F7. Illustrated, framed questions
 
 Every Part 1 question is a framed card (`QuestionCard`): coloured band naming the section, big bold stem with marker highlights (numbers, money, SHOUTED words, the activity word in interest prompts), a drawing, then the answers. Each section has its own cool colour (`[data-sec]` in globals.css; no warm hues). Artwork is inline SVG in `Art.tsx` (36 activity drawings, 10 value drawings, trait and section emblems), `Figures.tsx` (diagrams and passage scenes for checks; only ones that don't reveal an answer) and `TasterArt.tsx`. Liking scales use faces, "how true" scales use rising bars; the text label always stays. Instrument wording is unchanged.
+
+## F8. Read-aloud (Option 1: the device's own voice)
+
+`src/components/client/readAloud.tsx`. A Listen button (and a Slower toggle) on every question card, taster scene, the values cards, the welcome and Guide-notice screens, and each Guide message. It reads the stem, then the choices; maths symbols, Rand, units and SA decimal commas are turned into words first (`speakable`, tested).
+
+- Offered only when an English voice that runs on the device exists. Browsers' "online" voices can send text to a cloud service, so they are never used: minors' answers stay on the phone. No local voice, no button.
+- Not offered on the Reading check or its passages: reading it aloud would stop it measuring reading.
+- The server records only that it was used (`audit_log`, action `learner_read_aloud`, target `session:where`, no text), not in `sessions.progress`, so a late request can't overwrite the learner's place. The reviewer page shows the count per area.
+- Not built: word-by-word highlighting (the card glows while it's being read instead), and pre-recorded voices (the planned next step for fixed questions).

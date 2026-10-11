@@ -100,7 +100,7 @@ export function ScoredLayer({ sectionId, title, stem, intro, items, startIndex, 
       <ol className="space-y-6">
         {page.map((it, k) => (
           <li key={it.id}>
-            <QuestionCard sec={sec} label={title} n={startIndex + offset + k + 1} art={artFor(it.id, sec)} lead={lead} id={`q-${it.id}`} stem={it.text}
+            <QuestionCard sec={sec} label={title} n={startIndex + offset + k + 1} art={artFor(it.id, sec)} lead={lead} id={`q-${it.id}`} stem={it.text} listen={{ id: `q:${it.id}`, where: "questions", choices: it.points.map((p) => p[1]) }}
               hint={it.optional ? "Optional. Skip it if you like." : undefined}>
               <RatingScale name={it.id} labelledBy={`q-${it.id}`} points={it.points} value={values[it.id]} onChange={(v) => choose(it.id, v)} />
             </QuestionCard>
