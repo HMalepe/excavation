@@ -48,7 +48,6 @@ create index if not exists safeguarding_events_trigger_msg_idx on public.safegua
 create index if not exists share_grants_learner_idx on public.share_grants (learner_id);
 create index if not exists share_grants_report_idx on public.share_grants (report_id);
 create index if not exists teacher_classes_learner_idx on public.teacher_classes (learner_id);
-create index if not exists conversation_messages_session_idx on public.conversation_messages (session_id, created_at);
 create index if not exists audit_log_action_at_idx on public.audit_log (action, at);
 
 -- 5. Tables that are deliberately service-role only. RLS is on and there is no policy, which means
