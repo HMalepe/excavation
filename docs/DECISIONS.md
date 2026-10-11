@@ -188,3 +188,7 @@ Replaces the aqua/strata look. Near-white canvas, ink text, cobalt (`--accent`) 
 Voice rules are in `docs/VOICE.md`. Every learner, parent and staff screen, the Guide's scripted opening and closing, check and taster text, error messages, the safeguarding alert email and the PDFs were rewritten to it. Verdict codes now show as plain labels (`src/lib/verdict/labels.ts`) instead of RESCUE / REDIRECT.
 
 Deliberately not changed: questionnaire items and response labels (instrument 1.0.0; rewording changes what they measure and invalidates norming), the Guide's 20 and 15 scripted questions (spec 03/05), and the check and taster questions themselves. AI prompts gained a shared CRAFT block, and the report linter now rejects stock AI phrasing.
+
+## F7. Illustrated, framed questions
+
+Every Part 1 question is a framed card (`QuestionCard`): coloured band naming the section, big bold stem with marker highlights (numbers, money, SHOUTED words, the activity word in interest prompts), a drawing, then the answers. Each section has its own cool colour (`[data-sec]` in globals.css; no warm hues). Artwork is inline SVG in `Art.tsx` (36 activity drawings, 10 value drawings, trait and section emblems), `Figures.tsx` (diagrams and passage scenes for checks; only ones that don't reveal an answer) and `TasterArt.tsx`. Liking scales use faces, "how true" scales use rising bars; the text label always stays. Instrument wording is unchanged.

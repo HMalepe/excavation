@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { learn } from "./api";
+import { Banner, QuestionCard, RatingScale } from "@/components/ui/Question";
 
 function useStep() {
   const router = useRouter();
@@ -24,6 +25,7 @@ export function Assent({ firstName }: { firstName: string }) {
   const [question, setQuestion] = useState(false);
   return (
     <section className="space-y-6">
+      <Banner sec="interests" art="shield" />
       <div className="space-y-2">
         <p className="eyebrow">Before you start</p>
         <h1 className="text-[2rem] sm:text-4xl">Hey {firstName}.</h1>
@@ -66,6 +68,7 @@ export function Intake() {
   const { busy, error, run } = useStep();
   return (
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); const f = new FormData(e.currentTarget); run("intake", Object.fromEntries(INTAKE_QUESTIONS.map((q) => [q.key, String(f.get(q.key) ?? "")]))); }}>
+      <Banner sec="personality" art="personality" />
       <h1 className="text-[2rem] sm:text-4xl">Three quick questions about you.</h1>
       {INTAKE_QUESTIONS.map((q) => (
         <div key={q.key}>
@@ -86,6 +89,7 @@ export function Snapshot({ subjects, imported }: { subjects: string[]; imported:
   if (imported) {
     return (
       <section className="space-y-6">
+        <Banner sec="study" art="study" />
         <h1 className="text-[2rem] sm:text-4xl">Your latest marks</h1>
         <p className="text-muted">Your school sent these. If one looks wrong, tell your LO teacher.</p>
         <ul className="card divide-y divide-line">
@@ -109,6 +113,7 @@ export function Snapshot({ subjects, imported }: { subjects: string[]; imported:
       }
       run("snapshot", { marks, estimates });
     }}>
+      <Banner sec="study" art="study" />
       <h1 className="text-[2rem] sm:text-4xl">Your latest marks</h1>
       <p className="text-muted">Enter your latest term mark for each subject. Not sure? Give your best guess and tick &lsquo;estimate&rsquo;. Honest marks get you honest advice.</p>
       <div className="space-y-3">
@@ -132,6 +137,7 @@ export function GuideNotice({ offerRetake }: { offerRetake: boolean }) {
   if (offerRetake) {
     return (
       <section className="space-y-6">
+        <Banner sec="motivation" art="pause" />
         <h1 className="text-[2rem] sm:text-4xl">Before the next part</h1>
         <p>Some of your answers may not have come through the way you meant them. You can redo the questions (about 20 minutes) or carry on. If you carry on, the chat with The Guide will count for more in your report.</p>
         <ErrorLine error={error} />
@@ -144,6 +150,7 @@ export function GuideNotice({ offerRetake }: { offerRetake: boolean }) {
   }
   return (
     <section className="space-y-6">
+      <Banner sec="identity" art="guide" />
       <h1 className="text-[2rem] sm:text-4xl">Next: a chat with The Guide</h1>
       <p className="card text-lg leading-relaxed">
         The Guide is an AI we built for The Excavation. It asks one question at a time and reads what you actually write.
@@ -160,6 +167,7 @@ export function TwoYears({ headline, fits, taken }: { headline: string | null; f
   const { busy, error, run } = useStep();
   return (
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); run("two_years", { text: String(new FormData(e.currentTarget).get("text") ?? "") }); }}>
+      <Banner sec="identity" art="identity" />
       <h1 className="text-[2rem] sm:text-4xl">Two years ago…</h1>
       {headline ? (
         <div className="card space-y-3">
@@ -238,21 +246,16 @@ export function PerSubjectLikert({ action, subject, header, stem, items, points 
       <h1 className="text-[2rem] sm:text-4xl">{header}</h1>
       {stem && <p className="eyebrow !normal-case !tracking-normal text-base">{stem}</p>}
       <ol className="space-y-5">
-        {items.map((it) => (
-          <li key={it.id} className="card space-y-3">
-            <p id={`q-${it.id}`}>{it.text}</p>
-            <div role="radiogroup" aria-labelledby={`q-${it.id}`} className="grid gap-2 sm:grid-cols-5">
-              {points.map(([v, label]) => (
-                <label key={v} className={`choice justify-center px-2 text-center text-sm ${answers[it.id] === v ? "choice-on" : ""}`}>
-                  <input type="radio" className="sr-only" name={it.id} checked={answers[it.id] === v} onChange={() => setAnswers((a) => ({ ...a, [it.id]: v }))} />{label}
-                </label>
-              ))}
-            </div>
+        {items.map((it, k) => (
+          <li key={it.id}>
+            <QuestionCard sec={action === "subject_experience" ? "identity" : "study"} label={subject} n={k + 1} art={action === "subject_experience" ? "identity" : "study"} id={`q-${it.id}`} stem={it.text}>
+              <RatingScale name={it.id} labelledBy={`q-${it.id}`} points={points} value={answers[it.id]} onChange={(v) => setAnswers((a) => ({ ...a, [it.id]: v }))} />
+            </QuestionCard>
           </li>
         ))}
       </ol>
       <ErrorLine error={error} />
-      <button className="btn-primary w-full" disabled={!done || busy} onClick={() => run(action, { subject, answers })}>Next</button>
+      <button className="btn-primary w-full !min-h-14 text-lg" disabled={!done || busy} onClick={() => run(action, { subject, answers })}>Next</button>
     </section>
   );
 }
@@ -263,6 +266,7 @@ export function CareerUpdate({ cu2Options, cu3Options }: { cu2Options: string[];
   const [cu3, setCu3] = useState<string[]>([]);
   return (
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); run("career_update", { cu1: String(new FormData(e.currentTarget).get("cu1") ?? ""), cu2, cu3 }); }}>
+      <Banner sec="direction" art="direction" />
       <h1 className="text-[2rem] sm:text-4xl">Where you&apos;re heading</h1>
       <div>
         <label className="label text-base text-fg" htmlFor="cu1">What career or field are you leaning towards right now? &ldquo;Not sure&rdquo; is a fine answer.</label>

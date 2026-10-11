@@ -3,6 +3,7 @@ import { pageLearner } from "@/lib/auth/guards";
 import { getOrCreateSession } from "@/lib/session/service";
 import { Resources } from "@/components/ui/Resources";
 import { LogoutButton } from "@/components/client/LoginForms";
+import { Banner } from "@/components/ui/Question";
 import { PlainPage } from "@/components/ui/PlainPage";
 
 export const dynamic = "force-dynamic";
@@ -16,6 +17,7 @@ export default async function Paused() {
     <PlainPage>
       {stopped ? (
         <>
+          <Banner sec="identity" art="shield" />
           <p className="eyebrow">Taking a break</p>
           <h1 className="text-[2rem] sm:text-4xl">We&apos;ve paused here for now.</h1>
           <p className="text-lg">Thank you for telling us what&apos;s going on. An adult at your school who can help has been told, so you&apos;re not on your own with this. Nothing you&apos;ve done is lost. You can finish later.</p>
@@ -24,6 +26,7 @@ export default async function Paused() {
         </>
       ) : (
         <>
+          <Banner sec="direction" art="pause" />
           <p className="eyebrow">Paused</p>
           <h1 className="text-[2rem] sm:text-4xl">Everything is saved.</h1>
           <p className="text-lg text-muted">Log in any time with the same codes and you&apos;ll pick up exactly where you stopped.</p>

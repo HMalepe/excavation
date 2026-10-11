@@ -2,8 +2,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { learn } from "./api";
-import { IconTile } from "@/components/ui/Brand";
 import { TasterArt } from "@/components/ui/TasterArt";
+import { Figure, hasFigure } from "@/components/ui/Figures";
+import { Banner, QuestionCard, RatingScale, SectionHero } from "@/components/ui/Question";
 import type { CheckView, OptionView, TasterStepView, TasterView } from "@/lib/skills/views";
 
 const ErrorLine = ({ error }: { error: string | null }) => (error ? <p role="alert" className="alert">{error}</p> : null);
@@ -16,11 +17,11 @@ function OptionList({ name, options, chosen, onChoose, disabled, correct }: {
       {options.map((o, n) => {
         const on = chosen === o.i;
         const isRight = disabled && correct !== undefined && correct !== null && o.i === correct;
-        const tone = isRight ? "!border-teal !bg-teal-soft" : on ? "choice-on" : "";
+        const tone = isRight ? "!border-teal !bg-teal-soft" : on ? "!border-[var(--sec)] !bg-[var(--sec-soft)] shadow-[0_0_0_1px_var(--sec)]" : "hover:!border-[var(--sec)] hover:!bg-[var(--sec-soft)]";
         return (
-          <label key={o.i} className={`choice justify-start gap-3 text-base ${tone} ${disabled ? "!cursor-default" : ""}`}>
+          <label key={o.i} className={`choice justify-start gap-3 !min-h-14 text-[1.05rem] font-semibold ${tone} ${disabled ? "!cursor-default" : ""}`}>
             <input type="radio" name={name} value={o.i} checked={on} disabled={disabled} onChange={() => onChoose(o.i)} className="sr-only" />
-            <span aria-hidden="true" className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 text-xs font-bold ${isRight ? "border-teal bg-teal text-white" : on ? "border-accent bg-accent text-on-accent" : "border-control text-muted"}`}>
+            <span aria-hidden="true" className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold ${isRight ? "border-teal bg-teal text-white" : on ? "border-[var(--sec)] bg-[var(--sec)] text-[var(--surface)]" : "border-control text-muted"}`}>
               {isRight ? "✓" : String.fromCharCode(65 + n)}
             </span>
             <span className="whitespace-pre-line text-left">{o.text}</span>
@@ -33,19 +34,11 @@ function OptionList({ name, options, chosen, onChoose, disabled, correct }: {
 }
 
 function Scale({ name, labels, value, onChange }: { name: string; labels: string[]; value: number | null; onChange: (v: number) => void }) {
-  return (
-    <div role="radiogroup" aria-label={name} className="grid gap-2 sm:grid-cols-5">
-      {labels.map((l, i) => {
-        const v = i + 1, on = value === v;
-        return (
-          <label key={v} className={`choice justify-center text-center text-sm ${on ? "choice-on" : ""}`}>
-            <input type="radio" name={name} value={v} checked={on} onChange={() => onChange(v)} className="sr-only" />{l}
-          </label>
-        );
-      })}
-    </div>
-  );
+  return <RatingScale name={name} points={labels.map((l, i) => [i + 1, l] as [number, string])} value={value ?? undefined} onChange={onChange} />;
 }
+
+const CHECK_SEC: Record<string, string> = { maths: "interests", science: "personality", reading: "values" };
+const TASTER_SEC: Record<string, string> = { HEALTH: "personality", CODE: "interests", EVIDENCE: "values", BUSINESS: "motivation", FIELD: "direction", DESIGN: "mindset" };
 
 // ---------------- Readiness checks ----------------
 export function CheckRunner({ v }: { v: CheckView }) {
@@ -67,12 +60,8 @@ export function CheckRunner({ v }: { v: CheckView }) {
 
   if (!started) {
     return (
-      <section className="space-y-6">
-        <div className="flex items-center gap-4">
-          <IconTile name={v.check} />
-          <p className="eyebrow">Check {v.checkNumber} of {v.checkCount} · about {v.minutes} minutes</p>
-        </div>
-        <h1 className="text-[2rem] sm:text-4xl">{v.title}</h1>
+      <section data-sec={CHECK_SEC[v.check]} className="space-y-6">
+        <SectionHero sec={CHECK_SEC[v.check]!} art={v.check} title={v.title} eyebrow={`Check ${v.checkNumber} of ${v.checkCount} · about ${v.minutes} minutes`} />
         <p className="text-lg leading-relaxed">{v.intro}</p>
         <ul className="note list-disc space-y-1 pl-9">
           <li>No timer. Take your time.</li>
@@ -89,26 +78,27 @@ export function CheckRunner({ v }: { v: CheckView }) {
     );
   }
 
+  const sec = CHECK_SEC[v.check]!;
+  const fig = hasFigure(v.itemId) ? v.itemId : null;
   return (
-    <section className="space-y-5" aria-live="polite">
-      <header className="flex items-baseline justify-between gap-3">
-        <h1 className="text-2xl">{v.title}</h1>
-        <span className="text-sm text-muted">{v.index + 1} of {v.total}</span>
-      </header>
+    <section data-sec={sec} className="space-y-5" aria-live="polite">
       {v.passage && (
-        <details open className="card">
-          <summary className="font-semibold">{v.passage.title}</summary>
-          <div className="mt-3 space-y-3 text-lg leading-relaxed">{v.passage.text.split(/\n{2,}/).map((p, i) => <p key={i}>{p}</p>)}</div>
+        <details open className="qcard">
+          <summary className="qband cursor-pointer"><span>{v.passage.title}</span><span>Read this first</span></summary>
+          <div className="space-y-4 p-5 sm:p-7">
+            {hasFigure(v.passage.title) && <Figure id={v.passage.title} />}
+            <div className="space-y-3 text-[1.1rem] leading-relaxed">{v.passage.text.split(/\n{2,}/).map((p, i) => <p key={i}>{p}</p>)}</div>
+          </div>
         </details>
       )}
-      <div className="card space-y-4">
-        <p id="stem" className="text-xl font-semibold leading-snug tracking-[-0.01em]">{v.stem}</p>
+      <QuestionCard sec={sec} label={v.title} n={v.index + 1} art={fig || v.passage ? undefined : v.check} id="stem" stem={v.stem}>
+        {fig && <Figure id={fig} />}
         <OptionList key={v.itemId} name={v.itemId} options={v.options} chosen={chosen} onChoose={setChosen} disabled={busy} />
-      </div>
+      </QuestionCard>
       <ErrorLine error={error} />
       <div className="grid gap-3 sm:grid-cols-2">
-        <button className="btn-primary" disabled={chosen === null || busy} onClick={() => chosen !== null && answer(chosen)}>{busy ? "Saving…" : "Next"}</button>
-        <button className="btn-ghost" disabled={busy} onClick={() => answer(-1)}>I&apos;m not sure</button>
+        <button className="btn-primary !min-h-14 text-lg" disabled={chosen === null || busy} onClick={() => chosen !== null && answer(chosen)}>{busy ? "Saving…" : "Next"}</button>
+        <button className="btn-ghost !min-h-14" disabled={busy} onClick={() => answer(-1)}>I&apos;m not sure</button>
       </div>
       <button className="w-full text-center text-sm text-muted underline" disabled={busy} onClick={skip}>Skip the rest of this check</button>
     </section>
@@ -147,7 +137,7 @@ function PosterAB() {
 
 type Phase = "before" | "task" | "after" | "another" | "bonus" | "bonus_after" | "sending";
 
-function StepRunner({ steps, onDone, prefix }: { steps: TasterStepView[]; onDone: (choices: number[]) => void; prefix: string }) {
+function StepRunner({ steps, onDone, prefix, sec, label }: { steps: TasterStepView[]; onDone: (choices: number[]) => void; prefix: string; sec: string; label: string }) {
   const [i, setI] = useState(0);
   const [choices, setChoices] = useState<number[]>([]);
   const [chosen, setChosen] = useState<number | null>(null);
@@ -160,21 +150,19 @@ function StepRunner({ steps, onDone, prefix }: { steps: TasterStepView[]; onDone
   };
   const verdict = s.answer === null ? null : chosen === s.answer;
   return (
-    <div className="space-y-4">
-      <div className="card space-y-4">
-        <p className="text-sm text-muted">Step {i + 1} of {steps.length}</p>
-        <p className="text-lg leading-snug">{s.stem}</p>
+    <div data-sec={sec} className="space-y-4">
+      <QuestionCard sec={sec} label={label} n={i + 1} stem={s.stem} id={`${prefix}stem${i}`} hint={`Step ${i + 1} of ${steps.length}`}>
         <OptionList key={`${prefix}${i}`} name={`${prefix}${i}`} options={s.options} chosen={chosen} onChoose={setChosen} disabled={revealed} correct={revealed ? s.answer : undefined} />
         {revealed && (
-          <p className="rounded-xl border border-line bg-sunken p-4 leading-relaxed" role="status">
-            {verdict === null ? "" : verdict ? <strong className="text-ok">Yes. </strong> : <strong className="text-accent-ink">Not quite. </strong>}
+          <p className="rounded-xl border-2 p-4 text-[1.05rem] leading-relaxed" style={{ background: "var(--sec-soft)", borderColor: "var(--sec-line)" }} role="status">
+            {verdict === null ? "" : verdict ? <strong className="text-ok">Yes. </strong> : <strong className="text-[var(--sec-ink)]">Not quite. </strong>}
             {s.feedback}
           </p>
         )}
-      </div>
+      </QuestionCard>
       {!revealed
-        ? <button className="btn-primary w-full" disabled={chosen === null} onClick={() => setRevealed(true)}>Check answer</button>
-        : <button className="btn-primary w-full" onClick={next}>{i + 1 >= steps.length ? "Done" : "Next step"}</button>}
+        ? <button className="btn-primary w-full !min-h-14 text-lg" disabled={chosen === null} onClick={() => setRevealed(true)}>Check answer</button>
+        : <button className="btn-primary w-full !min-h-14 text-lg" onClick={next}>{i + 1 >= steps.length ? "Done" : "Next step"}</button>}
     </div>
   );
 }
@@ -199,42 +187,40 @@ export function TasterRunner({ v }: { v: TasterView }) {
   const finish = (bonus: { steps: number[]; after: number | null } | null) =>
     submit({ skipped: false, before, after, steps, bonus });
 
+  const sec = TASTER_SEC[v.id]!;
+  const bonusPhase = phase === "bonus" || phase === "bonus_after";
   return (
-    <section className="space-y-6">
-      <header className="space-y-1">
-        <div className="flex items-center gap-4">
-          <IconTile name={v.id} />
-          <p className="eyebrow">Taster {v.index + 1} of {v.total} · {v.work}</p>
-        </div>
-        <h1 className="text-[2rem] sm:text-4xl">{phase === "bonus" || phase === "bonus_after" ? v.bonus.title : v.title}</h1>
-      </header>
+    <section data-sec={sec} className="space-y-6">
+      <SectionHero sec={sec} art={v.id} title={bonusPhase ? v.bonus.title : v.title} eyebrow={`Taster ${v.index + 1} of ${v.total} · ${v.work}`} />
 
       {phase === "before" && (
         <div className="space-y-5">
           {v.index === 0 && (
             <p className="note leading-relaxed">Six tiny slices of real jobs, about 3 minutes each. You get feedback after every step, but we&apos;re not marking you. What we want to know is whether you <em>enjoy</em> this kind of work. There&apos;s no wrong way to feel.</p>
           )}
-          <p className="text-lg">{v.before_prompt}</p>
-          <Scale name="before" labels={v.before_scale} value={before} onChange={setBefore} />
+          <QuestionCard sec={sec} label="Before you start" stem={v.before_prompt} id="before-q">
+            <Scale name="before" labels={v.before_scale} value={before} onChange={setBefore} />
+          </QuestionCard>
           <ErrorLine error={error} />
-          <button className="btn-primary w-full" disabled={before === null} onClick={() => { t0.current = Date.now(); setPhase("task"); }}>Show me the task</button>
+          <button className="btn-primary w-full !min-h-14 text-lg" disabled={before === null} onClick={() => { t0.current = Date.now(); setPhase("task"); }}>Show me the task</button>
           <button className="w-full text-center text-sm text-muted underline" onClick={() => submit({ skipped: true, before, after: null, steps: [], bonus: null })}>Skip this one</button>
         </div>
       )}
 
       {phase === "task" && (
         <div className="space-y-4">
-          <p className={`card whitespace-pre-line text-lg leading-relaxed ${v.id === "HEALTH" || v.id === "CODE" ? "sr-only" : ""}`}>{v.scene}</p>
+          <p className={`qcard whitespace-pre-line p-5 text-[1.15rem] font-semibold leading-relaxed ${v.id === "HEALTH" || v.id === "CODE" ? "sr-only" : ""}`}>{v.scene}</p>
           {v.visual === "poster_ab" ? <PosterAB /> : <TasterArt id={v.id} />}
-          <StepRunner steps={v.steps} prefix="s" onDone={(c) => { setSteps(c); setPhase("after"); }} />
+          <StepRunner sec={TASTER_SEC[v.id]!} label={v.title} steps={v.steps} prefix="s" onDone={(c) => { setSteps(c); setPhase("after"); }} />
         </div>
       )}
 
       {phase === "after" && (
         <div className="space-y-5">
-          <p className="text-lg">Honestly, how much did you enjoy that?</p>
-          <Scale name="after" labels={v.after_scale} value={after} onChange={setAfter} />
-          <button className="btn-primary w-full" disabled={after === null} onClick={() => setPhase("another")}>Next</button>
+          <QuestionCard sec={sec} label="How was that?" stem="Honestly, how much did you enjoy that?" id="after-q">
+            <Scale name="after" labels={v.after_scale} value={after} onChange={setAfter} />
+          </QuestionCard>
+          <button className="btn-primary w-full !min-h-14 text-lg" disabled={after === null} onClick={() => setPhase("another")}>Next</button>
         </div>
       )}
 
@@ -251,15 +237,16 @@ export function TasterRunner({ v }: { v: TasterView }) {
 
       {phase === "bonus" && (
         <div className="space-y-4">
-          <p className="card whitespace-pre-line text-lg leading-relaxed">{v.bonus.scene}</p>
-          <StepRunner steps={v.bonus.steps} prefix="b" onDone={(c) => { setBonusSteps(c); setPhase("bonus_after"); }} />
+          <p className="qcard whitespace-pre-line p-5 text-[1.15rem] font-semibold leading-relaxed">{v.bonus.scene}</p>
+          <StepRunner sec={TASTER_SEC[v.id]!} label={v.bonus.title} steps={v.bonus.steps} prefix="b" onDone={(c) => { setBonusSteps(c); setPhase("bonus_after"); }} />
         </div>
       )}
 
       {phase === "bonus_after" && (
         <div className="space-y-5">
-          <p className="text-lg">And that one?</p>
-          <Scale name="bonus_after" labels={v.after_scale} value={bonusAfter} onChange={setBonusAfter} />
+          <QuestionCard sec={sec} label="And that one?" stem="How much did you enjoy that one?" id="bonus-q">
+            <Scale name="bonus_after" labels={v.after_scale} value={bonusAfter} onChange={setBonusAfter} />
+          </QuestionCard>
           <ErrorLine error={error} />
           <button className="btn-primary w-full" disabled={bonusAfter === null} onClick={() => finish({ steps: bonusSteps ?? [], after: bonusAfter })}>Next task</button>
         </div>
@@ -284,6 +271,7 @@ export function PartOneBreak() {
   }
   return (
     <section className="space-y-6">
+      <Banner sec="direction" art="pause" />
       <p className="eyebrow">Halfway</p>
       <h1 className="text-[2rem] sm:text-4xl">Part 1 is done.</h1>
       <p className="text-lg leading-relaxed">Your questions, checks and tasks are all saved. Part 2 is a chat with The Guide, about 30 to 40 minutes. It goes better when you&apos;re fresh, so this is a good place to stop.</p>

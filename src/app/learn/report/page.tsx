@@ -5,6 +5,7 @@ import { getOrCreateSession } from "@/lib/session/service";
 import { loadReportBundle } from "@/lib/report/load";
 import { G9Report, G11Report } from "@/components/report/ReportViews";
 import { AutoRefresh } from "@/components/client/AutoRefresh";
+import { Banner } from "@/components/ui/Question";
 import { PlainPage } from "@/components/ui/PlainPage";
 import { Wordmark } from "@/components/ui/Brand";
 import { ThemeToggle } from "@/components/client/ThemeToggle";
@@ -24,6 +25,7 @@ export default async function ReportPage() {
     const generating = !b.report || b.report.status === "generating";
     return (
       <PlainPage>
+        <Banner sec="identity" art={generating ? "layers" : "report"} />
         <p className="eyebrow">{generating ? "Putting it together" : "In review"}</p>
         <h1 className="text-[2rem] sm:text-4xl">{generating ? "Your report is being written." : "A person is reading your report first."}</h1>
         <p className="text-lg text-muted">

@@ -163,6 +163,48 @@
 @utility note { @apply rounded-[10px] border border-line bg-sunken px-4 py-3 text-muted; }
 @utility diamond { @apply mt-[0.6em] h-2 w-2 shrink-0 rounded-full bg-accent; }
 
+
+/* ---------- question frames: each Part 1 section has its own cool colour ---------- */
+[data-sec] { --sec: var(--accent); --sec-ink: var(--accent-ink); }
+[data-sec="interests"] { --sec: #1b57e5; --sec-ink: #1b57e5; }
+[data-sec="personality"] { --sec: #0f9b8a; --sec-ink: #0a6f63; }
+[data-sec="values"] { --sec: #4f46e5; --sec-ink: #4338ca; }
+[data-sec="motivation"] { --sec: #0b84c6; --sec-ink: #0a6a9f; }
+[data-sec="mindset"] { --sec: #7c3aed; --sec-ink: #6d28d9; }
+[data-sec="identity"] { --sec: #0891b2; --sec-ink: #0e7490; }
+[data-sec="direction"] { --sec: #0f8a5f; --sec-ink: #0b6e4b; }
+[data-sec="study"] { --sec: #4a63b0; --sec-ink: #3a4f94; }
+[data-sec="context"] { --sec: #5b6b86; --sec-ink: #475569; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [data-sec="interests"] { --sec: #5b8dff; --sec-ink: #9db9ff; }
+  :root:not([data-theme="light"]) [data-sec="personality"] { --sec: #35d0bb; --sec-ink: #4fe0cb; }
+  :root:not([data-theme="light"]) [data-sec="values"] { --sec: #8b86ff; --sec-ink: #b1adff; }
+  :root:not([data-theme="light"]) [data-sec="motivation"] { --sec: #3fb0ec; --sec-ink: #7cc8f2; }
+  :root:not([data-theme="light"]) [data-sec="mindset"] { --sec: #a679ff; --sec-ink: #c2a3ff; }
+  :root:not([data-theme="light"]) [data-sec="identity"] { --sec: #2fc4e6; --sec-ink: #6bd6ee; }
+  :root:not([data-theme="light"]) [data-sec="direction"] { --sec: #2fd08f; --sec-ink: #5fe0aa; }
+  :root:not([data-theme="light"]) [data-sec="study"] { --sec: #7f98e6; --sec-ink: #a3b6f0; }
+  :root:not([data-theme="light"]) [data-sec="context"] { --sec: #8fa0bd; --sec-ink: #b2bfd4; }
+}
+:root[data-theme="dark"] [data-sec="interests"] { --sec: #5b8dff; --sec-ink: #9db9ff; }
+:root[data-theme="dark"] [data-sec="personality"] { --sec: #35d0bb; --sec-ink: #4fe0cb; }
+:root[data-theme="dark"] [data-sec="values"] { --sec: #8b86ff; --sec-ink: #b1adff; }
+:root[data-theme="dark"] [data-sec="motivation"] { --sec: #3fb0ec; --sec-ink: #7cc8f2; }
+:root[data-theme="dark"] [data-sec="mindset"] { --sec: #a679ff; --sec-ink: #c2a3ff; }
+:root[data-theme="dark"] [data-sec="identity"] { --sec: #2fc4e6; --sec-ink: #6bd6ee; }
+:root[data-theme="dark"] [data-sec="direction"] { --sec: #2fd08f; --sec-ink: #5fe0aa; }
+:root[data-theme="dark"] [data-sec="study"] { --sec: #7f98e6; --sec-ink: #a3b6f0; }
+:root[data-theme="dark"] [data-sec="context"] { --sec: #8fa0bd; --sec-ink: #b2bfd4; }
+
+[data-sec] { --sec-soft: color-mix(in srgb, var(--sec) 9%, var(--surface)); --sec-line: color-mix(in srgb, var(--sec) 34%, var(--surface)); --sec-mid: color-mix(in srgb, var(--sec) 22%, var(--surface)); }
+
+/* A framed question: coloured top band, big type, art on the side or above. */
+@utility qcard { @apply relative overflow-hidden rounded-2xl border-2 bg-surface; border-color: var(--sec-line); box-shadow: var(--shadow-soft); }
+@utility qband { @apply flex items-center justify-between gap-3 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.1em]; background: var(--sec-soft); color: var(--sec-ink); border-bottom: 2px solid var(--sec-line); }
+/* Marker highlight for key words inside a question. */
+@utility hl { background: linear-gradient(transparent 52%, color-mix(in srgb, var(--sec) 30%, var(--surface)) 52%, color-mix(in srgb, var(--sec) 30%, var(--surface)) 94%, transparent 94%); color: inherit; padding: 0 0.12em; border-radius: 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+@utility art-tile { @apply flex shrink-0 items-center justify-center rounded-2xl; background: var(--sec-soft); border: 2px solid var(--sec-line); color: var(--fg); }
+
 /* Subtle page texture for hero areas: a faint dot grid, no requests. */
 @utility bg-contours {
   background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--fg) 7%, transparent) 1px, transparent 0);

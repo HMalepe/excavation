@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogoutButton } from "@/components/client/LoginForms";
+import { Banner } from "@/components/ui/Question";
 import { PlainPage } from "@/components/ui/PlainPage";
 
 export const metadata = { title: "Not today" };
@@ -8,6 +9,7 @@ export const metadata = { title: "Not today" };
 export default function NotToday() {
   return (
     <PlainPage>
+      <Banner sec="direction" art="direction" />
       <p className="eyebrow">Your call</p>
       <h1 className="text-[2rem] sm:text-4xl">No problem.</h1>
       <p className="text-lg text-muted">Nothing happens because you said not today. Your school only sees &ldquo;not completed&rdquo;. If you change your mind, log in again with the same codes.</p>
