@@ -8,7 +8,7 @@
       "informs_mark": "Mathematics",
       "minutes": 8,
       "min_median_ms": 6000,
-      "intro": "Ten Grade 9 maths questions — the skills Grade 10 Mathematics builds on. Use paper if you like. This can only help you: if you do well, it can open doors your marks might have closed. If it goes badly, nothing changes.",
+      "intro": "Ten questions on the maths that Grade 10 builds on. Use paper if you like. Do well and it can open doors your marks might have closed.",
       "units": [
         { "id": "M1", "topic": "Integers and order of operations", "difficulty": 1, "variants": [
           { "id": "M1a", "items": [ { "id": "M1a", "stem": "Work out: −3 + 4 × (−2)", "options": ["−11", "−2", "2", "5"], "answer": 0 } ] },
@@ -57,7 +57,7 @@
       "informs_mark": "Natural Sciences",
       "minutes": 7,
       "min_median_ms": 6000,
-      "intro": "Eight questions about thinking like a scientist: fair tests, data, and simple calculations. This is what Physical Sciences and Life Sciences build on. Same deal: it can only help you.",
+      "intro": "Eight questions about thinking like a scientist: fair tests, data and simple calculations. It's what Physical Sciences and Life Sciences build on.",
       "units": [
         { "id": "S1", "topic": "Variables and fair tests", "difficulty": 1, "variants": [
           { "id": "S1a", "items": [ { "id": "S1a", "stem": "Lebo tests whether the amount of sunlight affects how tall bean plants grow. What must she keep the SAME for all the plants?", "options": ["The amount of sunlight", "The amount of water each plant gets", "How tall the plants grow", "Nothing — anything can change"], "answer": 1 } ] },
@@ -98,7 +98,7 @@
       "informs_mark": "Social Sciences",
       "minutes": 8,
       "min_median_ms": 4000,
-      "intro": "Two short texts in English, four questions each. Every subject you take in Grade 10 is taught and tested in English, so this tells us something about all of them. Read at your own pace.",
+      "intro": "Two short texts, four questions each. Every Grade 10 subject is taught and tested in English, so this tells us something about all of them. Read at your own pace.",
       "units": [
         { "id": "R1", "topic": "Narrative and information text", "difficulty": 1, "variants": [
           { "id": "R1a",

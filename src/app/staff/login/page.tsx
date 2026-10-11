@@ -14,9 +14,9 @@ export default function StaffLogin() {
       </header>
       <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center gap-6 px-5 pb-16">
         <div className="space-y-3">
-          <p className="eyebrow">Schools · Reviewers</p>
-          <h1 className="text-[2rem] sm:text-4xl">Sign in</h1>
-          <p className="text-muted">For LO teachers, school admins, safeguarding contacts and Excavation reviewers.</p>
+          <p className="eyebrow">Staff</p>
+          <h1 className="text-[2rem] sm:text-4xl">Staff sign in</h1>
+          <p className="text-muted">For LO teachers, school admins, safeguarding contacts and Excavation reviewers. Learners log in with their codes instead.</p>
         </div>
         <div className="card"><StaffLoginForm /></div>
       </main>

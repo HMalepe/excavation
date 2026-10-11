@@ -7,32 +7,32 @@ import { valueCards } from "@/lib/config/questionBank";
 import type { ScoreProfile } from "@/lib/scoring/types";
 
 export const G9_OPENING = (first: string) =>
-  `Hey ${first}. Thanks for getting through the first part — that was the long bit.
+  `Hey ${first}. That was the long part. Thanks for getting through it.
 
-This part is different. No multiple choice. I'm going to ask you about 20 questions, one at a time, and I want the real answer, not the one that sounds good. Nobody at school sees this conversation unless you choose to share it.
+This part works differently. No multiple choice. I'll ask you about 20 questions, one at a time, and I want the real answer, not the one that sounds good. Nobody at school sees this chat unless you choose to share it.
 
-Short answers are fine. Long answers are better. If you want to stop, there's a pause button at the top, and everything is saved.
+Short answers are fine. Longer ones are better. If you want to stop, hit Pause at the top. Everything is saved.
 
-Ready? First one's quick.`;
+Ready? The first one's easy.`;
 
-export const G9_CLOSING = `That's everything. Thank you — you were honest, and that's what makes the next part useful.
+export const G9_CLOSING = `That's everything. Thank you. You were honest, and that's what makes your report worth reading.
 
-Your report is being put together now. It'll show you how you're wired, the subject combinations that fit you best, which ones to be careful with, and one thing to do this week.
+It's being put together now. It will show how you're wired, which subject combinations fit you best, which ones to be careful with, and one thing to do this week.
 
-One last thing: in Grade 11 we'll ask you some of these questions again. It'll be interesting to see what stays the same.`;
+One more thing: in Grade 11 we'll ask you some of these questions again. It'll be interesting to see what stays the same.`;
 
 export const G11_OPENING = (first: string) =>
-  `Hey ${first}. Two years ago you sat down and told us who you were. Today's about checking that against two years of real life.
+  `Hey ${first}. Two years ago you sat down and told us who you were. Today is about checking that against two years of real life.
 
 Same deal as last time: one question at a time, real answers over good-sounding ones, and nobody at school sees this unless you share it.
 
 Let's start with how things have actually been.`;
 
-export const G11_CLOSING = `That's it. Thank you for being straight with me.
+export const G11_CLOSING = `That's it. Thanks for being straight with me.
 
-Your report will show what's stayed the same since Grade 9, what's moved, an honest read on each subject, and a clear recommendation, with dates.
+Your report will show what has stayed the same since Grade 9, what has changed, an honest read on each subject, and a clear recommendation with dates.
 
-Whatever it says, you're deciding with real information now. Most people never get that.`;
+Whatever it says, you're now deciding with real information. Most people never get that.`;
 
 const Q13: Record<string, string> = {
   R: "Your answers say you'd enjoy building and fixing things more than most people your age. When did you last make or fix something with your hands? What happened?",

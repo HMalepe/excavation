@@ -62,7 +62,7 @@ describe("stages", () => {
 
 describe("micro-moments", () => {
   it("names the strongest pull, or says honestly that nothing stood out", () => {
-    expect(afterInterests({ R: 90, I: 40, A: 30, S: 30, E: 20, C: 20 })).toMatch(/building and fixing/);
+    expect(afterInterests({ R: 90, I: 40, A: 30, S: 30, E: 20, C: 20 })).toMatch(/Building and fixing/);
     expect(afterInterests({ R: 50, I: 45, A: 48, S: 40, E: 42, C: 44 })).toMatch(/common at your age/);
     expect(afterValues("V_BE")).toBe('You put "Looking after the people close to me" first. We\'ll come back to that.');
   });

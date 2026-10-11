@@ -15,7 +15,7 @@ export interface AlertInput {
 export function composeAlert(a: AlertInput) {
   const when = new Intl.DateTimeFormat("en-ZA", { timeZone: a.timezone, dateStyle: "medium", timeStyle: "short" }).format(a.at);
   const trigger = a.triggerMessage ? a.triggerMessage.slice(0, 600) : "(raised by the questionnaire, no message)";
-  const subject = `[The Excavation] ${a.level === "urgent" ? "URGENT " : ""}safeguarding alert — ${a.learnerName}, Grade ${a.grade}`;
+  const subject = `[The Excavation] ${a.level === "urgent" ? "URGENT " : ""}safeguarding alert: ${a.learnerName}, Grade ${a.grade}`;
   const body = [
     `Learner: ${a.learnerName}`,
     `Grade: ${a.grade}`,
@@ -23,8 +23,8 @@ export function composeAlert(a: AlertInput) {
     `Level: ${a.level}`,
     `Message that triggered this: "${trigger}"`,
     "",
-    "The learner has been shown crisis resources and told that a trusted adult at school will be let know.",
-    `Please confirm you have received this: ${a.confirmUrl}`,
+    "The learner has been shown crisis resources and told that a trusted adult at school will be told.",
+    `Please confirm you have received this alert: ${a.confirmUrl}`,
   ].join("\n");
   return { subject, body };
 }

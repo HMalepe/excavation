@@ -86,7 +86,7 @@ export function ScoredLayer({ sectionId, title, stem, intro, items, startIndex, 
   return (
     <section aria-labelledby="sec-title" className="space-y-6">
       <header className="space-y-2">
-        <p className="eyebrow">Part 1 · questions</p>
+        <p className="eyebrow">Part 1 · Questions</p>
         <h1 id="sec-title" className="text-[2rem] sm:text-4xl">{title}</h1>
         {offset === 0 && startIndex === 0 && intro && <p className="text-muted">{intro}</p>}
         {stem && <p className="font-semibold text-accent-ink">{stem}</p>}
@@ -107,7 +107,7 @@ export function ScoredLayer({ sectionId, title, stem, intro, items, startIndex, 
                 );
               })}
             </div>
-            {it.optional && <p className="text-xs text-muted">Optional — skip it if you like.</p>}
+            {it.optional && <p className="text-xs text-muted">Optional. Skip it if you like.</p>}
           </li>
         ))}
       </ol>

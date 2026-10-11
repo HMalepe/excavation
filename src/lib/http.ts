@@ -10,7 +10,7 @@ export function handle<A extends unknown[]>(fn: (...args: A) => Promise<Response
       return await fn(...args);
     } catch (e) {
       if (e instanceof HttpError) return NextResponse.json({ error: e.message }, { status: e.status });
-      if (e instanceof ZodError) return NextResponse.json({ error: "Invalid request", issues: e.issues.map((i) => i.path.join(".")) }, { status: 400 });
+      if (e instanceof ZodError) return NextResponse.json({ error: "That didn't go through. Refresh the page and try again.", issues: e.issues.map((i) => i.path.join(".")) }, { status: 400 });
       console.error("[route error]", e);
       return NextResponse.json({ error: "Something went wrong. Your progress is saved." }, { status: 500 });
     }

@@ -76,8 +76,9 @@ export function CheckRunner({ v }: { v: CheckView }) {
         <p className="text-lg leading-relaxed">{v.intro}</p>
         <ul className="note list-disc space-y-1 pl-9">
           <li>No timer. Take your time.</li>
-          <li>&ldquo;I&apos;m not sure&rdquo; is a real answer — use it instead of guessing.</li>
-          <li>You won&apos;t see right or wrong here. Your report tells you what it showed.</li>
+          <li>&ldquo;I&apos;m not sure&rdquo; is a real answer. Use it instead of guessing.</li>
+          <li>You won&apos;t see right or wrong as you go. Your report tells you what the check showed.</li>
+          <li>A check can only help you. A low score never lowers anything.</li>
         </ul>
         <ErrorLine error={error} />
         <div className="grid gap-3">
@@ -172,7 +173,7 @@ function StepRunner({ steps, onDone, prefix }: { steps: TasterStepView[]; onDone
         )}
       </div>
       {!revealed
-        ? <button className="btn-primary w-full" disabled={chosen === null} onClick={() => setRevealed(true)}>Check</button>
+        ? <button className="btn-primary w-full" disabled={chosen === null} onClick={() => setRevealed(true)}>Check answer</button>
         : <button className="btn-primary w-full" onClick={next}>{i + 1 >= steps.length ? "Done" : "Next step"}</button>}
     </div>
   );
@@ -211,7 +212,7 @@ export function TasterRunner({ v }: { v: TasterView }) {
       {phase === "before" && (
         <div className="space-y-5">
           {v.index === 0 && (
-            <p className="note leading-relaxed">Six tiny slices of real work, about 3 minutes each. You&apos;ll see how you did after every step. What we care about most is how much you <em>enjoy</em> it — there&apos;s no wrong way to feel.</p>
+            <p className="note leading-relaxed">Six tiny slices of real jobs, about 3 minutes each. You get feedback after every step, but we&apos;re not marking you. What we want to know is whether you <em>enjoy</em> this kind of work. There&apos;s no wrong way to feel.</p>
           )}
           <p className="text-lg">{v.before_prompt}</p>
           <Scale name="before" labels={v.before_scale} value={before} onChange={setBefore} />
@@ -231,7 +232,7 @@ export function TasterRunner({ v }: { v: TasterView }) {
 
       {phase === "after" && (
         <div className="space-y-5">
-          <p className="text-lg">Honestly — how much did you enjoy that?</p>
+          <p className="text-lg">Honestly, how much did you enjoy that?</p>
           <Scale name="after" labels={v.after_scale} value={after} onChange={setAfter} />
           <button className="btn-primary w-full" disabled={after === null} onClick={() => setPhase("another")}>Next</button>
         </div>
@@ -239,11 +240,11 @@ export function TasterRunner({ v }: { v: TasterView }) {
 
       {phase === "another" && (
         <div className="space-y-5">
-          <p className="text-lg">Want another one like it? It&apos;s optional — about a minute.</p>
+          <p className="text-lg">Want another one like it? Optional, about a minute.</p>
           <ErrorLine error={error} />
           <div className="grid gap-3 sm:grid-cols-2">
-            <button className="btn-primary" onClick={() => setPhase("bonus")}>Yes, give me another</button>
-            <button className="btn-ghost" onClick={() => finish(null)}>No thanks, next task</button>
+            <button className="btn-primary" onClick={() => setPhase("bonus")}>Yes, one more</button>
+            <button className="btn-ghost" onClick={() => finish(null)}>No, next task</button>
           </div>
         </div>
       )}
@@ -285,12 +286,12 @@ export function PartOneBreak() {
     <section className="space-y-6">
       <p className="eyebrow">Halfway</p>
       <h1 className="text-[2rem] sm:text-4xl">Part 1 is done.</h1>
-      <p className="text-lg leading-relaxed">Questions, checks, tasks — all saved. Part 2 is a conversation with The Guide, about 30–40 minutes. It goes best when you&apos;re fresh, so this is a good place for a break.</p>
-      <p className="text-muted">If you stop now, log in with the same codes later (or tomorrow) and you&apos;ll start right at the conversation.</p>
+      <p className="text-lg leading-relaxed">Your questions, checks and tasks are all saved. Part 2 is a chat with The Guide, about 30 to 40 minutes. It goes better when you&apos;re fresh, so this is a good place to stop.</p>
+      <p className="text-muted">Stop now and log in later with the same codes. You&apos;ll land straight on the chat.</p>
       <ErrorLine error={error} />
       <div className="grid gap-3">
-        <button className="btn-primary" disabled={busy} onClick={() => go("continue")}>I&apos;m fresh — keep going</button>
-        <button className="btn-ghost" disabled={busy} onClick={() => go("later")}>Stop here for today</button>
+        <button className="btn-primary" disabled={busy} onClick={() => go("continue")}>I&apos;m fresh, keep going</button>
+        <button className="btn-ghost" disabled={busy} onClick={() => go("later")}>Stop for today</button>
       </div>
     </section>
   );

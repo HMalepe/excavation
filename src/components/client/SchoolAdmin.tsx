@@ -107,7 +107,7 @@ export function ImportBox({ kind, help, example }: { kind: "roster" | "marks"; h
           {!!result.errors.length && <ul className="list-disc pl-5 text-sm text-danger">{result.errors.slice(0, 50).map((e, i) => <li key={i}>{e}</li>)}</ul>}
           {!!result.codes?.length && (
             <div>
-              <p className="font-semibold">Login codes — print these now and hand them out (school code on each slip).</p>
+              <p className="font-semibold">Login codes. Print these now and hand them out, with the school code on each slip.</p>
               <table className="mt-2 w-full text-sm"><tbody>{result.codes.map((c) => <tr key={c.code} className="border-t border-line"><td className="py-1">{c.name}</td><td>Gr {c.grade} {c.class ?? ""}</td><td className="font-mono">{c.code}</td></tr>)}</tbody></table>
               <button className="btn-ghost mt-2" onClick={() => window.print()}>Print</button>
             </div>

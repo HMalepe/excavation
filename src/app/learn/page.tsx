@@ -24,8 +24,8 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Your session" };
 
 const PERSONALITY_NOTE =
-  "There are no right answers here, and no good or bad personalities. Answer for how you actually are most of the time, not how you'd like to be or how your parents see you.";
-const CONTEXT_NOTE = "These three help us suggest practical support. They don't affect your results. Skip any you like.";
+  "There are no right answers and no good or bad personalities. Answer for how you actually are most of the time, not how you'd like to be or how other people see you.";
+const CONTEXT_NOTE = "These help us suggest practical support. They don't change your results. Skip any you like.";
 
 function itemView(id: string): ItemView {
   const ac = attentionCheckText(id);
@@ -40,8 +40,8 @@ export default async function LearnPage() {
 
   if (!session) {
     return (
-      <Centered title="Nothing to do right now">
-        <p>The Excavation runs in Grade 9 and Grade 11. Your teacher will let you know when it&apos;s your turn.</p>
+      <Centered title="Nothing for you yet">
+        <p>The Excavation runs in Grade 9 and Grade 11. Your teacher will tell you when it&apos;s your turn.</p>
         <LogoutButton />
       </Centered>
     );
@@ -50,8 +50,8 @@ export default async function LearnPage() {
   // spec 09 §3: block if there is no valid guardian consent. Nothing is collected.
   if (!(await hasValidGuardianConsent(learner.id))) {
     return (
-      <Centered title="We need a grown-up's OK first">
-        <p>Before you can start, a parent or guardian needs to give consent. Ask your LO teacher for the consent form — it only takes a few minutes.</p>
+      <Centered title="We need a parent or guardian to say yes first">
+        <p>Before you can start, a parent or guardian has to give consent. Ask your LO teacher for the consent form. It takes a few minutes.</p>
         <p className="text-muted">Nothing you do here is saved until that&apos;s done.</p>
         <LogoutButton />
       </Centered>
@@ -156,7 +156,7 @@ export default async function LearnPage() {
             key={`${stage}:${subject}`}
             action={stage}
             subject={subject}
-            header={isSE ? `${subject} — be honest, nobody from the school sees individual answers.` : `Think about ${subject}.`}
+            header={isSE ? `${subject}: be honest. Nobody at school sees your individual answers.` : `Think about ${subject}.`}
             stem={isSE ? undefined : "How true is each of these?"}
             items={block.map((i) => ({ id: i.id, text: i.text }))}
             points={points}
@@ -190,7 +190,7 @@ export default async function LearnPage() {
 function Centered({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-5 px-5 py-10">
-      <h1 className="text-3xl">{title}</h1>
+      <h1 className="text-[1.75rem] sm:text-3xl">{title}</h1>
       {children}
     </main>
   );

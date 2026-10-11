@@ -17,17 +17,17 @@ export default async function Paused() {
       {stopped ? (
         <>
           <p className="eyebrow">Taking a break</p>
-          <h1 className="text-5xl">We&apos;ve paused here for now.</h1>
-          <p className="text-lg">Thank you for telling us what&apos;s going on. An adult at your school who can help has been let know, so you&apos;re not alone with this. Nothing you&apos;ve done is lost — you can finish later.</p>
+          <h1 className="text-[2rem] sm:text-4xl">We&apos;ve paused here for now.</h1>
+          <p className="text-lg">Thank you for telling us what&apos;s going on. An adult at your school who can help has been told, so you&apos;re not on your own with this. Nothing you&apos;ve done is lost. You can finish later.</p>
           <p className="text-lg font-semibold">If you need someone right now:</p>
           <Resources />
         </>
       ) : (
         <>
           <p className="eyebrow">Paused</p>
-          <h1 className="text-5xl">Everything is saved.</h1>
-          <p className="text-lg text-muted">Come back any time with the same codes and you&apos;ll pick up exactly where you left off.</p>
-          <Link href="/learn" className="btn-primary">Carry on now</Link>
+          <h1 className="text-[2rem] sm:text-4xl">Everything is saved.</h1>
+          <p className="text-lg text-muted">Log in any time with the same codes and you&apos;ll pick up exactly where you stopped.</p>
+          <Link href="/learn" className="btn-primary">Carry on</Link>
           <details className="card"><summary className="font-semibold">People you can talk to</summary><div className="mt-4"><Resources compact /></div></details>
         </>
       )}

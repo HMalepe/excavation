@@ -18,7 +18,7 @@ export default async function SharePage() {
   return (
     <PlainPage width="md" centered={false}>
       <Link href="/learn/report" className="btn-quiet self-start !px-0 no-underline">← Back to my report</Link>
-      <h1 className="text-5xl">Sharing</h1>
+      <h1 className="text-[2rem] sm:text-4xl">Sharing</h1>
       <p className="text-lg text-muted">Your report is yours. Nobody sees a summary unless you switch it on here.</p>
       <ShareToggles initial={{ teacher: live.has("teacher"), parent: live.has("parent") }} />
     </PlainPage>

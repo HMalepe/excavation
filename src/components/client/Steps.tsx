@@ -26,28 +26,28 @@ export function Assent({ firstName }: { firstName: string }) {
     <section className="space-y-6">
       <div className="space-y-2">
         <p className="eyebrow">Before you start</p>
-        <h1 className="text-5xl">Hey {firstName}.</h1>
+        <h1 className="text-[2rem] sm:text-4xl">Hey {firstName}.</h1>
       </div>
       <ul className="space-y-3">
         {[
-          <>This isn&apos;t a test. There are no wrong answers.</>,
-          <>You&apos;ll chat with <strong>The Guide</strong>, an AI. It&apos;s built to listen properly.</>,
-          <>Your report is yours. Teachers only see a summary if you say yes.</>,
-          <>If something you write makes us think you might be unsafe, we&apos;ll make sure an adult at school who can help knows. That&apos;s the only exception.</>,
-          <>You can pause or stop any time.</>,
+          <><strong>This isn&apos;t a test.</strong> There are no right or wrong answers, and nothing here is marked.</>,
+          <><strong>You&apos;ll talk to an AI.</strong> The Guide is an AI. It asks one question at a time and it&apos;s built to listen.</>,
+          <><strong>Your report is yours.</strong> Teachers and parents only see a summary if you choose to share it.</>,
+          <><strong>One exception.</strong> If what you write makes us think you might be unsafe, an adult at school who can help will be told. We&apos;d rather tell someone than say nothing.</>,
+          <><strong>You&apos;re in control.</strong> Pause or stop whenever you want. Everything saves as you go.</>,
         ].map((t, i) => (
           <li key={i} className="card flex gap-4 text-lg leading-snug"><span className="diamond" aria-hidden="true" /><span>{t}</span></li>
         ))}
       </ul>
       {question && (
         <div className="note space-y-2">
-          <p>Good — ask your LO teacher anything you&apos;re unsure about before you start. You can come back to this screen any time with the same codes.</p>
+          <p>Ask your LO teacher before you start. You can come back to this screen any time with the same codes.</p>
           <p>Questions about your information can also go to privacy@theexcavation.co.za.</p>
         </div>
       )}
       <ErrorLine error={error} />
       <div className="grid gap-3">
-        <button className="btn-primary" disabled={busy} onClick={() => run("assent", { choice: "agree" })}>I understand — let&apos;s start</button>
+        <button className="btn-primary" disabled={busy} onClick={() => run("assent", { choice: "agree" })}>I understand, let&apos;s start</button>
         <button className="btn-ghost" onClick={() => setQuestion(true)}>I have a question</button>
         <button className="btn-ghost" disabled={busy} onClick={() => run("assent", { choice: "not_today" })}>Not today</button>
       </div>
@@ -57,16 +57,16 @@ export function Assent({ firstName }: { firstName: string }) {
 
 // ---------- intake (3 short questions) ----------
 export const INTAKE_QUESTIONS = [
-  { key: "world", label: "Tell us a bit about your world: where you stay, who's at home, which languages you speak there.", hint: "Share only what you're comfortable with." },
-  { key: "right_now", label: "What's on your mind right now about school or your future?" },
-  { key: "why_here", label: "Why are you doing this today? Any reason is fine." },
+  { key: "world", label: "Tell us a bit about your world: where you stay, who's at home, what languages you speak.", hint: "Only share what you're comfortable with. Short is fine." },
+  { key: "right_now", label: "What's on your mind about school or your future right now?" },
+  { key: "why_here", label: "What brought you here today? Any reason is fine, including \"my teacher told me to\"." },
 ] as const;
 
 export function Intake() {
   const { busy, error, run } = useStep();
   return (
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); const f = new FormData(e.currentTarget); run("intake", Object.fromEntries(INTAKE_QUESTIONS.map((q) => [q.key, String(f.get(q.key) ?? "")]))); }}>
-      <h1 className="text-4xl">First, three quick ones about you.</h1>
+      <h1 className="text-[2rem] sm:text-4xl">Three quick questions about you.</h1>
       {INTAKE_QUESTIONS.map((q) => (
         <div key={q.key}>
           <label className="label text-base text-fg" htmlFor={q.key}>{q.label}</label>
@@ -86,13 +86,13 @@ export function Snapshot({ subjects, imported }: { subjects: string[]; imported:
   if (imported) {
     return (
       <section className="space-y-6">
-        <h1 className="text-4xl">Your latest marks</h1>
-        <p className="text-muted">Your school sent these. If something looks wrong, tell your LO teacher.</p>
+        <h1 className="text-[2rem] sm:text-4xl">Your latest marks</h1>
+        <p className="text-muted">Your school sent these. If one looks wrong, tell your LO teacher.</p>
         <ul className="card divide-y divide-line">
           {Object.entries(imported).map(([s, m]) => <li key={s} className="flex justify-between py-2"><span>{s}</span><span className="font-semibold">{m}%</span></li>)}
         </ul>
         <ErrorLine error={error} />
-        <button className="btn-primary w-full" disabled={busy} onClick={() => run("snapshot", {})}>{busy ? "Working out your results…" : "These are right — continue"}</button>
+        <button className="btn-primary w-full" disabled={busy} onClick={() => run("snapshot", {})}>{busy ? "Putting your results together…" : "These are right, continue"}</button>
       </section>
     );
   }
@@ -109,8 +109,8 @@ export function Snapshot({ subjects, imported }: { subjects: string[]; imported:
       }
       run("snapshot", { marks, estimates });
     }}>
-      <h1 className="text-4xl">Your latest marks</h1>
-      <p className="text-muted">Type your latest term mark for each subject. If you&apos;re not sure, give your best guess and tick &lsquo;estimate&rsquo;. Honest marks give you honest advice.</p>
+      <h1 className="text-[2rem] sm:text-4xl">Your latest marks</h1>
+      <p className="text-muted">Enter your latest term mark for each subject. Not sure? Give your best guess and tick &lsquo;estimate&rsquo;. Honest marks get you honest advice.</p>
       <div className="space-y-3">
         {subjects.map((s) => (
           <div key={s} className="grid grid-cols-[1fr_6rem] items-center gap-3">
@@ -121,7 +121,7 @@ export function Snapshot({ subjects, imported }: { subjects: string[]; imported:
         ))}
       </div>
       <ErrorLine error={error} />
-      <button className="btn-primary w-full" disabled={busy}>{busy ? "Working out your results…" : "Continue"}</button>
+      <button className="btn-primary w-full" disabled={busy}>{busy ? "Putting your results together…" : "Continue"}</button>
     </form>
   );
 }
@@ -132,8 +132,8 @@ export function GuideNotice({ offerRetake }: { offerRetake: boolean }) {
   if (offerRetake) {
     return (
       <section className="space-y-6">
-        <h1 className="text-4xl">Quick check before the next part</h1>
-        <p>Some of your answers may not have come through the way you meant them. You can redo the questions (about 20 minutes), or carry on — the conversation will carry more weight in your report.</p>
+        <h1 className="text-[2rem] sm:text-4xl">Before the next part</h1>
+        <p>Some of your answers may not have come through the way you meant them. You can redo the questions (about 20 minutes) or carry on. If you carry on, the chat with The Guide will count for more in your report.</p>
         <ErrorLine error={error} />
         <div className="grid gap-3">
           <button className="btn-primary" disabled={busy} onClick={() => run("retake", { choice: "retake" })}>Redo the questions</button>
@@ -144,13 +144,13 @@ export function GuideNotice({ offerRetake }: { offerRetake: boolean }) {
   }
   return (
     <section className="space-y-6">
-      <h1 className="text-4xl">Next: a conversation</h1>
+      <h1 className="text-[2rem] sm:text-4xl">Next: a chat with The Guide</h1>
       <p className="card text-lg leading-relaxed">
-        For this part you&apos;ll chat with The Guide, an AI built for The Excavation. It&apos;s designed to listen carefully and ask good questions.
-        Nobody at school sees this conversation unless you choose to share it, except if The Guide thinks you might be unsafe; then someone who can help will be told.
+        The Guide is an AI we built for The Excavation. It asks one question at a time and reads what you actually write.
+        Nobody at school sees the chat unless you choose to share it. The one exception: if The Guide thinks you might be unsafe, someone who can help will be told.
       </p>
       <ErrorLine error={error} />
-      <button className="btn-primary w-full" disabled={busy} onClick={() => run("guide_ok")}>Start the conversation</button>
+      <button className="btn-primary w-full" disabled={busy} onClick={() => run("guide_ok")}>Start the chat</button>
     </section>
   );
 }
@@ -160,7 +160,7 @@ export function TwoYears({ headline, fits, taken }: { headline: string | null; f
   const { busy, error, run } = useStep();
   return (
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); run("two_years", { text: String(new FormData(e.currentTarget).get("text") ?? "") }); }}>
-      <h1 className="text-4xl">Two years ago…</h1>
+      <h1 className="text-[2rem] sm:text-4xl">Two years ago…</h1>
       {headline ? (
         <div className="card space-y-3">
           <p className="text-xl font-semibold sm:text-2xl leading-snug">&ldquo;{headline}&rdquo;</p>
@@ -168,10 +168,10 @@ export function TwoYears({ headline, fits, taken }: { headline: string | null; f
           {taken.length > 0 && <p className="text-muted">You took: {taken.join(", ")}</p>}
         </div>
       ) : (
-        <p className="note">We don&apos;t have a Grade 9 report for you, so today becomes your first baseline. That&apos;s fine — your report will say so.</p>
+        <p className="note">We don&apos;t have a Grade 9 report for you, so today is your starting point. That&apos;s fine. Your report will say so.</p>
       )}
       <div>
-        <label className="label text-base text-fg" htmlFor="text">Reading this now — what still fits, and what doesn&apos;t?</label>
+        <label className="label text-base text-fg" htmlFor="text">Reading that now, what still fits and what doesn&apos;t?</label>
         <textarea id="text" name="text" rows={4} maxLength={800} className="field" />
       </div>
       <ErrorLine error={error} />
@@ -188,14 +188,14 @@ export function MarksG11({ imported, subjects }: { imported: { subject: string; 
   if (imported) {
     return (
       <section className="space-y-6">
-        <h1 className="text-4xl">Your marks</h1>
-        <p className="text-muted">From your school: Grade 10 final and your latest Grade 11 term.</p>
+        <h1 className="text-[2rem] sm:text-4xl">Your marks</h1>
+        <p className="text-muted">From your school: your Grade 10 final and your latest Grade 11 term.</p>
         <table className="card w-full text-left">
           <thead><tr className="text-sm text-muted"><th className="py-1">Subject</th><th>Gr 10</th><th>Gr 11</th></tr></thead>
           <tbody>{imported.map((r) => <tr key={r.subject} className="border-t border-line"><td className="py-2">{r.subject}</td><td>{r.m10 ?? "—"}</td><td className="font-semibold">{r.m11 ?? "—"}</td></tr>)}</tbody>
         </table>
         <ErrorLine error={error} />
-        <button className="btn-primary w-full" disabled={busy} onClick={() => run("marks_g11", {})}>These are right — continue</button>
+        <button className="btn-primary w-full" disabled={busy} onClick={() => run("marks_g11", {})}>These are right, continue</button>
       </section>
     );
   }
@@ -209,8 +209,8 @@ export function MarksG11({ imported, subjects }: { imported: { subject: string; 
         estimates: valid.filter((r) => r.est).map((r) => r.subject),
       });
     }}>
-      <h1 className="text-4xl">Your subjects and marks</h1>
-      <p className="text-muted">Grade 10 final and your latest Grade 11 term. Best guess is fine — tick &lsquo;estimate&rsquo;.</p>
+      <h1 className="text-[2rem] sm:text-4xl">Your subjects and marks</h1>
+      <p className="text-muted">Your Grade 10 final and your latest Grade 11 term. A best guess is fine. Tick &lsquo;estimate&rsquo; if it is one.</p>
       <datalist id="fet">{subjects.map((s) => <option key={s} value={s} />)}</datalist>
       <div className="space-y-3">
         {rows.map((r, i) => (
@@ -235,7 +235,7 @@ export function PerSubjectLikert({ action, subject, header, stem, items, points 
   const done = items.every((i) => answers[i.id] !== undefined);
   return (
     <section className="space-y-6">
-      <h1 className="text-4xl">{header}</h1>
+      <h1 className="text-[2rem] sm:text-4xl">{header}</h1>
       {stem && <p className="eyebrow !normal-case !tracking-normal text-base">{stem}</p>}
       <ol className="space-y-5">
         {items.map((it) => (
@@ -263,9 +263,9 @@ export function CareerUpdate({ cu2Options, cu3Options }: { cu2Options: string[];
   const [cu3, setCu3] = useState<string[]>([]);
   return (
     <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); run("career_update", { cu1: String(new FormData(e.currentTarget).get("cu1") ?? ""), cu2, cu3 }); }}>
-      <h1 className="text-4xl">Where you&apos;re heading</h1>
+      <h1 className="text-[2rem] sm:text-4xl">Where you&apos;re heading</h1>
       <div>
-        <label className="label text-base text-fg" htmlFor="cu1">What career or field are you leaning towards right now? (It&apos;s fine to say &ldquo;not sure&rdquo;.)</label>
+        <label className="label text-base text-fg" htmlFor="cu1">What career or field are you leaning towards right now? &ldquo;Not sure&rdquo; is a fine answer.</label>
         <input id="cu1" name="cu1" className="field" maxLength={300} required />
       </div>
       <fieldset className="space-y-2">
@@ -285,7 +285,7 @@ export function CareerUpdate({ cu2Options, cu3Options }: { cu2Options: string[];
         ))}
       </fieldset>
       <ErrorLine error={error} />
-      <button className="btn-primary w-full" disabled={busy || !cu2 || !cu3.length}>{busy ? "Working it out…" : "Next"}</button>
+      <button className="btn-primary w-full" disabled={busy || !cu2 || !cu3.length}>{busy ? "Saving…" : "Next"}</button>
     </form>
   );
 }

@@ -8,10 +8,10 @@ import { Doors } from "@/components/report/Doors";
 const SAMPLE_SHAPE = { R: 30, I: 78, A: 64, S: 70, E: 25, C: 33 };
 
 const STEPS = [
-  { icon: "reading", title: "Answer honestly", text: "What you love, how you work, what matters to you. No wrong answers." },
-  { icon: "maths", title: "Try the work", text: "Short checks and taster tasks: real problems from real jobs." },
-  { icon: "EVIDENCE", title: "Talk it through", text: "A conversation with The Guide, built to listen properly." },
-  { icon: "FIELD", title: "Get your report", text: "Subject options, the doors they open, and your first move." },
+  { icon: "reading", title: "Answer honestly", text: "What you enjoy, how you work, what matters to you. Nothing here is marked." },
+  { icon: "maths", title: "Try real work", text: "Short maths, science and reading checks, then tiny tasks from real jobs. They can only help you." },
+  { icon: "EVIDENCE", title: "Talk it through", text: "Chat with The Guide, an AI that asks one question at a time and reads what you write." },
+  { icon: "FIELD", title: "Get your report", text: "Your best-fit subjects, what each one opens or closes, and one move for this week." },
 ] as const;
 
 export default function Home() {
@@ -28,16 +28,16 @@ export default function Home() {
             <p className="eyebrow">For Grade 9 and Grade 11 · South African schools</p>
             <h1 className="text-[2.25rem] leading-[1.05] sm:text-6xl">Choose your subjects from <span className="text-accent-ink">who you are</span>, not just your marks.</h1>
             <p className="max-w-lg text-lg text-muted">
-              Choose your Grade 10 subjects from who you are and what you can actually do — not from what sounds impressive. Then check, in Grade 11, whether they still fit.
+              Built for Grade 9s choosing Grade 10 subjects, and Grade 11s checking they chose right. You answer questions, try a few real tasks and chat with The Guide. You get a report that says which subjects fit you, and why.
             </p>
             <nav className="flex flex-col gap-3 sm:flex-row">
               <Link href="/login" className="btn-primary sm:px-7">
                 I&apos;m a learner
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </Link>
-              <Link href="/staff/login" className="btn-ghost">School or Excavation staff</Link>
+              <Link href="/staff/login" className="btn-ghost">Staff login</Link>
             </nav>
-            <p className="text-sm font-medium text-muted">Know Thy Self measures. The Excavation interprets. A person reviews before anything is decided.</p>
+            <p className="text-sm font-medium text-muted">Know Thy Self measures. The Excavation interprets. A real person reviews every report before you see it.</p>
           </div>
           <AppPreview />
         </section>
@@ -62,7 +62,7 @@ export default function Home() {
           <div className="space-y-2">
             <p className="eyebrow">What you get</p>
             <h2 id="sample" className="text-3xl sm:text-4xl">A report that sounds like you.</h2>
-            <p className="max-w-2xl text-lg text-muted">Not a score and a label: a picture of how you think, the subject combinations that fit, the doors each one keeps open, and one thing to do this week.</p>
+            <p className="max-w-2xl text-lg text-muted">Not a score and a label. A picture of how you think, the subject combinations that fit, what each one keeps open or closes, and one move for this week.</p>
           </div>
           <div className="grid items-start gap-6 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="space-y-4">
@@ -88,9 +88,9 @@ export default function Home() {
 
         <section className="mt-16 grid gap-3 sm:grid-cols-3">
           {[
-            ["Not a test", "There are no wrong answers. Results are insights, not a diagnosis."],
-            ["Yours first", "Teachers and parents only see a summary if you choose to share it."],
-            ["Built for here", "CAPS subjects, South African pathways, and your school's own rules."],
+            ["Not a test", "There are no right answers. What you get is insight, not a diagnosis."],
+            ["Yours first", "Teachers and parents only see a summary if you switch it on."],
+            ["Made for here", "CAPS subjects, South African pathways and your school's own rules."],
           ].map(([t, d]) => (
             <div key={t} className="card flex gap-3 !p-4">
               <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-teal" aria-hidden="true" />
@@ -103,7 +103,7 @@ export default function Home() {
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-8 sm:flex-row sm:items-center sm:justify-between">
           <Wordmark sub="Know Thy Self × The Excavation" />
-          <p className="max-w-md text-sm text-muted">Reflective insights to support a decision: not a diagnosis, not a test. Questions about your information: <a href="mailto:privacy@theexcavation.co.za">privacy@theexcavation.co.za</a></p>
+          <p className="max-w-md text-sm text-muted">Reflective insights to help you decide. Not a diagnosis, not a test. Questions about your information: <a href="mailto:privacy@theexcavation.co.za">privacy@theexcavation.co.za</a></p>
         </div>
       </footer>
     </div>

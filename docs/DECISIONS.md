@@ -182,3 +182,9 @@ Replaces the aqua/strata look. Near-white canvas, ink text, cobalt (`--accent`) 
 - Learner screens: one prominent question, a small set of choices. Staff screens: repeated rows, compact figures (`Stat`), tables.
 - AI interpretation stays separate from raw scores; nothing is decided without human review (unchanged: reports are reviewer-gated).
 - No brown, orange or yellow anywhere. Status uses slate, cobalt tint, teal or red. Verified by a computed-colour audit (hue 12–70°) and a WCAG AA contrast audit on both themes.
+
+## F6. Copywriting overhaul
+
+Voice rules are in `docs/VOICE.md`. Every learner, parent and staff screen, the Guide's scripted opening and closing, check and taster text, error messages, the safeguarding alert email and the PDFs were rewritten to it. Verdict codes now show as plain labels (`src/lib/verdict/labels.ts`) instead of RESCUE / REDIRECT.
+
+Deliberately not changed: questionnaire items and response labels (instrument 1.0.0; rewording changes what they measure and invalidates norming), the Guide's 20 and 15 scripted questions (spec 03/05), and the check and taster questions themselves. AI prompts gained a shared CRAFT block, and the report linter now rejects stock AI phrasing.

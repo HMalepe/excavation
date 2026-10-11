@@ -69,7 +69,7 @@ export default async function Cohort() {
       {stats.grades.map((g) => (
         <section key={g.grade} className="space-y-3">
           <h2 className="text-3xl">Grade {g.grade}</h2>
-          {g.suppressed ? <p className="card text-muted">Fewer than {MIN_GROUP} learners in this grade — nothing is shown.</p> : (
+          {g.suppressed ? <p className="card text-muted">Fewer than {MIN_GROUP} learners in this grade, so nothing is shown.</p> : (
             <>
               <div className="grid gap-3 sm:grid-cols-3">
                 <Stat label="Learners" value={g.learners} icon="users" />

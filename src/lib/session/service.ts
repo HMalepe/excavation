@@ -71,7 +71,7 @@ export async function updateSession(id: string, patch: Partial<SessionRow>): Pro
 
 export function assertStage(s: SessionRow, ...allowed: Stage[]) {
   if (s.locked_at) throw new HttpError(423, "This session is paused while someone checks in with you.");
-  if (!allowed.includes(s.stage as Stage)) throw new HttpError(409, `This step isn't available right now (you're at "${s.stage}").`);
+  if (!allowed.includes(s.stage as Stage)) throw new HttpError(409, "That step isn't available right now. Refresh the page.");
 }
 
 const STATUS_FOR: Record<Stage, SessionStatus> = {

@@ -48,8 +48,8 @@ export function toApiMessages(rows: MessageRow[]): Anthropic.Beta.BetaMessagePar
  * the last learner message (after a dropped connection or a screen outage).
  */
 export async function guideTurn(session: SessionRow, learner: LearnerRow, text: string | null): Promise<{ stream: ReadableStream<Uint8Array>; done: Promise<TurnOutcome> }> {
-  if (session.locked_at || session.status === "safety_stop") throw new HttpError(423, "This conversation is paused.");
-  if (session.stage !== "conversation") throw new HttpError(409, "The conversation isn't open right now.");
+  if (session.locked_at || session.status === "safety_stop") throw new HttpError(423, "This chat is paused.");
+  if (session.stage !== "conversation") throw new HttpError(409, "The chat isn't open right now.");
   const db = adminDb();
   let rows = await loadMessages(session.id);
   const lastVisible = rows.filter((r) => r.role !== "system").at(-1);
@@ -57,8 +57,8 @@ export async function guideTurn(session: SessionRow, learner: LearnerRow, text: 
   let learnerMsg: MessageRow;
   if (text !== null) {
     const clean = text.trim().slice(0, MAX_LEARNER_CHARS);
-    if (!clean) throw new HttpError(400, "Type something first.");
-    if (lastVisible?.role !== "guide") throw new HttpError(409, "The Guide is still replying.");
+    if (!clean) throw new HttpError(400, "Type your answer first.");
+    if (lastVisible?.role !== "guide") throw new HttpError(409, "The Guide is still replying. Give it a second.");
     const { data, error } = await db.from("conversation_messages").insert({ session_id: session.id, role: "learner", content: clean }).select().single();
     if (error || !data) throw new Error(`save learner message: ${error?.message}`);
     learnerMsg = data as MessageRow;
@@ -74,7 +74,7 @@ export async function guideTurn(session: SessionRow, learner: LearnerRow, text: 
     try {
       risk = (await screenMessage(learnerMsg.content)).risk;
     } catch (e) {
-      if (e instanceof ScreenUnavailable) throw new HttpError(503, "The Guide can't reply right now. Your message is saved — tap retry in a minute.");
+      if (e instanceof ScreenUnavailable) throw new HttpError(503, "The Guide can't reply right now. Your message is saved. Tap Try again in a minute.");
       throw e;
     }
     await db.from("conversation_messages").update({ safety_risk: risk }).eq("id", learnerMsg.id);

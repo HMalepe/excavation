@@ -42,7 +42,7 @@ export function GuideChat({ initial }: { initial: Initial }) {
       const res = await fetch("/api/guide/message", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }) });
       if (!res.ok || !res.body) {
         const j = await res.json().catch(() => ({}));
-        throw new Error((j as { error?: string }).error ?? "The Guide couldn't reply. Your message is saved.");
+        throw new Error((j as { error?: string }).error ?? "The Guide couldn't reply. Your message is saved. Try again in a minute.");
       }
       setMessages((m) => [...m, { id: guideId, role: "guide", text: "" }]);
       const reader = res.body.getReader();
@@ -57,7 +57,7 @@ export function GuideChat({ initial }: { initial: Initial }) {
       }
       const ctl = all.split(CONTROL)[1];
       const outcome: Outcome | null = ctl ? JSON.parse(ctl) : null;
-      if (!outcome) throw new Error("The reply was cut off. Tap retry.");
+      if (!outcome) throw new Error("The reply got cut off. Tap Try again.");
       if (outcome.safetyStop) setState("stopped");
       else if (outcome.complete) setState("complete");
     } catch (e) {
@@ -109,15 +109,15 @@ export function GuideChat({ initial }: { initial: Initial }) {
       {error && <p role="alert" className="text-danger">{error}</p>}
 
       {state === "stopped" ? (
-        <Link href="/learn/paused" className="btn-primary no-underline">Okay</Link>
+        <Link href="/learn/paused" className="btn-primary no-underline">OK</Link>
       ) : state === "complete" ? (
-        <Link href="/learn/report" className="btn-primary no-underline">See where your report is at</Link>
+        <Link href="/learn/report" className="btn-primary no-underline">Go to my report</Link>
       ) : needsRetry && lastIsLearner ? (
-        <button className="btn-primary" disabled={busy} onClick={() => send(null)}>{busy ? "Trying…" : "Retry"}</button>
+        <button className="btn-primary" disabled={busy} onClick={() => send(null)}>{busy ? "Trying…" : "Try again"}</button>
       ) : (
         <form className="sticky bottom-0 -mx-4 flex items-end gap-2 border-t-[1.5px] border-line bg-canvas/95 px-4 pb-3 pt-3 backdrop-blur" onSubmit={(e) => { e.preventDefault(); const t = draft.trim(); if (t && !busy) { setDraft(""); void send(t); } }}>
           <label htmlFor="reply" className="sr-only">Your answer</label>
-          <textarea id="reply" rows={2} value={draft} maxLength={4000} onChange={(e) => setDraft(e.target.value)} placeholder={busy ? "The Guide is replying…" : "Type, or tap the mic"}
+          <textarea id="reply" rows={2} value={draft} maxLength={4000} onChange={(e) => setDraft(e.target.value)} placeholder={busy ? "The Guide is replying…" : "Type your answer, or tap the mic"}
             className="field min-h-14 flex-1 resize-none"
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey && window.matchMedia("(min-width: 768px)").matches) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }} />
           {canSpeak && (

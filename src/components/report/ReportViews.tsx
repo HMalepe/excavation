@@ -7,6 +7,7 @@ import type { ReportG9, ReportG11 } from "@/lib/ai/schemas";
 import type { ScoreProfile } from "@/lib/scoring/types";
 import type { VerdictResult } from "@/lib/verdict/types";
 import { skillsLines } from "@/lib/skills/plain";
+import { verdictLabel } from "@/lib/verdict/labels";
 import type { SkillsResult } from "@/lib/skills/types";
 
 /** Deterministic (not AI-written): what the learner did in Part 1 and what it changed. */
@@ -15,9 +16,9 @@ function WhatYouTried({ skills, marks }: { skills: SkillsResult; marks: Record<s
   const practise = checks.find((c) => c.check === "maths")?.practise ?? [];
   return (
     <Section title="What you tried">
-      <p className="text-muted">Before the conversation you did three short checks and some taster tasks. The checks could only ever help you: they never lowered anything.</p>
+      <p className="text-muted">Before the chat you did three short checks and some taster tasks. The checks could only help you. They never lowered anything.</p>
       {skills.gate_lift && (
-        <p className="card text-lg">Your maths check went well enough to open the Mathematics option. Your marks alone pointed somewhere safer — see the Maths section above.</p>
+        <p className="card text-lg">Your maths check went well enough to open the Mathematics option. Your marks alone pointed somewhere safer. See the Maths section above.</p>
       )}
       <Bullets items={checks.map((c) => c.you)} />
       {practise.length > 0 && <p className="note"><strong>Worth practising:</strong> {practise.join(" · ")}</p>}
@@ -28,8 +29,8 @@ function WhatYouTried({ skills, marks }: { skills: SkillsResult; marks: Record<s
       {tasters.length > 0 && (
         <>
           <Sub>Taster tasks</Sub>
-          <ul className="space-y-3">{tasters.map((t) => <li key={t.id} className="card text-lg leading-snug"><strong>{t.title}</strong> <span className="text-muted">({t.work})</span> — {t.you}.</li>)}</ul>
-          <p className="text-sm text-muted">How much you enjoyed real work counted a little towards your subject options. Getting answers right didn&apos;t.</p>
+          <ul className="space-y-3">{tasters.map((t) => <li key={t.id} className="card text-lg leading-snug"><strong>{t.title}</strong> <span className="text-muted">({t.work})</span>: {t.you}.</li>)}</ul>
+          <p className="text-sm text-muted">How much you enjoyed the work counted a little towards your subject options. Getting answers right didn&apos;t count at all.</p>
         </>
       )}
     </Section>
@@ -59,7 +60,7 @@ const Headline = ({ text }: { text: string }) => <h1 className="text-[2rem] lead
 export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile }) {
   return (
     <article className="space-y-2 pb-24">
-      <Reveal kicker="Your Foundation Report" headline={<Headline text={r.headline.text} />}>
+      <Reveal kicker="Your Grade 9 report" headline={<Headline text={r.headline.text} />}>
         <div className="space-y-2">
           <div className="pt-8"><Hexagon scores={profile.interests.scores} /></div>
           <Section title="Your shape" tone={1}>
@@ -96,7 +97,7 @@ export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile })
             </ol>
             {r.subject_options.cautions.map((c) => (
               <div key={c.combination_id} className="card space-y-2 border-l-[10px] !border-l-danger">
-                <p className="eyebrow !text-danger">Be careful with · {c.type === "competence_trap" ? "competence trap" : "a stretch"}</p>
+                <p className="eyebrow !text-danger">Be careful with · {c.type === "competence_trap" ? "good at it, but it could drain you" : "a stretch for now"}</p>
                 <h3 className="text-2xl">{profile.combinations.find((x) => x.id === c.combination_id)?.name ?? c.combination_id}</h3>
                 <p className="text-lg leading-snug">{c.why}</p>
               </div>
@@ -126,30 +127,27 @@ export function G9Report({ r, profile }: { r: ReportG9; profile: ScoreProfile })
   );
 }
 
-const VERDICT_WORD: Record<string, string> = {
-  CONFIRM: "CONFIRM", RESCUE: "RESCUE", RETHINK: "RETHINK", ADJUST_ONE: "ADJUST ONE", REDIRECT: "REDIRECT", REDIRECT_AFTER_MATRIC: "REDIRECT AFTER MATRIC",
-};
 
 /** The Grade 11 Confirmation Report. */
 export function G11Report({ r, profile, g9Profile, verdict, planState }: { r: ReportG11; profile: ScoreProfile; g9Profile: ScoreProfile | null; verdict: VerdictResult; planState: Record<string, boolean> }) {
   return (
     <article className="space-y-2 pb-24">
-      <Reveal kicker="Your Confirmation Report" headline={<Headline text={r.headline.text} />}>
+      <Reveal kicker="Your Grade 11 report" headline={<Headline text={r.headline.text} />}>
         <div className="space-y-2">
           <div className="pt-8"><Hexagon scores={profile.interests.scores} before={g9Profile?.interests.scores ?? null} /></div>
-          <Section title="Two years: what stayed" tone={1}><Bullets items={r.two_years.what_stayed} /></Section>
-          <Section title="Two years: what moved" tone={2}>
+          <Section title="What stayed the same" tone={1}><Bullets items={r.two_years.what_stayed} /></Section>
+          <Section title="What changed" tone={2}>
             <Bullets items={r.two_years.what_moved} />
             <p className="card text-lg"><strong>Who you&apos;re becoming:</strong> {r.two_years.identity_shift}</p>
           </Section>
           <Section title="Your subjects, honestly" tone={3}>
-            <ul className="space-y-3">{r.subjects.map((s) => <li key={s.subject} className="card text-lg leading-snug"><strong>{s.subject}</strong> — {s.plain}</li>)}</ul>
+            <ul className="space-y-3">{r.subjects.map((s) => <li key={s.subject} className="card text-lg leading-snug"><strong>{s.subject}:</strong> {s.plain}</li>)}</ul>
           </Section>
           <section className="pt-10">
             <div className="card relative space-y-3 overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-1 bg-accent" aria-hidden="true" />
               <p className="eyebrow pt-2">Your verdict</p>
-              <p className="text-4xl font-bold leading-none tracking-[-0.03em] text-accent-ink sm:text-6xl">{VERDICT_WORD[verdict.verdict]}</p>
+              <p className="text-3xl font-bold leading-[1.1] tracking-[-0.03em] text-accent-ink sm:text-5xl">{verdictLabel(verdict.verdict)}</p>
               <p className="text-xl font-semibold leading-snug sm:text-2xl">{r.verdict.headline}</p>
               <Paras text={r.verdict.explanation} />
             </div>

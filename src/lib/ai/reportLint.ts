@@ -28,6 +28,7 @@ export const BANNED: { re: RegExp; label: string }[] = [
   { re: /\byou need help\b|\bsee a psychologist\b/i, label: "you need help / see a psychologist" },
   { re: /\bscientifically proven\b|\baccurate assessment\b/i, label: "overclaiming certainty" },
   { re: /\bassessment\b/i, label: "assessment" },
+  { re: /\bdelve\b|\btapestry\b|\bresonates?\b|\bnavigat(e|es|ing)\b|\bdig deep\b|\bunpack(ing)?\b/i, label: "stock AI phrasing" },
   { re: /\byour parents are pushing\b|\bpushing you\b/i, label: "blaming family" },
 ];
 

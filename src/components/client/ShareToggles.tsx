@@ -17,7 +17,7 @@ export function ShareToggles({ initial }: { initial: { teacher: boolean; parent:
       setState((s) => ({ ...s, [audience]: r.shared }));
       if (r.link) setLink(r.link);
       if (!on && audience === "parent") setLink(null);
-      if (r.pending) setNote("Your summary is being checked by a person first. It'll be shared as soon as that's done.");
+      if (r.pending) setNote("A person is checking your summary first. It'll be shared as soon as that's done.");
     } catch (e) { setError((e as Error).message); } finally { setBusy(null); }
   }
 
@@ -33,17 +33,17 @@ export function ShareToggles({ initial }: { initial: { teacher: boolean; parent:
 
   return (
     <div className="space-y-4">
-      <Row audience="teacher" label="Share a summary with my LO teacher" help="A one-page summary: how you learn best, your strengths and your subject options. Never your conversation." />
-      <Row audience="parent" label="Share a summary with my parent/guardian" help="A short summary to help you have one good conversation at home. You get a private link to send them." />
+      <Row audience="teacher" label="Share a summary with my LO teacher" help="One page: how you learn best, your strengths and your subject options. Never your chat with The Guide." />
+      <Row audience="parent" label="Share a summary with my parent or guardian" help="A short summary to help you have one good conversation at home. You get a private link to send them." />
       {link && (
         <div className="card space-y-3">
-          <p className="font-semibold">Your parent/guardian link</p>
+          <p className="font-semibold">Your parent or guardian link</p>
           <p className="break-all text-sm">{link}</p>
           <div className="flex flex-wrap gap-2">
             <button className="btn-ghost" onClick={() => navigator.clipboard?.writeText(link)}>Copy link</button>
-            <a className="btn-ghost no-underline" href={`https://wa.me/?text=${encodeURIComponent(`Here's a summary of my Excavation report: ${link}`)}`}>Send on WhatsApp</a>
+            <a className="btn-ghost no-underline" href={`https://wa.me/?text=${encodeURIComponent(`Here's a summary of my Excavation report. Have a look when you get a minute: ${link}`)}`}>Send on WhatsApp</a>
           </div>
-          <p className="text-xs text-muted">This link is shown once. Turning sharing off stops it working.</p>
+          <p className="text-xs text-muted">This link is shown once. If you turn sharing off, it stops working.</p>
         </div>
       )}
       {note && <p className="text-muted">{note}</p>}

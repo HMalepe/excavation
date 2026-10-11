@@ -9,8 +9,8 @@ export default function NotToday() {
   return (
     <PlainPage>
       <p className="eyebrow">Your call</p>
-      <h1 className="text-5xl">No problem.</h1>
-      <p className="text-lg text-muted">Nothing happens because you said not today. If you change your mind, log in again with the same codes.</p>
+      <h1 className="text-[2rem] sm:text-4xl">No problem.</h1>
+      <p className="text-lg text-muted">Nothing happens because you said not today. Your school only sees &ldquo;not completed&rdquo;. If you change your mind, log in again with the same codes.</p>
       <Link href="/learn" className="btn-ghost">Actually, let&apos;s start</Link>
       <LogoutButton className="btn-quiet self-start" />
     </PlainPage>

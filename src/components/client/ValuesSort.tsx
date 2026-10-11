@@ -48,9 +48,9 @@ export function ValuesSort({ cards, resources }: { cards: Card[]; resources: Rea
     <section className="space-y-6">
       <header className="space-y-2">
         <p className="eyebrow">{step === "top" ? "Step 1 of 2" : "Step 2 of 2"}</p>
-        <h1 className="text-4xl">What matters most</h1>
+        <h1 className="text-[2rem] sm:text-4xl">What matters most to you</h1>
         <p className="text-muted">
-          {step === "top" ? "Tap the 3 cards that matter MOST to you. The first one you tap is number 1. Use the arrows to change the order." : "Now tap the 2 cards that matter LEAST to you."}
+          {step === "top" ? "Tap the 3 cards that matter most to you. The first one you tap is number 1. Use the arrows to change the order." : "Now tap the 2 that matter least to you."}
         </p>
       </header>
 

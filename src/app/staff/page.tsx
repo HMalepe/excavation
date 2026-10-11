@@ -28,7 +28,7 @@ export default async function StaffHome() {
       <div className="grid gap-3 sm:grid-cols-3">
         <Stat label="Waiting for review" value={queue?.length ?? 0} icon="inbox" />
         <Stat label="Learner reports released" value={released ?? 0} note={`Launch review applies to the first ${serverEnv().REVIEW_FIRST_N_REPORTS}`} icon="doc" />
-        <Link href="/staff/safeguarding" className="block no-underline"><Stat label="Hard safeguarding events not yet reviewed" value={openSg ?? 0} tone={openSg ? "danger" : undefined} layer={5} /></Link>
+        <Link href="/staff/safeguarding" className="block no-underline"><Stat label="Safeguarding alerts to review" value={openSg ?? 0} tone={openSg ? "danger" : undefined} icon="shield" /></Link>
       </div>
       <section className="card overflow-x-auto">
         <table className="w-full text-left text-sm">

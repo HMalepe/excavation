@@ -91,9 +91,9 @@ export const actions = {
     const sec = plan.sections[prog.section];
     if (!sec || sec.id === "values") throw new HttpError(409, "Not a question section");
     const idx = sec.items.indexOf(b.itemId);
-    if (idx < prog.item || idx >= prog.item + PAGE_SIZE_MAX) throw new HttpError(409, "That answer is already locked in.");
+    if (idx < prog.item || idx >= prog.item + PAGE_SIZE_MAX) throw new HttpError(409, "That answer is already saved. Refresh the page.");
     const range = rangeFor(b.itemId);
-    if (!range || b.value < range[0] || b.value > range[1]) throw new HttpError(400, "Invalid answer");
+    if (!range || b.value < range[0] || b.value > range[1]) throw new HttpError(400, "That answer didn't go through. Refresh and try again.");
     await upsertResponse(session.id, b.itemId, { value: b.value, response_ms: b.ms, change_count: b.changes });
     return {};
   }),
@@ -104,7 +104,7 @@ export const actions = {
     const plan = planOf(session), prog = progressOf(session);
     const sec = plan.sections[prog.section];
     if (!sec || sec.id === "values") throw new HttpError(409, "Not a question section");
-    if (b.upTo <= prog.item || b.upTo > Math.min(sec.items.length, prog.item + PAGE_SIZE_MAX)) throw new HttpError(409, "Out of step — refresh the page.");
+    if (b.upTo <= prog.item || b.upTo > Math.min(sec.items.length, prog.item + PAGE_SIZE_MAX)) throw new HttpError(409, "This page is out of date. Refresh and try again.");
     const page = sec.items.slice(prog.item, b.upTo);
     const { likert } = await loadResponses(session.id);
     const missing = page.filter((id) => !isOptionalItem(id) && typeof likert[id] !== "number");

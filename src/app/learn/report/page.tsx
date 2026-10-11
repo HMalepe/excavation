@@ -24,12 +24,12 @@ export default async function ReportPage() {
     const generating = !b.report || b.report.status === "generating";
     return (
       <PlainPage>
-        <p className="eyebrow">{generating ? "Digging" : "In review"}</p>
-        <h1 className="text-5xl">{generating ? "Your report is being put together." : "A person is reading your report first."}</h1>
+        <p className="eyebrow">{generating ? "Putting it together" : "In review"}</p>
+        <h1 className="text-[2rem] sm:text-4xl">{generating ? "Your report is being written." : "A person is reading your report first."}</h1>
         <p className="text-lg text-muted">
           {generating
-            ? "This usually takes a minute or two. You can leave this page — it'll be here when you log in again."
-            : "While The Excavation is new, a trained reviewer reads every report before you see it. It usually takes less than a day."}
+            ? "This usually takes a minute or two. You can leave this page. Your report will be here when you log back in."
+            : "While The Excavation is new, a trained reviewer reads every report before you see it. That usually takes less than a day. Log in again to check."}
         </p>
         {generating && <AutoRefresh seconds={15} />}
         <Link href="/learn/paused" className="btn-ghost">Close for now</Link>

@@ -14,11 +14,11 @@ export const POST = handle(async (req: Request) => {
   const { email, password } = Body.parse(await req.json());
   const db = await userDb();
   const { data, error } = await db.auth.signInWithPassword({ email, password });
-  if (error || !data.user) throw new HttpError(401, "Email or password is wrong.");
+  if (error || !data.user) throw new HttpError(401, "That email and password don't match.");
   const { data: profile } = await adminDb().from("profiles").select("role").eq("id", data.user.id).maybeSingle();
   if (!profile || profile.role === "learner") {
     await db.auth.signOut();
-    throw new HttpError(403, "This login is for school and Excavation staff.");
+    throw new HttpError(403, "This login is for school and Excavation staff. Learners log in with their codes.");
   }
   return ok({ next: HOME[profile.role] ?? "/" });
 });

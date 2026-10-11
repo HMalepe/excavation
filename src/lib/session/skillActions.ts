@@ -18,7 +18,7 @@ export const newSkillsProgress = (): SkillsProgress => ({ plan: planSkills(seede
 
 export function skillsOf(s: SessionRow): SkillsProgress {
   const sk = progressOf(s).skills;
-  if (!sk) throw new HttpError(409, "Out of step — refresh the page.");
+  if (!sk) throw new HttpError(409, "This page is out of date. Refresh and try again.");
   return sk;
 }
 
@@ -55,9 +55,9 @@ export const skillActions = {
     const sk = skillsOf(session);
     const check = sk.plan.order[sk.check]!;
     const served = servedItems(sk.plan, check);
-    if (served[sk.item] !== b.itemId) throw new HttpError(409, "That answer is already locked in — refresh the page.");
+    if (served[sk.item] !== b.itemId) throw new HttpError(409, "That answer is already saved. Refresh the page.");
     const meta = itemIndex.get(b.itemId)!;
-    if (b.choice >= meta.item.options.length) throw new HttpError(400, "Invalid answer");
+    if (b.choice >= meta.item.options.length) throw new HttpError(400, "That answer didn't go through. Refresh and try again.");
     await upsertResponse(session.id, DX(b.itemId), { value: b.choice, response_ms: b.ms });
     sk.item += 1;
     if (sk.item >= served.length) await nextCheck(session, sk);
@@ -69,7 +69,7 @@ export const skillActions = {
   check_skip: action(z.object({ check: z.enum(CHECK_IDS) }), async ({ session }, b) => {
     assertStage(session, "checks");
     const sk = skillsOf(session);
-    if (sk.plan.order[sk.check] !== b.check) throw new HttpError(409, "Out of step — refresh the page.");
+    if (sk.plan.order[sk.check] !== b.check) throw new HttpError(409, "This page is out of date. Refresh and try again.");
     await upsertResponse(session.id, DXS(b.check), { value_json: { skipped_at_item: sk.item } });
     await nextCheck(session, sk);
     return {};
@@ -79,12 +79,12 @@ export const skillActions = {
   taster: action(tasterBody, async ({ session, caller }, b) => {
     assertStage(session, "tasters");
     const sk = skillsOf(session);
-    if (sk.plan.tasters[sk.taster] !== b.id) throw new HttpError(409, "Out of step — refresh the page.");
+    if (sk.plan.tasters[sk.taster] !== b.id) throw new HttpError(409, "This page is out of date. Refresh and try again.");
     const t = tasterById.get(b.id)!;
     if (!b.skipped) {
       if (b.after === null || b.steps.length !== t.steps.length || b.steps.some((c) => c === null)) throw new HttpError(400, "Finish the task (or skip it) first.");
-      b.steps.forEach((c, i) => { if (c !== null && c >= t.steps[i]!.options.length) throw new HttpError(400, "Invalid answer"); });
-      if (b.bonus && b.bonus.steps.length > t.bonus.steps.length) throw new HttpError(400, "Invalid answer");
+      b.steps.forEach((c, i) => { if (c !== null && c >= t.steps[i]!.options.length) throw new HttpError(400, "That answer didn't go through. Refresh and try again."); });
+      if (b.bonus && b.bonus.steps.length > t.bonus.steps.length) throw new HttpError(400, "That answer didn't go through. Refresh and try again.");
     }
     const record: TasterInput = b.skipped
       ? { skipped: true, before: b.before, after: null, steps: [], ms: b.ms, bonus: null }

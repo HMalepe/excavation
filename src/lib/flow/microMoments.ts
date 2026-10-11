@@ -6,22 +6,22 @@ import { valueCards } from "@/lib/config/questionBank";
 import type { RiasecType } from "@/lib/config/subjectMap";
 
 const INTEREST_LINES: Record<RiasecType, string> = {
-  R: "You lit up most at the building and fixing activities. Hold that thought.",
-  I: "You lit up most at the figuring-things-out activities. Hold that thought.",
-  A: "Making things pulled you in more than anything else. Hold that thought.",
-  S: "Helping and teaching people came out on top for you. Hold that thought.",
-  E: "Leading and convincing people pulled you most. Hold that thought.",
-  C: "Getting things organised and exactly right pulled you most. Hold that thought.",
+  R: "Building and fixing things pulled you in most. We'll come back to that.",
+  I: "Figuring things out pulled you in most. We'll come back to that.",
+  A: "Making things pulled you in most. We'll come back to that.",
+  S: "Helping and teaching people pulled you in most. We'll come back to that.",
+  E: "Leading and persuading people pulled you in most. We'll come back to that.",
+  C: "Getting things organised and exactly right pulled you in most. We'll come back to that.",
 };
 
 export function afterInterests(scores: Partial<Record<RiasecType, number | null>>): string {
   const entries = Object.entries(scores).filter((e): e is [RiasecType, number] => typeof e[1] === "number");
-  if (!entries.length) return "That's the first part done. Hold on to whatever stood out for you.";
+  if (!entries.length) return "That's one part done. Remember whatever stood out to you.";
   entries.sort((a, b) => b[1] - a[1]);
   const [top, topScore] = entries[0]!;
   const lowest = entries.at(-1)![1];
   if (topScore < 60 || topScore - lowest < 20) {
-    return "Nothing pulled you much more than everything else. That's common at your age, and we'll dig into it later.";
+    return "Nothing pulled you much harder than everything else. That's common at your age. We'll look at it from other angles.";
   }
   return INTEREST_LINES[top];
 }

@@ -1,6 +1,7 @@
 import "server-only";
 import { Document, Page, StyleSheet, Text, View, renderToBuffer } from "@react-pdf/renderer";
 import { pathwayName } from "@/lib/scoring/doors";
+import { verdictLabel } from "@/lib/verdict/labels";
 import type { ParentSummary, ReportG9, ReportG11, TeacherSummary } from "@/lib/ai/schemas";
 import type { skillsLines } from "@/lib/skills/plain";
 
@@ -34,18 +35,18 @@ const Brand = () => <Text style={s.brand}>THE EXCAVATION</Text>;
 
 const Footer = () => (
   <Text style={s.footer} fixed>
-    The Excavation · reflective insights to support a decision, not a diagnosis or an instruction. Requirements differ between universities and change yearly — check the prospectus.
+    The Excavation · Reflective insights to help with a decision. Not a diagnosis and not an instruction. University requirements differ and change every year, so check the prospectus.
   </Text>
 );
 const Paras = ({ t }: { t: string }) => <>{t.split(/\n{2,}/).map((x, i) => <Text key={i} style={s.p}>{x}</Text>)}</>;
 
 export function G9Pdf({ r, name, part1 = null }: { r: ReportG9; name: string; part1?: ReturnType<typeof skillsLines> | null }) {
   return (
-    <Document title={`Foundation Report — ${name}`} author="The Excavation">
+    <Document title={`Grade 9 report: ${name}`} author="The Excavation">
       <Page size="A4" style={s.page}>
         <Strata />
         <Brand />
-        <Text style={s.kicker}>Grade 9 Foundation Report · {name}</Text>
+        <Text style={s.kicker}>Grade 9 report · {name}</Text>
         <Text style={s.h1}>“{r.headline.text}”</Text>
         <Text style={s.h2} minPresenceAhead={70}>Your shape</Text>
         <Text style={s.h3}>What you&apos;d love doing</Text><Text style={s.p}>{r.shape.interests_plain}</Text>
@@ -67,7 +68,7 @@ export function G9Pdf({ r, name, part1 = null }: { r: ReportG9; name: string; pa
         ))}
         {r.subject_options.cautions.map((c) => (
           <View key={c.combination_id} style={s.card} wrap={false}>
-            <Text style={s.h3}>Be careful with ({c.type === "competence_trap" ? "competence trap" : "a stretch"})</Text>
+            <Text style={s.h3}>Be careful with ({c.type === "competence_trap" ? "good at it, but it could drain you" : "a stretch for now"})</Text>
             <Text>{c.why}</Text>
           </View>
         ))}
@@ -76,7 +77,7 @@ export function G9Pdf({ r, name, part1 = null }: { r: ReportG9; name: string; pa
         {part1 && (
           <View>
             <Text style={s.h2} minPresenceAhead={70}>What you tried</Text>
-            <Text style={s.muted}>Three short checks and some taster tasks. The checks could only ever help you: they never lowered anything.</Text>
+            <Text style={s.muted}>Three short checks and some taster tasks. The checks could only help you. They never lowered anything.</Text>
             {part1.checks.map((c) => <Text key={c.check} style={s.p}>{c.you}</Text>)}
             {part1.tasters.map((t) => <Text key={t.id} style={s.p}>{t.title} ({t.work}): {t.you}.</Text>)}
           </View>
@@ -96,17 +97,17 @@ export function G9Pdf({ r, name, part1 = null }: { r: ReportG9; name: string; pa
 
 export function G11Pdf({ r, name }: { r: ReportG11; name: string }) {
   return (
-    <Document title={`Confirmation Report — ${name}`} author="The Excavation">
+    <Document title={`Grade 11 report: ${name}`} author="The Excavation">
       <Page size="A4" style={s.page}>
         <Strata />
         <Brand />
-        <Text style={s.kicker}>Grade 11 Confirmation Report · {name}</Text>
+        <Text style={s.kicker}>Grade 11 report · {name}</Text>
         <Text style={s.h1}>“{r.headline.text}”</Text>
-        <Text style={s.h2} minPresenceAhead={70}>Two years: what stayed</Text>{r.two_years.what_stayed.map((x, i) => <Text key={i} style={s.p}>• {x}</Text>)}
-        <Text style={s.h2} minPresenceAhead={70}>Two years: what moved</Text>{r.two_years.what_moved.map((x, i) => <Text key={i} style={s.p}>• {x}</Text>)}
+        <Text style={s.h2} minPresenceAhead={70}>What stayed the same</Text>{r.two_years.what_stayed.map((x, i) => <Text key={i} style={s.p}>• {x}</Text>)}
+        <Text style={s.h2} minPresenceAhead={70}>What changed</Text>{r.two_years.what_moved.map((x, i) => <Text key={i} style={s.p}>• {x}</Text>)}
         <Text style={s.p}>Who you&apos;re becoming: {r.two_years.identity_shift}</Text>
-        <Text style={s.h2} minPresenceAhead={70}>Your subjects, honestly</Text>{r.subjects.map((x) => <Text key={x.subject} style={s.p}>{x.subject} — {x.plain}</Text>)}
-        <Text style={s.h2} minPresenceAhead={70}>Verdict: {r.verdict.code.replace(/_/g, " ")} — {r.verdict.headline}</Text><Paras t={r.verdict.explanation} />
+        <Text style={s.h2} minPresenceAhead={70}>Your subjects, honestly</Text>{r.subjects.map((x) => <Text key={x.subject} style={s.p}>{x.subject}: {x.plain}</Text>)}
+        <Text style={s.h2} minPresenceAhead={70}>{verdictLabel(r.verdict.code)}: {r.verdict.headline}</Text><Paras t={r.verdict.explanation} />
         <Text style={s.h2} minPresenceAhead={70}>Your pathway</Text>
         {[r.pathway.pass_type_now, r.pathway.gap_to_next, r.pathway.aps_note, r.pathway.grade11_finals_note, r.pathway.career_check].map((x, i) => <Text key={i} style={s.p}>• {x}</Text>)}
         <Text style={s.h2} minPresenceAhead={70}>Your plan</Text>
@@ -123,12 +124,12 @@ export function G11Pdf({ r, name }: { r: ReportG11; name: string }) {
 
 export function TeacherPdf({ t }: { t: TeacherSummary }) {
   return (
-    <Document title={`Teacher summary — ${t.learner_first_name}`} author="The Excavation">
+    <Document title={`Teacher summary: ${t.learner_first_name}`} author="The Excavation">
       <Page size="A4" style={s.page}>
         <Strata />
         <Brand />
         <Text style={s.kicker}>Teacher summary · shared by the learner</Text>
-        <Text style={s.h1}>{t.learner_first_name} — {t.touchpoint === "G9" ? "Grade 9 Foundation" : "Grade 11 Confirmation"}</Text>
+        <Text style={s.h1}>{t.learner_first_name}: {t.touchpoint === "G9" ? "Grade 9 report" : "Grade 11 report"}</Text>
         <Text style={s.h3}>Learns best when</Text><Text style={s.p}>{t.learns_best_when}</Text>
         <Text style={s.h3}>Strengths</Text>{t.strengths.map((x, i) => <Text key={i} style={s.p}>• {x}</Text>)}
         <Text style={s.h3}>Recommendation</Text><Text style={s.p}>{t.recommendation}</Text>
@@ -143,7 +144,7 @@ export function TeacherPdf({ t }: { t: TeacherSummary }) {
 
 export function ParentPdf({ p, name }: { p: ParentSummary; name: string }) {
   return (
-    <Document title={`Summary for family — ${name}`} author="The Excavation">
+    <Document title={`Summary for family: ${name}`} author="The Excavation">
       <Page size="A4" style={s.page}>
         <Strata />
         <Brand />

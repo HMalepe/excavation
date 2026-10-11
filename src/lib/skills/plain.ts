@@ -25,7 +25,7 @@ export function checkLine(check: CheckId, r: CheckResult | null, mark: number | 
   const band = checkBand(r.score);
   const vs = typeof mark === "number" ? (r.score - mark >= 20 ? "above" : mark - r.score >= 20 ? "below" : "in_line") : null;
   const vsText = vs === "above" ? `, well above the school ${cfg.informs_mark} mark` : vs === "below" ? `, below the school ${cfg.informs_mark} mark` : vs === "in_line" ? ", in line with the school mark" : "";
-  const youVs = vs === "above" ? ` — well above your school ${cfg.informs_mark} mark. Your marks may undersell you here.` : vs === "below" ? ". Your school mark is the better guide here." : ".";
+  const youVs = vs === "above" ? `. That is well above your school ${cfg.informs_mark} mark, so your marks may undersell you here.` : vs === "below" ? ". Your school mark is the better guide here." : ".";
   return { ...base, status: "used", band, vs_mark: vs, text: `${cfg.title}: ${band}${vsText}.`, you: `${cfg.title}: ${band}${youVs}`, practise: band === "strong" ? [] : r.missed_topics.slice(0, 3) };
 }
 

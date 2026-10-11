@@ -21,8 +21,8 @@ export function LearnerLoginForm() {
       <div><label className="label" htmlFor="code">Your code</label>
         <input id="code" name="code" className="field text-lg font-semibold uppercase tracking-[0.08em] placeholder:font-normal placeholder:normal-case placeholder:tracking-normal" placeholder="e.g. ABC-0901" autoComplete="off" autoCapitalize="characters" required maxLength={32} /></div>
       {error && <p role="alert" className="alert">{error}</p>}
-      <button className="btn-primary w-full" disabled={busy}>{busy ? "Checking…" : "Start digging"}</button>
-      <p className="text-sm text-muted">Your teacher gives you both codes. Lost yours? Ask them for it again.</p>
+      <button className="btn-primary w-full" disabled={busy}>{busy ? "Checking…" : "Log in"}</button>
+      <p className="text-sm text-muted">Lost a code? Ask your LO teacher. They can look it up.</p>
     </form>
   );
 }

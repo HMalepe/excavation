@@ -17,7 +17,7 @@ async function throttle(key: string) {
   const since = new Date(Date.now() - WINDOW_MINUTES * 60_000).toISOString();
   const { count } = await adminDb().from("login_attempts").select("id", { count: "exact", head: true })
     .eq("key", key).eq("succeeded", false).gte("at", since);
-  if ((count ?? 0) >= MAX_FAILED_PER_WINDOW) throw new HttpError(429, "Too many tries. Wait 15 minutes, or ask your teacher for your code.");
+  if ((count ?? 0) >= MAX_FAILED_PER_WINDOW) throw new HttpError(429, "Too many tries. Wait 15 minutes and try again, or ask your teacher to check your codes.");
 }
 
 /**
@@ -31,7 +31,7 @@ export async function loginLearner(schoolCodeRaw: string, loginCodeRaw: string, 
   const db = adminDb();
   const fail = async () => {
     await db.from("login_attempts").insert({ key, succeeded: false });
-    return new HttpError(401, "Those codes don't match. Check them with your teacher.");
+    return new HttpError(401, "Those codes don't match. Check them against what your teacher gave you.");
   };
 
   const { data: school } = await db.from("schools").select("id").eq("school_code", schoolCode).maybeSingle();

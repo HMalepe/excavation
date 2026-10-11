@@ -29,7 +29,7 @@ export default async function TeacherHome() {
   }
   return (
     <StaffShell title={`My learners`} nav={[{ href: "/school/teacher", label: "My learners" }]}>
-      <p className="text-muted">You see a learner&apos;s summary only if they chose to share it with you. Conversations are never shared.</p>
+      <p className="text-muted">You only see a learner&apos;s summary if they chose to share it with you. Their chats with The Guide are never shared.</p>
       <div className="card overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead className="text-muted"><tr><th className="py-2">Learner</th><th>Class</th><th>Grade</th><th>Status</th><th>Shared summary</th></tr></thead>
@@ -44,7 +44,7 @@ export default async function TeacherHome() {
                 </tr>
               );
             })}
-            {!learners?.length && <tr><td colSpan={5} className="py-4 text-muted">No learners linked to your classes yet. Ask your school admin.</td></tr>}
+            {!learners?.length && <tr><td colSpan={5} className="py-4 text-muted">No learners are linked to your classes yet. Ask your school admin to add them.</td></tr>}
           </tbody>
         </table>
       </div>
