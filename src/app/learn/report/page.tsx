@@ -40,10 +40,11 @@ export default async function ReportPage() {
   }
 
   const g9 = session.touchpoint === "G9_FOUNDATION";
+  const issued = new Intl.DateTimeFormat("en-ZA", { dateStyle: "medium", timeZone: "Africa/Johannesburg" }).format(new Date(b.report.reviewed_at ?? b.report.created_at));
   return (
     <div className="min-h-dvh">
       <header className="sticky top-0 z-10 border-b border-line bg-canvas/90 backdrop-blur-md print:hidden">
-        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-2.5">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-2.5">
           <Wordmark />
           <nav className="flex items-center gap-2 text-sm font-semibold">
             <a href={`/api/report/pdf?kind=learner`} className="inline-flex h-11 items-center rounded-[10px] border border-line bg-surface px-3 text-fg no-underline hover:bg-sunken">PDF</a>
@@ -52,11 +53,11 @@ export default async function ReportPage() {
           </nav>
         </div>
       </header>
-      <main className="mx-auto max-w-2xl px-4">
+      <main className="mx-auto max-w-3xl px-4">
         {g9 ? (
-          <G9Report r={b.report.content as ReportG9} profile={b.profile!} />
+          <G9Report r={b.report.content as ReportG9} profile={b.profile!} name={learner.first_name} issued={issued} />
         ) : (
-          <G11Report r={b.report.content as ReportG11} profile={b.profile!} g9Profile={b.g9Profile} verdict={b.verdict!} planState={(b.report.learner_state?.plan as Record<string, boolean>) ?? {}} />
+          <G11Report name={learner.first_name} issued={issued} r={b.report.content as ReportG11} profile={b.profile!} g9Profile={b.g9Profile} verdict={b.verdict!} planState={(b.report.learner_state?.plan as Record<string, boolean>) ?? {}} />
         )}
       </main>
     </div>

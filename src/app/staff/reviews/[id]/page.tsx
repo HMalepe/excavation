@@ -69,8 +69,8 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
           <div className="card max-h-[48rem] overflow-auto">
             {!hasContent ? <p className="text-muted">No content yet.</p>
               : rep.kind !== "learner" ? <Json v={rep.content} />
-              : g9 && b.profile ? <G9Report r={rep.content as ReportG9} profile={b.profile} />
-              : b.profile && b.verdict ? <G11Report r={rep.content as ReportG11} profile={b.profile} g9Profile={b.g9Profile} verdict={b.verdict} planState={{}} />
+              : g9 && b.profile ? <G9Report r={rep.content as ReportG9} profile={b.profile} name={s.learners.first_name} issued="(preview)" />
+              : b.profile && b.verdict ? <G11Report name={s.learners.first_name} issued="(preview)" r={rep.content as ReportG11} profile={b.profile} g9Profile={b.g9Profile} verdict={b.verdict} planState={{}} />
               : <Json v={rep.content} />}
           </div>
         </section>

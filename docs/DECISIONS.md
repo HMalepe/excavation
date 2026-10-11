@@ -201,3 +201,11 @@ Every Part 1 question is a framed card (`QuestionCard`): coloured band naming th
 - Not offered on the Reading check or its passages: reading it aloud would stop it measuring reading.
 - The server records only that it was used (`audit_log`, action `learner_read_aloud`, target `session:where`, no text), not in `sessions.progress`, so a late request can't overwrite the learner's place. The reviewer page shows the count per area.
 - Not built: word-by-word highlighting (the card glows while it's being read instead), and pre-recorded voices (the planned next step for fixed questions).
+
+## F9. Dashboard report (web and PDF)
+
+The learner report is now a dashboard: an "excavation complete" keepsake card, three headline cards, the five-layer "dig" (Surface to The floor), and charts for interests (radar and ranked bars), how you work (five spectra), values, habits, subject-option fit, a career-doors matrix, readiness checks next to the marks the learner entered, and taster reactions. Grade 11 adds then-and-now dumbbells, a radar overlay and a fit-versus-marks subject map.
+
+- One view-model (`src/lib/insights/build.ts`, pure, tested) feeds one chart library (`components/report/charts.tsx`) that draws on the web (plain SVG, theme tokens, compact variants for phones) and into the PDF (react-pdf SVG, literal colours). Same code, same charts.
+- Deliberately not copied from the reference design: an aptitude score ring, "Top 15%", ranking against other test-takers, and warm colours. This is not an aptitude test, nothing here compares a learner with other people (the instrument is pre-norm, spec 07 rule 2), and the palette stays cool. What learners read are named bands ("Strong pull", "Solid"); positions and bars are only for drawing. Marks shown are the learner's own typed marks.
+- PDF layout gotcha: never put `break` on a `Text` inside a nested `View`; react-pdf's layout loops forever. Put it on the `View`.
