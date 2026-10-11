@@ -7,6 +7,7 @@ import { audit } from "@/lib/audit";
 import { subjectMap, LIFE_ORIENTATION } from "@/lib/config/subjectMap";
 import { G9_SNAPSHOT_SUBJECTS } from "@/lib/config/questionBank";
 import { loginCode, parseMarksCsv, parseRosterCsv } from "@/lib/school/csv";
+import { retainUntil } from "@/lib/privacy/retention";
 
 const Body = z.object({ kind: z.enum(["roster", "marks"]), csv: z.string().max(2_000_000) });
 const KNOWN = new Set([...subjectMap.subjects.map((s) => s.name), ...G9_SNAPSHOT_SUBJECTS, "Home Language", "First Additional Language", LIFE_ORIENTATION]);
@@ -25,7 +26,7 @@ export const POST = handle(async (req: Request) => {
     const created: { name: string; grade: number; class: string | null; code: string }[] = [];
     for (const r of rows) {
       const code = loginCode(rand, r.first_name);
-      const { error } = await db.from("learners").insert({ ...r, school_id: admin.schoolId, login_code: code });
+      const { error } = await db.from("learners").insert({ ...r, school_id: admin.schoolId, login_code: code, retain_until: retainUntil(r.current_grade) });
       if (error) errors.push(`${r.first_name} ${r.last_name}: ${error.message}`);
       else created.push({ name: `${r.first_name} ${r.last_name}`, grade: r.current_grade, class: r.class_label, code });
     }

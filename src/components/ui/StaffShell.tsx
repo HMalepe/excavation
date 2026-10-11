@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/components/client/ThemeToggle";
 import { Icon, Wordmark } from "./Brand";
 
 const ICON_FOR: [RegExp, string][] = [
-  [/consent/i, "check"],
+  [/consent/i, "check"], [/privacy/i, "shield"],
   [/review|queue/i, "inbox"], [/safeguard|alert/i, "shield"], [/setting|school|import/i, "settings"],
   [/cohort|result|dashboard/i, "chart"], [/learner|student/i, "users"],
 ];
@@ -46,5 +46,6 @@ export function StaffShell({ title, nav, children }: { title: string; nav: { hre
 export const STAFF_NAV = [
   { href: "/staff", label: "Review queue" },
   { href: "/staff/safeguarding", label: "Safeguarding" },
+  { href: "/staff/privacy", label: "Privacy requests" },
 ];
 export { Icon };

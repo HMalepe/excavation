@@ -1,9 +1,21 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "regions": ["dub1"],
+  "regions": [
+    "dub1"
+  ],
   "crons": [
-    { "path": "/api/cron/safeguarding-escalation", "schedule": "*/15 * * * *" },
-    { "path": "/api/cron/norms", "schedule": "17 2 * * *" }
+    {
+      "path": "/api/cron/safeguarding-escalation",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/norms",
+      "schedule": "17 2 * * *"
+    },
+    {
+      "path": "/api/cron/retention",
+      "schedule": "33 3 * * *"
+    }
   ]
 }

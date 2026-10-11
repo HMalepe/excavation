@@ -35,7 +35,7 @@ export interface SchoolSettingsRow {
 export interface LearnerRow {
   id: string; profile_id: string | null; school_id: string; school_learner_ref: string | null;
   first_name: string; last_name: string; current_grade: number; class_label: string | null;
-  preferred_language: string | null; login_code: string | null; fet_subjects: string[];
+  preferred_language: string | null; login_code: string | null; fet_subjects: string[]; retain_until?: string | null;
 }
 export interface SessionRow {
   id: string; learner_id: string; touchpoint: Touchpoint; instrument_version: string; status: SessionStatus;
