@@ -69,6 +69,8 @@ test.describe("public pages", () => {
 
 test.describe("investor demo", () => {
   test("walks Part 1, Part 2 and the sample results without a login, and the PDF downloads", async ({ page, request }) => {
+    const apiCalls: string[] = [];
+    page.on("request", (r) => { const u = new URL(r.url()); if (u.pathname.startsWith("/api/")) apiCalls.push(u.pathname); });
     await page.goto("/demo");
     await page.getByRole("link", { name: "Start the demo" }).click();
     await expect(page).toHaveURL(/\/demo\/part-1$/);
@@ -86,6 +88,8 @@ test.describe("investor demo", () => {
     await page.getByRole("link", { name: "See the finished report" }).click();
     await expect(page).toHaveURL(/\/demo\/results$/);
     await expect(page.getByText("Sample report for a fictional learner")).toBeVisible();
+    // The demo touches no API at all while it runs: no Guide, no learner, no auth route (so no AI and no credit).
+    expect(apiCalls).toEqual([]);
     const pdf = await request.get("/api/demo/pdf");
     expect(pdf.ok()).toBe(true);
     expect((await pdf.body()).subarray(0, 5).toString()).toBe("%PDF-");

@@ -3,7 +3,7 @@ import { Art, hasArt } from "./Art";
 import { ListenButton, useIsReading, type ReadWhere } from "@/components/client/readAloud";
 
 /** What the Listen button reads for a question: its stem, then its choices. */
-export interface Listen { id: string; where: ReadWhere; choices?: string[]; lettered?: boolean }
+export interface Listen { id: string; where: ReadWhere; choices?: string[]; lettered?: boolean; quiet?: boolean }
 
 /** Highlight words worth catching at a glance: numbers with units, money, and SHOUTED words. */
 const KEY = /(R\s?\d[\d\s]*(?:,\d+)?|\d+(?:[,.]\d+)?\s?(?:%|°C|km\/h|m\/s|g\/cm³|cm³|litres?|km|kg|min|cm|m|g|s|hours?)\b|\b[A-Z]{3,}\b)/g;
@@ -56,7 +56,7 @@ export function QuestionCard({ sec, label, n, art, lead, stem, id, children, hin
           <p id={id} className="min-w-0 flex-1 text-[1.5rem] font-bold leading-[1.2] tracking-[-0.02em] sm:text-[1.7rem]"><StemText text={stem} lead={lead} /></p>
         </div>
         {hint && <p className="text-sm font-medium text-muted">{hint}</p>}
-        {listen && <ListenButton id={listen.id} where={listen.where} parts={parts} />}
+        {listen && <ListenButton id={listen.id} where={listen.where} parts={parts} quiet={listen.quiet} />}
         {children}
       </div>
     </section>

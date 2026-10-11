@@ -73,21 +73,22 @@ export function stopReading() {
 }
 
 const reported = new Set<string>();
-function report(where: ReadWhere, key: string) {
+function report(where: ReadWhere, key: string, quiet: boolean) {
+  if (quiet) return; // demo mode: no request of any kind
   const id = `${where}:${key}`;
   if (reported.has(id)) return;
   reported.add(id);
   void learn("read_aloud", { where }).catch(() => { /* usage count only: never block reading on it */ });
 }
 
-export function startReading(key: string, where: ReadWhere, parts: string[]) {
+export function startReading(key: string, where: ReadWhere, parts: string[], quiet = false) {
   if (!snap.supported || !voice) return;
   const synth = window.speechSynthesis;
   synth.cancel();
   const queue = chunks(parts);
   if (!queue.length) return;
   emit({ speakingKey: key });
-  report(where, key);
+  report(where, key, quiet);
   queue.forEach((text, i) => {
     const u = new SpeechSynthesisUtterance(text);
     u.voice = voice; u.lang = voice!.lang; u.rate = snap.slow ? 0.75 : 0.95; u.pitch = 1;
@@ -115,14 +116,14 @@ export function useIsReading(key: string): boolean {
 }
 
 /** "Listen" button with a Slower toggle. Renders nothing if the device has no on-device English voice. */
-export function ListenButton({ id, where, parts, className = "" }: { id: string; where: ReadWhere; parts: string[]; className?: string }) {
+export function ListenButton({ id, where, parts, className = "", quiet = false }: { id: string; where: ReadWhere; parts: string[]; className?: string; quiet?: boolean }) {
   const s = useSpeech();
   const reading = s.speakingKey === id;
   useEffect(() => () => { if (isReading(id)) stopReading(); }, [id]);
   if (!s.supported) return null;
   return (
     <div className={`flex flex-wrap items-center gap-2 ${className}`}>
-      <button type="button" onClick={() => (reading ? stopReading() : startReading(id, where, parts))} aria-pressed={reading}
+      <button type="button" onClick={() => (reading ? stopReading() : startReading(id, where, parts, quiet))} aria-pressed={reading}
         className="inline-flex min-h-11 items-center gap-2 rounded-full border-2 px-4 text-[0.95rem] font-bold transition-colors"
         style={{ borderColor: "var(--sec-line, var(--line))", background: reading ? "var(--sec, var(--accent))" : "var(--sec-soft, var(--tint))", color: reading ? "var(--surface)" : "var(--sec-ink, var(--accent-ink))" }}>
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

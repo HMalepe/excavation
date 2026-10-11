@@ -20,7 +20,7 @@ export function DemoPart1({ questions, cards }: { questions: Q[]; cards: Card[] 
     return (
       <section className="space-y-5" aria-label={`Sample question ${step + 1} of ${total + 1}`}>
         <QuestionCard sec={q.sec} label={q.label} n={step + 1} art={artFor(q.id, q.sec)} lead={q.sec === "interests"} id={`q-${q.id}`} stem={q.text}
-          listen={{ id: `demo:${q.id}`, where: "questions", choices: q.points.map((p) => p[1]) }}>
+          listen={{ id: `demo:${q.id}`, where: "questions", quiet: true, choices: q.points.map((p) => p[1]) }}>
           <RatingScale name={q.id} labelledBy={`q-${q.id}`} points={q.points} value={vals[q.id]} onChange={(v) => setVals((s) => ({ ...s, [q.id]: v }))} />
         </QuestionCard>
         <button className="btn-primary w-full !min-h-14 text-lg" disabled={!answered} onClick={() => setStep(step + 1)}>Next</button>
