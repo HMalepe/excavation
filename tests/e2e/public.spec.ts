@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const PAGES = ["/", "/login", "/staff/login", "/privacy", "/terms", "/cookies", "/nope"];
+const PAGES = ["/", "/login", "/staff/login", "/privacy", "/terms", "/cookies", "/nope", "/demo", "/demo/part-1", "/demo/part-2", "/demo/results"];
 
 test.describe("security headers (production build)", () => {
   test("every response carries the hardening headers", async ({ request }) => {
@@ -64,5 +64,30 @@ test.describe("public pages", () => {
     await expect(page.getByRole("button", { name: "Log in" })).toBeVisible();
     await expect(page.getByLabel("School code")).toBeVisible();
     await expect(page.getByLabel("Your code")).toBeVisible();
+  });
+});
+
+test.describe("investor demo", () => {
+  test("walks Part 1, Part 2 and the sample results without a login, and the PDF downloads", async ({ page, request }) => {
+    await page.goto("/demo");
+    await page.getByRole("link", { name: "Start the demo" }).click();
+    await expect(page).toHaveURL(/\/demo\/part-1$/);
+    for (let i = 0; i < 3; i++) {
+      await page.getByRole("radiogroup").locator("label").nth(3).click();
+      await page.getByRole("button", { name: "Next", exact: true }).click();
+    }
+    const cards = page.getByRole("group").getByRole("button");
+    for (let i = 0; i < 3; i++) await cards.nth(i).click();
+    await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.getByRole("link", { name: /Part 2/ }).click();
+    await page.getByRole("radiogroup").locator("label").first().click();
+    await page.getByRole("button", { name: /Guide/ }).click();
+    for (let i = 0; i < 3; i++) { await page.getByRole("button", { name: /^(Making|Helping|Honestly|Mostly|Natural)/ }).first().click(); }
+    await page.getByRole("link", { name: "See the finished report" }).click();
+    await expect(page).toHaveURL(/\/demo\/results$/);
+    await expect(page.getByText("Sample report for a fictional learner")).toBeVisible();
+    const pdf = await request.get("/api/demo/pdf");
+    expect(pdf.ok()).toBe(true);
+    expect((await pdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
   });
 });

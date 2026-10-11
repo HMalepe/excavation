@@ -103,7 +103,7 @@ export default function Home() {
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-8 sm:flex-row sm:items-center sm:justify-between">
           <Wordmark sub="Know Thy Self × The Excavation" />
-          <div className="max-w-md space-y-1 text-sm text-muted"><p>Reflective insights to help you decide. Not a diagnosis, not a test. Questions about your information: <a href="mailto:privacy@theexcavation.co.za">privacy@theexcavation.co.za</a></p><p className="flex flex-wrap gap-x-4"><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/cookies">Cookies</Link></p></div>
+          <div className="max-w-md space-y-1 text-sm text-muted"><p>Reflective insights to help you decide. Not a diagnosis, not a test. Questions about your information: <a href="mailto:privacy@theexcavation.co.za">privacy@theexcavation.co.za</a></p><p className="flex flex-wrap gap-x-4"><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/cookies">Cookies</Link><Link href="/demo">Demo</Link></p></div>
         </div>
       </footer>
     </div>
