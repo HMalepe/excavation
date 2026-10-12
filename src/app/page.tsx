@@ -35,6 +35,7 @@ export default function Home() {
                 I&apos;m a learner
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </Link>
+              <Link href="/demo" className="btn-ghost">Try the 5-minute demo</Link>
               <Link href="/staff/login" className="btn-ghost">Staff login</Link>
             </nav>
             <p className="text-sm font-medium text-muted">Know Thy Self measures. The Excavation interprets. A real person reviews every report before you see it.</p>
