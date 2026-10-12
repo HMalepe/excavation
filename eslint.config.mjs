@@ -1,9 +1,5 @@
-import { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { FlatCompat } from "@eslint/eslintrc";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const compat = new FlatCompat({ baseDirectory: __dirname });
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
 const serverOnlyModules = [
   "@/lib/env.server",
@@ -15,7 +11,14 @@ const serverOnlyModules = [
 
 const config = [
   { ignores: [".next/**", "node_modules/**", "spec/**", "next-env.d.ts"] },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...nextVitals,
+  ...nextTs,
+  {
+    // eslint-config-next 16 enables React Compiler-era rules. Three existing patterns trip them (a theme read on
+    // mount, and small row components defined inside SchoolAdmin and ShareToggles). They work today; kept as warnings
+    // until they are refactored, rather than rewriting working UI inside a dependency bump.
+    rules: { "react-hooks/set-state-in-effect": "warn", "react-hooks/static-components": "warn" },
+  },
   {
     // Client components must never import modules that hold the service-role key or the
     // Anthropic key. `server-only` already fails the build; this rule fails lint earlier.
